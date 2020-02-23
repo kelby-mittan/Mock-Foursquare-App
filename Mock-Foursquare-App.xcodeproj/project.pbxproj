@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,6 +12,15 @@
 		02699BC224021C2900211C0F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02699BC124021C2900211C0F /* Assets.xcassets */; };
 		02699BC524021C2900211C0F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02699BC324021C2900211C0F /* LaunchScreen.storyboard */; };
 		02699BD024021C2900211C0F /* Mock_Foursquare_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02699BCF24021C2900211C0F /* Mock_Foursquare_AppTests.swift */; };
+		02699BE224021EE700211C0F /* configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02699BE124021EE700211C0F /* configure.swift */; };
+		02699BE524021F5300211C0F /* ImageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 02699BE424021F5300211C0F /* ImageKit */; };
+		02699BE724021F8400211C0F /* FoursquareAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02699BE624021F8400211C0F /* FoursquareAPIClient.swift */; };
+		02699BE924021FCA00211C0F /* FoursquareSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02699BE824021FCA00211C0F /* FoursquareSearch.swift */; };
+		02699BEB2402204200211C0F /* UserCollectionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02699BEA2402204200211C0F /* UserCollectionsController.swift */; };
+		02699BED2402205600211C0F /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02699BEC2402205600211C0F /* MapViewController.swift */; };
+		02699BEF2402208A00211C0F /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02699BEE2402208A00211C0F /* TabBarController.swift */; };
+		02699BF12402212C00211C0F /* TheMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02699BF02402212C00211C0F /* TheMapView.swift */; };
+		02699BF32402217C00211C0F /* UserCollectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02699BF22402217C00211C0F /* UserCollectionsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +43,14 @@
 		02699BCB24021C2900211C0F /* Mock-Foursquare-AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mock-Foursquare-AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		02699BCF24021C2900211C0F /* Mock_Foursquare_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mock_Foursquare_AppTests.swift; sourceTree = "<group>"; };
 		02699BD124021C2900211C0F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		02699BE124021EE700211C0F /* configure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = configure.swift; sourceTree = "<group>"; };
+		02699BE624021F8400211C0F /* FoursquareAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoursquareAPIClient.swift; sourceTree = "<group>"; };
+		02699BE824021FCA00211C0F /* FoursquareSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoursquareSearch.swift; sourceTree = "<group>"; };
+		02699BEA2402204200211C0F /* UserCollectionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCollectionsController.swift; sourceTree = "<group>"; };
+		02699BEC2402205600211C0F /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		02699BEE2402208A00211C0F /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		02699BF02402212C00211C0F /* TheMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheMapView.swift; sourceTree = "<group>"; };
+		02699BF22402217C00211C0F /* UserCollectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCollectionsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02699BE524021F5300211C0F /* ImageKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,6 +117,7 @@
 			children = (
 				02699BB824021C2400211C0F /* AppDelegate.swift */,
 				02699BBA24021C2400211C0F /* SceneDelegate.swift */,
+				02699BE124021EE700211C0F /* configure.swift */,
 				02699BC124021C2900211C0F /* Assets.xcassets */,
 				02699BC324021C2900211C0F /* LaunchScreen.storyboard */,
 			);
@@ -108,6 +127,7 @@
 		02699BDB24021D2A00211C0F /* API Client */ = {
 			isa = PBXGroup;
 			children = (
+				02699BE624021F8400211C0F /* FoursquareAPIClient.swift */,
 			);
 			path = "API Client";
 			sourceTree = "<group>";
@@ -115,6 +135,7 @@
 		02699BDC24021D5300211C0F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				02699BE824021FCA00211C0F /* FoursquareSearch.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -122,6 +143,9 @@
 		02699BDD24021D5D00211C0F /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				02699BEE2402208A00211C0F /* TabBarController.swift */,
+				02699BEC2402205600211C0F /* MapViewController.swift */,
+				02699BEA2402204200211C0F /* UserCollectionsController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -129,6 +153,8 @@
 		02699BDE24021D6B00211C0F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				02699BF02402212C00211C0F /* TheMapView.swift */,
+				02699BF22402217C00211C0F /* UserCollectionsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -149,6 +175,9 @@
 			dependencies = (
 			);
 			name = "Mock-Foursquare-App";
+			packageProductDependencies = (
+				02699BE424021F5300211C0F /* ImageKit */,
+			);
 			productName = "Mock-Foursquare-App";
 			productReference = 02699BB524021C2400211C0F /* Mock-Foursquare-App.app */;
 			productType = "com.apple.product-type.application";
@@ -199,6 +228,9 @@
 				Base,
 			);
 			mainGroup = 02699BAC24021C2400211C0F;
+			packageReferences = (
+				02699BE324021F5300211C0F /* XCRemoteSwiftPackageReference "ImageKit" */,
+			);
 			productRefGroup = 02699BB624021C2400211C0F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -233,8 +265,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02699BF12402212C00211C0F /* TheMapView.swift in Sources */,
 				02699BB924021C2400211C0F /* AppDelegate.swift in Sources */,
+				02699BEF2402208A00211C0F /* TabBarController.swift in Sources */,
 				02699BBB24021C2400211C0F /* SceneDelegate.swift in Sources */,
+				02699BEB2402204200211C0F /* UserCollectionsController.swift in Sources */,
+				02699BE924021FCA00211C0F /* FoursquareSearch.swift in Sources */,
+				02699BE724021F8400211C0F /* FoursquareAPIClient.swift in Sources */,
+				02699BF32402217C00211C0F /* UserCollectionsView.swift in Sources */,
+				02699BE224021EE700211C0F /* configure.swift in Sources */,
+				02699BED2402205600211C0F /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -493,6 +533,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		02699BE324021F5300211C0F /* XCRemoteSwiftPackageReference "ImageKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/alexpaul/ImageKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		02699BE424021F5300211C0F /* ImageKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 02699BE324021F5300211C0F /* XCRemoteSwiftPackageReference "ImageKit" */;
+			productName = ImageKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 02699BAD24021C2400211C0F /* Project object */;
 }
