@@ -75,6 +75,10 @@
 		02699BB724021C2400211C0F /* Mock-Foursquare-App */ = {
 			isa = PBXGroup;
 			children = (
+				02699BDD24021D5D00211C0F /* View Controllers */,
+				02699BDE24021D6B00211C0F /* Views */,
+				02699BDC24021D5300211C0F /* Models */,
+				02699BDB24021D2A00211C0F /* API Client */,
 				02699BDA24021C8300211C0F /* Supporting Files */,
 				02699BC624021C2900211C0F /* Info.plist */,
 			);
@@ -99,6 +103,34 @@
 				02699BC324021C2900211C0F /* LaunchScreen.storyboard */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		02699BDB24021D2A00211C0F /* API Client */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "API Client";
+			sourceTree = "<group>";
+		};
+		02699BDC24021D5300211C0F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		02699BDD24021D5D00211C0F /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		02699BDE24021D6B00211C0F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
