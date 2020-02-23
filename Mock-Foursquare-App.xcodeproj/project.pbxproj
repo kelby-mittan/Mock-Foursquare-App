@@ -1,0 +1,466 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		02699BB924021C2400211C0F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02699BB824021C2400211C0F /* AppDelegate.swift */; };
+		02699BBB24021C2400211C0F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02699BBA24021C2400211C0F /* SceneDelegate.swift */; };
+		02699BC224021C2900211C0F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02699BC124021C2900211C0F /* Assets.xcassets */; };
+		02699BC524021C2900211C0F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02699BC324021C2900211C0F /* LaunchScreen.storyboard */; };
+		02699BD024021C2900211C0F /* Mock_Foursquare_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02699BCF24021C2900211C0F /* Mock_Foursquare_AppTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		02699BCC24021C2900211C0F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 02699BAD24021C2400211C0F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 02699BB424021C2400211C0F;
+			remoteInfo = "Mock-Foursquare-App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		02699BB524021C2400211C0F /* Mock-Foursquare-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mock-Foursquare-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		02699BB824021C2400211C0F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		02699BBA24021C2400211C0F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		02699BC124021C2900211C0F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		02699BC424021C2900211C0F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		02699BC624021C2900211C0F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		02699BCB24021C2900211C0F /* Mock-Foursquare-AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mock-Foursquare-AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		02699BCF24021C2900211C0F /* Mock_Foursquare_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mock_Foursquare_AppTests.swift; sourceTree = "<group>"; };
+		02699BD124021C2900211C0F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		02699BB224021C2400211C0F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		02699BC824021C2900211C0F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		02699BAC24021C2400211C0F = {
+			isa = PBXGroup;
+			children = (
+				02699BB724021C2400211C0F /* Mock-Foursquare-App */,
+				02699BCE24021C2900211C0F /* Mock-Foursquare-AppTests */,
+				02699BB624021C2400211C0F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		02699BB624021C2400211C0F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				02699BB524021C2400211C0F /* Mock-Foursquare-App.app */,
+				02699BCB24021C2900211C0F /* Mock-Foursquare-AppTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		02699BB724021C2400211C0F /* Mock-Foursquare-App */ = {
+			isa = PBXGroup;
+			children = (
+				02699BDA24021C8300211C0F /* Supporting Files */,
+				02699BC624021C2900211C0F /* Info.plist */,
+			);
+			path = "Mock-Foursquare-App";
+			sourceTree = "<group>";
+		};
+		02699BCE24021C2900211C0F /* Mock-Foursquare-AppTests */ = {
+			isa = PBXGroup;
+			children = (
+				02699BCF24021C2900211C0F /* Mock_Foursquare_AppTests.swift */,
+				02699BD124021C2900211C0F /* Info.plist */,
+			);
+			path = "Mock-Foursquare-AppTests";
+			sourceTree = "<group>";
+		};
+		02699BDA24021C8300211C0F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				02699BB824021C2400211C0F /* AppDelegate.swift */,
+				02699BBA24021C2400211C0F /* SceneDelegate.swift */,
+				02699BC124021C2900211C0F /* Assets.xcassets */,
+				02699BC324021C2900211C0F /* LaunchScreen.storyboard */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		02699BB424021C2400211C0F /* Mock-Foursquare-App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 02699BD424021C2900211C0F /* Build configuration list for PBXNativeTarget "Mock-Foursquare-App" */;
+			buildPhases = (
+				02699BB124021C2400211C0F /* Sources */,
+				02699BB224021C2400211C0F /* Frameworks */,
+				02699BB324021C2400211C0F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Mock-Foursquare-App";
+			productName = "Mock-Foursquare-App";
+			productReference = 02699BB524021C2400211C0F /* Mock-Foursquare-App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		02699BCA24021C2900211C0F /* Mock-Foursquare-AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 02699BD724021C2900211C0F /* Build configuration list for PBXNativeTarget "Mock-Foursquare-AppTests" */;
+			buildPhases = (
+				02699BC724021C2900211C0F /* Sources */,
+				02699BC824021C2900211C0F /* Frameworks */,
+				02699BC924021C2900211C0F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				02699BCD24021C2900211C0F /* PBXTargetDependency */,
+			);
+			name = "Mock-Foursquare-AppTests";
+			productName = "Mock-Foursquare-AppTests";
+			productReference = 02699BCB24021C2900211C0F /* Mock-Foursquare-AppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		02699BAD24021C2400211C0F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1130;
+				LastUpgradeCheck = 1130;
+				ORGANIZATIONNAME = "Kelby Mittan";
+				TargetAttributes = {
+					02699BB424021C2400211C0F = {
+						CreatedOnToolsVersion = 11.3.1;
+					};
+					02699BCA24021C2900211C0F = {
+						CreatedOnToolsVersion = 11.3.1;
+						TestTargetID = 02699BB424021C2400211C0F;
+					};
+				};
+			};
+			buildConfigurationList = 02699BB024021C2400211C0F /* Build configuration list for PBXProject "Mock-Foursquare-App" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 02699BAC24021C2400211C0F;
+			productRefGroup = 02699BB624021C2400211C0F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				02699BB424021C2400211C0F /* Mock-Foursquare-App */,
+				02699BCA24021C2900211C0F /* Mock-Foursquare-AppTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		02699BB324021C2400211C0F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02699BC524021C2900211C0F /* LaunchScreen.storyboard in Resources */,
+				02699BC224021C2900211C0F /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		02699BC924021C2900211C0F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		02699BB124021C2400211C0F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02699BB924021C2400211C0F /* AppDelegate.swift in Sources */,
+				02699BBB24021C2400211C0F /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		02699BC724021C2900211C0F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02699BD024021C2900211C0F /* Mock_Foursquare_AppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		02699BCD24021C2900211C0F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 02699BB424021C2400211C0F /* Mock-Foursquare-App */;
+			targetProxy = 02699BCC24021C2900211C0F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		02699BC324021C2900211C0F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				02699BC424021C2900211C0F /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		02699BD224021C2900211C0F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		02699BD324021C2900211C0F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		02699BD524021C2900211C0F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 87F72Z6LFG;
+				INFOPLIST_FILE = "Mock-Foursquare-App/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kelbymittan.Mock-Foursquare-App";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		02699BD624021C2900211C0F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 87F72Z6LFG;
+				INFOPLIST_FILE = "Mock-Foursquare-App/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kelbymittan.Mock-Foursquare-App";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		02699BD824021C2900211C0F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 87F72Z6LFG;
+				INFOPLIST_FILE = "Mock-Foursquare-AppTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kelbymittan.Mock-Foursquare-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mock-Foursquare-App.app/Mock-Foursquare-App";
+			};
+			name = Debug;
+		};
+		02699BD924021C2900211C0F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 87F72Z6LFG;
+				INFOPLIST_FILE = "Mock-Foursquare-AppTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kelbymittan.Mock-Foursquare-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mock-Foursquare-App.app/Mock-Foursquare-App";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		02699BB024021C2400211C0F /* Build configuration list for PBXProject "Mock-Foursquare-App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				02699BD224021C2900211C0F /* Debug */,
+				02699BD324021C2900211C0F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		02699BD424021C2900211C0F /* Build configuration list for PBXNativeTarget "Mock-Foursquare-App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				02699BD524021C2900211C0F /* Debug */,
+				02699BD624021C2900211C0F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		02699BD724021C2900211C0F /* Build configuration list for PBXNativeTarget "Mock-Foursquare-AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				02699BD824021C2900211C0F /* Debug */,
+				02699BD924021C2900211C0F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 02699BAD24021C2400211C0F /* Project object */;
+}
