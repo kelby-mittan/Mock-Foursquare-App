@@ -15,7 +15,7 @@ struct FoursquareAPIClient {
         
         var foursquareEndpoint = "https://api.foursquare.com/v2/venues/search?client_id=\(APIKeys.id)&client_secret=\(APIKeys.secret)&v=20202002&near=\(location)&intent=browse&radius=10000&query=\(search)&limit=50"
         
-        foursquareEndpoint = foursquareEndpoint.replacingOccurrences(of: " ", with: "")
+        foursquareEndpoint = foursquareEndpoint.replacingOccurrences(of: " ", with: "%20")
         
         guard let url = URL(string: foursquareEndpoint) else {
             completion(.failure(.badURL(foursquareEndpoint)))
