@@ -7,9 +7,13 @@
 //
 
 import UIKit
+import DataPersistence
 
 class TabBarController: UITabBarController {
 
+    public var venuePersistence = DataPersistence<Venue>(filename: "savedVenues.plist")
+    public var collectionPersistence = DataPersistence<UserCollection>(filename: "savedCollections.plist")
+    
     private lazy var mapVC: MapViewController = {
         let vc = MapViewController()
         vc.tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass"), tag: 0)
@@ -17,7 +21,7 @@ class TabBarController: UITabBarController {
     }()
     
     private lazy var collectionsVC: UserCollectionsController = {
-        let vc = UserCollectionsController()
+        let vc = UserCollectionsController(venuePersistence, collectionPersistence: collectionPersistence)
         vc.tabBarItem = UITabBarItem(title: "Collections", image: UIImage(systemName: "folder.fill"), tag: 1)
         return vc
     }()

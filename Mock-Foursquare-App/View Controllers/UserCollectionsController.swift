@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DataPersistence
 
 class UserCollectionsController: UIViewController {
     
@@ -14,6 +15,20 @@ class UserCollectionsController: UIViewController {
     
     override func loadView() {
         view = userCollectionsV
+    }
+    
+    public var venuePersistence: DataPersistence<Venue>
+    public var collectionPersistence: DataPersistence<UserCollection>
+    
+    init(_ venuePersistence: DataPersistence<Venue>, collectionPersistence: DataPersistence<UserCollection>) {
+        self.venuePersistence = venuePersistence
+        self.collectionPersistence = collectionPersistence
+        super.init(nibName: nil, bundle: nil)
+        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
@@ -52,7 +67,7 @@ extension UserCollectionsController: UICollectionViewDelegateFlowLayout {
         
         let totalSpace = flowLayout.sectionInset.left
             + flowLayout.sectionInset.right
-            + (flowLayout.minimumInteritemSpacing * CGFloat(noOfCellsInRow - 1)) + 10
+            + (flowLayout.minimumInteritemSpacing * CGFloat(noOfCellsInRow - 1))
         
         let size = Int((collectionView.bounds.width - totalSpace) / CGFloat(noOfCellsInRow))
         
@@ -60,6 +75,6 @@ extension UserCollectionsController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 15, left: 0, bottom: 15, right: 0)
+        return UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
     }
 }
