@@ -17,6 +17,11 @@ class UserCollectionsController: UIViewController {
         view = userCollectionsV
     }
     
+    private lazy var addButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(addButtonPressed(_:)))
+        return button
+    }()
+    
     public var venuePersistence: DataPersistence<Venue>
     public var collectionPersistence: DataPersistence<UserCollection>
     
@@ -35,9 +40,27 @@ class UserCollectionsController: UIViewController {
         super.viewDidLoad()
         
         userCollectionsV.backgroundColor = .systemGray2
+        navigationItem.setRightBarButton(addButton, animated: true)
         userCollectionsV.collectionView.register(UsersCollectionsCell.self, forCellWithReuseIdentifier: "userCell")
         userCollectionsV.collectionView.dataSource = self
         userCollectionsV.collectionView.delegate = self
+        
+    }
+    
+    @objc private func addButtonPressed(_ sender: UIBarButtonItem) {
+        print("add button pressed")
+        
+        let createStoryboard = UIStoryboard(name: "CreateCollection", bundle: nil)
+        
+        let createCollectionVC = createStoryboard.instantiateViewController(identifier: "CreateCollectionController", creator: { coder in
+            
+            return CreateCollectionController(coder: coder, venuePersistence: self.venuePersistence, collectionPersistence: self.collectionPersistence)
+        })
+        
+//        let createCollectionNC = UINavigationController(rootViewController: createCollectionVC)
+        
+//        createCollectionVC.modalTransitionStyle
+        navigationController?.pushViewController(createCollectionVC, animated: true)
     }
     
     

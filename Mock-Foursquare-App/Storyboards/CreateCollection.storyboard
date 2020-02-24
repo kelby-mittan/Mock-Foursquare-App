@@ -7,20 +7,65 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Create Collection Controller-->
         <scene sceneID="lpV-kc-iAX">
             <objects>
-                <viewController id="fdt-kC-sAk" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CreateCollectionController" id="fdt-kC-sAk" customClass="CreateCollectionController" customModule="Mock_Foursquare_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="PDJ-Jv-Dtk">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="enter name for collection" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pam-h5-cWd">
+                                <rect key="frame" x="20" y="150" width="374" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="RCE-nP-go6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5XL-TE-sGD">
+                                <rect key="frame" x="185" y="224" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="8rj-aE-UdJ"/>
+                                    <constraint firstAttribute="width" constant="44" id="Yyk-IL-xFR"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" backgroundImage="photo.on.rectangle" catalog="system"/>
+                                <connections>
+                                    <action selector="pickPhotoButton:" destination="fdt-kC-sAk" eventType="touchUpInside" id="ooI-m6-cqA"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Give Collection a Name and a Photo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pBJ-xv-SOJ">
+                                <rect key="frame" x="20" y="84" width="374" height="26"/>
+                                <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="22"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="pBJ-xv-SOJ" secondAttribute="trailing" constant="20" id="7B8-FN-3sc"/>
+                            <constraint firstItem="pBJ-xv-SOJ" firstAttribute="top" secondItem="3ES-h4-MwU" secondAttribute="top" constant="40" id="7xv-TA-uYm"/>
+                            <constraint firstItem="5XL-TE-sGD" firstAttribute="centerX" secondItem="pam-h5-cWd" secondAttribute="centerX" id="Eur-MC-b7D"/>
+                            <constraint firstItem="3ES-h4-MwU" firstAttribute="trailing" secondItem="pam-h5-cWd" secondAttribute="trailing" constant="20" id="GEN-9c-FF5"/>
+                            <constraint firstItem="pam-h5-cWd" firstAttribute="leading" secondItem="3ES-h4-MwU" secondAttribute="leading" constant="20" id="aqi-xI-r45"/>
+                            <constraint firstItem="pBJ-xv-SOJ" firstAttribute="leading" secondItem="3ES-h4-MwU" secondAttribute="leading" constant="20" id="hQM-QN-c6X"/>
+                            <constraint firstItem="5XL-TE-sGD" firstAttribute="top" secondItem="pam-h5-cWd" secondAttribute="bottom" constant="30" id="jYe-4o-APk"/>
+                            <constraint firstItem="pam-h5-cWd" firstAttribute="top" secondItem="pBJ-xv-SOJ" secondAttribute="bottom" constant="40" id="k2z-Lr-AMV"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="3ES-h4-MwU"/>
                     </view>
+                    <navigationItem key="navigationItem" id="s1f-y8-0n4"/>
+                    <connections>
+                        <outlet property="collectionNameTextField" destination="pam-h5-cWd" id="ydm-5e-pHC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lUd-DD-Qb8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-228" y="10"/>
+            <point key="canvasLocation" x="681.15942028985512" y="9.375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="photo.on.rectangle" catalog="system" width="64" height="48"/>
+    </resources>
 </document>
