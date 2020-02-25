@@ -12,6 +12,9 @@ import MapKit
 class MapViewController: UIViewController {
     
     private let theMapView = TheMapView()
+    override func loadView() {
+        view = theMapView
+    }
     
     private lazy var menuButton: UIBarButtonItem = {
         let button = UIBarButtonItem(image: UIImage(systemName: "line.horizontal.3"), style: .plain, target: self, action: #selector(menuButtonPressed(_:)))
@@ -35,10 +38,8 @@ class MapViewController: UIViewController {
     
     public var annotations = [MKPointAnnotation]()
     
-    override func loadView() {
-        view = theMapView
-    }
     
+ // MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,32 +48,37 @@ class MapViewController: UIViewController {
         
         theMapView.mapView.delegate = self
         theMapView.locationSearchBar.delegate = self
-//        venueSearchBar.delegate = self
-//        loadVenues()
+        
+        theMapView.collectionView.delegate = self
+        theMapView.collectionView.dataSource = self
+        theMapView.collectionView.register(UINib(nibName: "VenueCVCell", bundle: nil), forCellWithReuseIdentifier: "venueCell")
+        
+        //        venueSearchBar.delegate = self
+        //        loadVenues()
     }
     
     private func setupNavBar() {
         navigationItem.setRightBarButton(menuButton, animated: true)
         navigationItem.titleView = venueSearchBar
         
-//        let searchController = UISearchController()
-//        searchController.searchResultsUpdater = self as? UISearchResultsUpdating
-//        searchController.obscuresBackgroundDuringPresentation = false
-//        searchController.searchBar.placeholder = "search venues"
-//        self.navigationItem.searchController = searchController
-//        self.navigationItem.setRightBarButton(menuButton, animated: true)
-//        self.definesPresentationContext = true
-//        searchController.delegate = self
+        //        let searchController = UISearchController()
+        //        searchController.searchResultsUpdater = self as? UISearchResultsUpdating
+        //        searchController.obscuresBackgroundDuringPresentation = false
+        //        searchController.searchBar.placeholder = "search venues"
+        //        self.navigationItem.searchController = searchController
+        //        self.navigationItem.setRightBarButton(menuButton, animated: true)
+        //        self.definesPresentationContext = true
+        //        searchController.delegate = self
     }
     
     
     @objc private func menuButtonPressed(_ sender: UIBarButtonItem) {
         print("menu button pressed")
-//        mediumMenu()
+        //        mediumMenu()
     }
     
     private func loadVenues(city: String) {
-//        locationSearch = "new york"
+        //        locationSearch = "new york"
         venueSearch = "coffee"
         FoursquareAPIClient.getVenues(location: city, search: venueSearch) { [weak self] (result) in
             switch result {
@@ -80,7 +86,7 @@ class MapViewController: UIViewController {
                 print(error)
             case .success(let venues):
                 self?.venues = venues
-//                dump(venues)
+                //                dump(venues)
                 DispatchQueue.main.async {
                     self?.loadMapView()
                 }
@@ -89,7 +95,7 @@ class MapViewController: UIViewController {
     }
     
     private func makeAnnotations() {
-//        var annotations = [MKPointAnnotation]()
+        //        var annotations = [MKPointAnnotation]()
         for venue in venues {
             
             let coordinate = CLLocationCoordinate2D(latitude: venue.location.lat, longitude: venue.location.lng)
@@ -100,7 +106,7 @@ class MapViewController: UIViewController {
             annotations.append(annotation)
         }
         dump(annotations)
-//        return annotations
+        //        return annotations
     }
     
     private func loadMapView() {
@@ -111,6 +117,8 @@ class MapViewController: UIViewController {
     
 }
 
+
+// MARK: SearchFieldDelegate
 extension MapViewController: UISearchControllerDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         print("searchBarSearchButtonClicked")
@@ -126,19 +134,19 @@ extension MapViewController: UISearchControllerDelegate {
 }
 
 extension MapViewController: UISearchBarDelegate {
-//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-//
-//        guard let text = searchBar.text else { return }
-//        venueSearch = text
-//        loadVenues(city: venueSearch)
-//        print("searchBarCancelButtonClicked")
-//    }
+    //    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    //
+    //        guard let text = searchBar.text else { return }
+    //        venueSearch = text
+    //        loadVenues(city: venueSearch)
+    //        print("searchBarCancelButtonClicked")
+    //    }
     
-//    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-//        guard let text = searchBar.text else { return }
-//        venueSearch = text
-//        loadVenues(city: venueSearch)
-//    }
+    //    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+    //        guard let text = searchBar.text else { return }
+    //        venueSearch = text
+    //        loadVenues(city: venueSearch)
+    //    }
     
     func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
         guard let text = searchBar.text else { return false }
@@ -169,6 +177,8 @@ extension MapViewController: UISearchTextFieldDelegate {
     }
 }
 
+
+// MARK: MapviewDelegate
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         print("did select")
@@ -193,4 +203,27 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         print("calloutAccessoryControlTapped")
     }
+}
+
+
+// MARK: Collection View Delegate/Datasource
+extension MapViewController: UICollectionViewDelegateFlowLayout {
+    
+}
+
+extension MapViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 25
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "venueCell", for: indexPath) as? VenueCVCell else {
+            fatalError("Failed to dequeue to VenueCVCell")
+        }
+        cell.configureCell()
+        cell.layer.cornerRadius = 4
+        return cell
+    }
+    
+    
 }
