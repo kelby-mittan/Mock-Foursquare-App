@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol CollectionCellDelegate: AnyObject {
+    func didLongPress(_ collectionsCell: UsersCollectionsCell, collection: UserCollection)
+}
+
 class UsersCollectionsCell: UICollectionViewCell {
+    
+    public var userCollection: UserCollection!
     
     public lazy var collectionImage: UIImageView = {
         let iv = UIImageView()
@@ -19,9 +25,17 @@ class UsersCollectionsCell: UICollectionViewCell {
     public lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "this is the title"
-        label.contentMode = .center
+        label.textAlignment = .center
         return label
     }()
+    
+    private lazy var longPressGesture: UILongPressGestureRecognizer = {
+        let gesture = UILongPressGestureRecognizer()
+        gesture.addTarget(self, action: #selector(longPressAction(gesture:)))
+        return gesture
+    }()
+    
+    weak var cellDelegate: CollectionCellDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
@@ -31,6 +45,12 @@ class UsersCollectionsCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         commonInit()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        addGestureRecognizer(longPressGesture)
     }
     
     private func commonInit() {
@@ -69,6 +89,13 @@ class UsersCollectionsCell: UICollectionViewCell {
             return
         }
         collectionImage.image = image
-        
+    }
+    
+    @objc private func longPressAction(gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .began {
+            gesture.state = .cancelled
+            return
+        }
+        cellDelegate?.didLongPress(self, collection: userCollection)
     }
 }

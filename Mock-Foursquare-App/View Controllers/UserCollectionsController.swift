@@ -73,6 +73,8 @@ class UserCollectionsController: UIViewController {
             return CreateCollectionController(coder: coder, venuePersistence: self.venuePersistence, collectionPersistence: self.collectionPersistence)
         })
         
+        createCollectionVC.collectionDelegate = self
+        
 //        let createCollectionNC = UINavigationController(rootViewController: createCollectionVC)
         
 //        createCollectionVC.modalTransitionStyle
@@ -82,15 +84,37 @@ class UserCollectionsController: UIViewController {
     
 }
 
+extension UserCollectionsController: AddToCollection {
+    
+    func updateCollectionView(userCollection: UserCollection) {
+        
+        usersCollections.insert(userCollection, at: 0)
+        do {
+            try collectionPersistence.createItem(userCollection)
+            showAlert(title: "Cool", message: "\(userCollection.collectionName) has been added to your collections")
+        } catch {
+            print("error saving collection")
+        }
+    }
+    
+}
+
 extension UserCollectionsController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return usersCollections.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "userCell", for: indexPath) as? UsersCollectionsCell else {
             fatalError("could not deque")
         }
+        let userCollection = usersCollections[indexPath.row]
+        
+        cell.userCollection = userCollection
+        cell.configureCell(for: userCollection)
+        cell.cellDelegate = self
+        
         cell.backgroundColor = .systemBackground
         return cell
     }
@@ -115,5 +139,39 @@ extension UserCollectionsController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+    }
+}
+
+extension UserCollectionsController: CollectionCellDelegate {
+    func didLongPress(_ collectionsCell: UsersCollectionsCell, collection: UserCollection) {
+        print("delegate working")
+        
+        guard let indexPath = userCollectionsV.collectionView.indexPath(for: collectionsCell) else {
+            return
+        }
+      
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        present(alertController, animated: true)
+        
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { [weak self] alertAction in
+            self?.deleteCollection(collection: collection)
+            self?.usersCollections.remove(at: indexPath.row)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        alertController.addAction(deleteAction)
+        alertController.addAction(cancelAction)
+    }
+    
+    private func deleteCollection(collection: UserCollection) {
+        guard let index = usersCollections.firstIndex(of: collection) else {
+            return
+        }
+        do {
+            try collectionPersistence.deleteItem(at: index)
+        } catch {
+            showAlert(title: "Error", message: "Could not delete Book")
+        }
     }
 }

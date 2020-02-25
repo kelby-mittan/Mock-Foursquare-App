@@ -27,6 +27,8 @@ class CreateCollectionController: UIViewController {
     public var selectedImage: UIImage?
     private var collectionName = ""
     
+    weak var collectionDelegate: AddToCollection?
+    
     private lazy var createButton: UIBarButtonItem = {
         let button = UIBarButtonItem(title: "Create", style: .plain, target: self, action: #selector(createButtonPressed(_:)))
         return button
@@ -66,13 +68,7 @@ class CreateCollectionController: UIViewController {
 
         let userCollection = UserCollection(collectionName: collectionName, pickedImage: resizedImageData)
         
-        do {
-            try collectionPersistence.createItem(userCollection)
-            showAlert(title: "Cool", message: "\(collectionName) has been added to your collections")
-        } catch {
-            print("error saving collection")
-        }
-        
+        collectionDelegate?.updateCollectionView(userCollection: userCollection)
         
         self.dismiss(animated: true, completion: nil)
     }
