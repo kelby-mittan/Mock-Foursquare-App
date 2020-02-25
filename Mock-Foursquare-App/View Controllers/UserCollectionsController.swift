@@ -25,6 +25,12 @@ class UserCollectionsController: UIViewController {
     public var venuePersistence: DataPersistence<Venue>
     public var collectionPersistence: DataPersistence<UserCollection>
     
+    private var usersCollections = [UserCollection]() {
+        didSet{
+            userCollectionsV.collectionView.reloadData()
+        }
+    }
+    
     init(_ venuePersistence: DataPersistence<Venue>, collectionPersistence: DataPersistence<UserCollection>) {
         self.venuePersistence = venuePersistence
         self.collectionPersistence = collectionPersistence
@@ -45,6 +51,16 @@ class UserCollectionsController: UIViewController {
         userCollectionsV.collectionView.dataSource = self
         userCollectionsV.collectionView.delegate = self
         
+        loadUsersCollections()
+        
+    }
+    
+    private func loadUsersCollections() {
+        do {
+            usersCollections = try collectionPersistence.loadItems()
+        } catch {
+            print("could not get photos")
+        }
     }
     
     @objc private func addButtonPressed(_ sender: UIBarButtonItem) {
@@ -68,7 +84,7 @@ class UserCollectionsController: UIViewController {
 
 extension UserCollectionsController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 50
+        return usersCollections.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
