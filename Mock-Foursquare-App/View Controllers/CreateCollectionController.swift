@@ -17,6 +17,10 @@ class CreateCollectionController: UIViewController {
     public var venuePersistence: DataPersistence<Venue>
     public var collectionPersistence: DataPersistence<UserCollection>
     
+    private let imagePickerController = UIImagePickerController()
+    
+    public var selectedImage: UIImage?
+    
     private lazy var createButton: UIBarButtonItem = {
         let button = UIBarButtonItem(title: "Create", style: .plain, target: self, action: #selector(createButtonPressed(_:)))
         return button
@@ -44,8 +48,33 @@ class CreateCollectionController: UIViewController {
     
     @IBAction func pickPhotoButton(_ sender: UIButton) {
         
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
+            
+            imagePickerController.delegate = self as UIImagePickerControllerDelegate & UINavigationControllerDelegate
+            
+            imagePickerController.sourceType = .photoLibrary
+            
+            self.present(imagePickerController, animated: true)//, animated: true, completion: nil)
+        }
         
     }
     
 
+}
+
+extension CreateCollectionController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
+            print("image selected not found")
+            return
+        }
+        selectedImage = image
+        dismiss(animated: true)
+    }
 }
