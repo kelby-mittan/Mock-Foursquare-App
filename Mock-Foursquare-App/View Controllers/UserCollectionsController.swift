@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DataPersistence
 
 class UserCollectionsController: UIViewController {
     
@@ -16,13 +17,50 @@ class UserCollectionsController: UIViewController {
         view = userCollectionsV
     }
     
+    private lazy var addButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(addButtonPressed(_:)))
+        return button
+    }()
+    
+    public var venuePersistence: DataPersistence<Venue>
+    public var collectionPersistence: DataPersistence<UserCollection>
+    
+    init(_ venuePersistence: DataPersistence<Venue>, collectionPersistence: DataPersistence<UserCollection>) {
+        self.venuePersistence = venuePersistence
+        self.collectionPersistence = collectionPersistence
+        super.init(nibName: nil, bundle: nil)
+        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         userCollectionsV.backgroundColor = .systemGray2
+        navigationItem.setRightBarButton(addButton, animated: true)
         userCollectionsV.collectionView.register(UsersCollectionsCell.self, forCellWithReuseIdentifier: "userCell")
         userCollectionsV.collectionView.dataSource = self
         userCollectionsV.collectionView.delegate = self
+        
+    }
+    
+    @objc private func addButtonPressed(_ sender: UIBarButtonItem) {
+        print("add button pressed")
+        
+        let createStoryboard = UIStoryboard(name: "CreateCollection", bundle: nil)
+        
+        let createCollectionVC = createStoryboard.instantiateViewController(identifier: "CreateCollectionController", creator: { coder in
+            
+            return CreateCollectionController(coder: coder, venuePersistence: self.venuePersistence, collectionPersistence: self.collectionPersistence)
+        })
+        
+//        let createCollectionNC = UINavigationController(rootViewController: createCollectionVC)
+        
+//        createCollectionVC.modalTransitionStyle
+        navigationController?.pushViewController(createCollectionVC, animated: true)
     }
     
     
@@ -52,7 +90,7 @@ extension UserCollectionsController: UICollectionViewDelegateFlowLayout {
         
         let totalSpace = flowLayout.sectionInset.left
             + flowLayout.sectionInset.right
-            + (flowLayout.minimumInteritemSpacing * CGFloat(noOfCellsInRow - 1)) + 10
+            + (flowLayout.minimumInteritemSpacing * CGFloat(noOfCellsInRow - 1))
         
         let size = Int((collectionView.bounds.width - totalSpace) / CGFloat(noOfCellsInRow))
         
@@ -60,6 +98,6 @@ extension UserCollectionsController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 15, left: 0, bottom: 15, right: 0)
+        return UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
     }
 }
