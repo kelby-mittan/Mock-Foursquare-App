@@ -10,12 +10,36 @@ import UIKit
 
 class ItemTableView: UIView {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    
+    public lazy var tableView: UITableView = {
+        let cv = UITableView(frame: CGRect.zero)
+
+        return cv
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: UIScreen.main.bounds)
+        commonInit()
     }
-    */
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        commonInit()
+    }
+    
+    private func commonInit() {
+        setupTableViewConstraints()
+    }
+    
+    private func setupTableViewConstraints() {
+        addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
 
 }
