@@ -25,6 +25,8 @@
 		02A5D1D524044F7F00060CA2 /* UserCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A5D1D424044F7F00060CA2 /* UserCollection.swift */; };
 		02A5D1D82404525100060CA2 /* CreateCollection.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02A5D1D72404525100060CA2 /* CreateCollection.storyboard */; };
 		02A5D1DA240452AA00060CA2 /* CreateCollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A5D1D9240452AA00060CA2 /* CreateCollectionController.swift */; };
+		C187F2F424059D6500C10721 /* VenueCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C187F2F324059D6500C10721 /* VenueCVCell.xib */; };
+		C187F2FA2405A03400C10721 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C187F2F92405A03400C10721 /* CollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,8 @@
 		02A5D1D424044F7F00060CA2 /* UserCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCollection.swift; sourceTree = "<group>"; };
 		02A5D1D72404525100060CA2 /* CreateCollection.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CreateCollection.storyboard; sourceTree = "<group>"; };
 		02A5D1D9240452AA00060CA2 /* CreateCollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCollectionController.swift; sourceTree = "<group>"; };
+		C187F2F324059D6500C10721 /* VenueCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VenueCVCell.xib; sourceTree = "<group>"; };
+		C187F2F92405A03400C10721 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				0269500B2404407F001CE788 /* UsersCollectionsCell.swift */,
+				C187F2F92405A03400C10721 /* CollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -183,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				02A5D1D72404525100060CA2 /* CreateCollection.storyboard */,
+				C187F2F324059D6500C10721 /* VenueCVCell.xib */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -274,6 +280,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C187F2F424059D6500C10721 /* VenueCVCell.xib in Resources */,
 				02699BC524021C2900211C0F /* LaunchScreen.storyboard in Resources */,
 				02A5D1D82404525100060CA2 /* CreateCollection.storyboard in Resources */,
 				02699BC224021C2900211C0F /* Assets.xcassets in Resources */,
@@ -299,6 +306,7 @@
 				02A5D1D524044F7F00060CA2 /* UserCollection.swift in Sources */,
 				02699BEF2402208A00211C0F /* TabBarController.swift in Sources */,
 				02699BBB24021C2400211C0F /* SceneDelegate.swift in Sources */,
+				C187F2FA2405A03400C10721 /* CollectionViewCell.swift in Sources */,
 				02699BEB2402204200211C0F /* UserCollectionsController.swift in Sources */,
 				02A5D1DA240452AA00060CA2 /* CreateCollectionController.swift in Sources */,
 				02699BE924021FCA00211C0F /* FoursquareSearch.swift in Sources */,
@@ -459,13 +467,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 87F72Z6LFG;
+				DEVELOPMENT_TEAM = 26RHXP32FH;
 				INFOPLIST_FILE = "Mock-Foursquare-App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.kelbymittan.Mock-Foursquare-App";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.gregK.Mock-Foursquare-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -477,13 +485,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 87F72Z6LFG;
+				DEVELOPMENT_TEAM = 26RHXP32FH;
 				INFOPLIST_FILE = "Mock-Foursquare-App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.kelbymittan.Mock-Foursquare-App";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.gregK.Mock-Foursquare-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

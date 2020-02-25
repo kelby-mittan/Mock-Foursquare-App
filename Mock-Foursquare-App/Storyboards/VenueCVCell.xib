@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="venueCell" id="7l5-F2-5Ek" customClass="VenueCVCell" customModule="Mock_Foursquare_App" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="209" height="195"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="B8L-hO-bDa">
+                <rect key="frame" x="0.0" y="0.0" width="209" height="195"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="t2s-Sv-rj3">
+                        <rect key="frame" x="0.0" y="1" width="209" height="192.5"/>
+                    </imageView>
+                    <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TfL-jL-RmF">
+                        <rect key="frame" x="0.0" y="125" width="209" height="72"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Venue Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BHm-bh-4cn">
+                        <rect key="frame" x="16" y="125" width="177" height="62"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="t2s-Sv-rj3" secondAttribute="trailing" id="71z-7H-X8k"/>
+                    <constraint firstItem="TfL-jL-RmF" firstAttribute="leading" secondItem="B8L-hO-bDa" secondAttribute="leading" id="84e-Pu-9WK"/>
+                    <constraint firstItem="BHm-bh-4cn" firstAttribute="top" secondItem="TfL-jL-RmF" secondAttribute="top" id="CgU-s7-fW8"/>
+                    <constraint firstItem="TfL-jL-RmF" firstAttribute="height" secondItem="B8L-hO-bDa" secondAttribute="height" multiplier="0.369231" id="HaJ-Ov-q0q"/>
+                    <constraint firstItem="t2s-Sv-rj3" firstAttribute="top" secondItem="B8L-hO-bDa" secondAttribute="top" id="RfG-Sa-nWz"/>
+                    <constraint firstAttribute="trailing" secondItem="BHm-bh-4cn" secondAttribute="trailing" constant="16" id="V3z-Yg-nK6"/>
+                    <constraint firstItem="t2s-Sv-rj3" firstAttribute="leading" secondItem="B8L-hO-bDa" secondAttribute="leading" id="YBc-TE-9Nn"/>
+                    <constraint firstAttribute="bottom" secondItem="BHm-bh-4cn" secondAttribute="bottom" constant="8" id="b7f-2M-DIq"/>
+                    <constraint firstAttribute="trailing" secondItem="TfL-jL-RmF" secondAttribute="trailing" id="hpK-6c-mEh"/>
+                    <constraint firstItem="BHm-bh-4cn" firstAttribute="leading" secondItem="B8L-hO-bDa" secondAttribute="leading" constant="16" id="nWA-et-rqp"/>
+                    <constraint firstAttribute="bottom" secondItem="TfL-jL-RmF" secondAttribute="bottom" constant="-2" id="sdy-56-TA4"/>
+                    <constraint firstAttribute="bottom" secondItem="t2s-Sv-rj3" secondAttribute="bottom" id="u8m-nX-i5O"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <size key="customSize" width="209" height="195"/>
+            <connections>
+                <outlet property="venueLabel" destination="BHm-bh-4cn" id="25r-dx-CeG"/>
+            </connections>
+            <point key="canvasLocation" x="202.17391304347828" y="134.26339285714286"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="photo.fill" catalog="system" width="64" height="46"/>
+    </resources>
+</document>
