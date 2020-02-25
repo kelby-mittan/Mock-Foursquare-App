@@ -21,6 +21,10 @@
 		02699BEF2402208A00211C0F /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02699BEE2402208A00211C0F /* TabBarController.swift */; };
 		02699BF12402212C00211C0F /* TheMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02699BF02402212C00211C0F /* TheMapView.swift */; };
 		02699BF32402217C00211C0F /* UserCollectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02699BF22402217C00211C0F /* UserCollectionsView.swift */; };
+		6C7CDC48240588D9003839DC /* ItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C7CDC47240588D9003839DC /* ItemTableViewController.swift */; };
+		6C7CDC4A240588E9003839DC /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C7CDC49240588E9003839DC /* DetailViewController.swift */; };
+		6C7CDC4C240588FE003839DC /* ItemTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C7CDC4B240588FE003839DC /* ItemTableView.swift */; };
+		6C7CDC4E2405890B003839DC /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C7CDC4D2405890B003839DC /* DetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +55,10 @@
 		02699BEE2402208A00211C0F /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		02699BF02402212C00211C0F /* TheMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheMapView.swift; sourceTree = "<group>"; };
 		02699BF22402217C00211C0F /* UserCollectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCollectionsView.swift; sourceTree = "<group>"; };
+		6C7CDC47240588D9003839DC /* ItemTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTableViewController.swift; sourceTree = "<group>"; };
+		6C7CDC49240588E9003839DC /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		6C7CDC4B240588FE003839DC /* ItemTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTableView.swift; sourceTree = "<group>"; };
+		6C7CDC4D2405890B003839DC /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +154,8 @@
 				02699BEE2402208A00211C0F /* TabBarController.swift */,
 				02699BEC2402205600211C0F /* MapViewController.swift */,
 				02699BEA2402204200211C0F /* UserCollectionsController.swift */,
+				6C7CDC47240588D9003839DC /* ItemTableViewController.swift */,
+				6C7CDC49240588E9003839DC /* DetailViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -155,6 +165,8 @@
 			children = (
 				02699BF02402212C00211C0F /* TheMapView.swift */,
 				02699BF22402217C00211C0F /* UserCollectionsView.swift */,
+				6C7CDC4B240588FE003839DC /* ItemTableView.swift */,
+				6C7CDC4D2405890B003839DC /* DetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -268,12 +280,16 @@
 				02699BF12402212C00211C0F /* TheMapView.swift in Sources */,
 				02699BB924021C2400211C0F /* AppDelegate.swift in Sources */,
 				02699BEF2402208A00211C0F /* TabBarController.swift in Sources */,
+				6C7CDC4E2405890B003839DC /* DetailView.swift in Sources */,
+				6C7CDC4A240588E9003839DC /* DetailViewController.swift in Sources */,
 				02699BBB24021C2400211C0F /* SceneDelegate.swift in Sources */,
 				02699BEB2402204200211C0F /* UserCollectionsController.swift in Sources */,
+				6C7CDC48240588D9003839DC /* ItemTableViewController.swift in Sources */,
 				02699BE924021FCA00211C0F /* FoursquareSearch.swift in Sources */,
 				02699BE724021F8400211C0F /* FoursquareAPIClient.swift in Sources */,
 				02699BF32402217C00211C0F /* UserCollectionsView.swift in Sources */,
 				02699BE224021EE700211C0F /* configure.swift in Sources */,
+				6C7CDC4C240588FE003839DC /* ItemTableView.swift in Sources */,
 				02699BED2402205600211C0F /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
