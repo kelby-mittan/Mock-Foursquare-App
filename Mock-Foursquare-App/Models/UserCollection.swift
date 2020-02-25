@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import UIKit
 
-struct UserCollection: Codable & Equatable {
+struct UserCollection: Codable & Equatable{
     let collectionName: String
-    let imageName: String
+    let pickedImage: Data
 }
