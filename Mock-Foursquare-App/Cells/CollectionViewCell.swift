@@ -14,22 +14,22 @@ class VenueCVCell: UICollectionViewCell {
     @IBOutlet weak var venueLabel: UILabel!
     @IBOutlet weak var venueImage: UIImageView!
     
-    //TODO: Get image endpoint for image, along with venue name
-//   func configureCell() {
-//    venueLabel.text = "Venu"
-//        venueImage.getImage(with: "") { (results) in
-//            switch results {
-//            case .failure(let appError):
-//                print("error with collectionViewcell: \(appError)")
-//            case .success(let image):
-//                DispatchQueue.main.async {
-//                self.venueImage.image = image
-//                }
-//            }
-//        }
-//    }
-       func configureCell() {
-        venueLabel.text = "Venue"
-//        venueImage.image = UIImage(systemName: "photo.fill")
+//    TODO: Get image endpoint for image, along with venue name
+    func configureCell(photoData: VenueDetail) {
+    venueLabel.text = "Venue"
+        venueImage.getImage(with:  "\(photoData.response.venue.photos.groups.first?.items.first?.prefix ?? "")original\(photoData.response.venue.photos.groups.first?.items.first?.suffix ?? "")") { [weak self] (results) in
+            switch results {
+            case .failure(let appError):
+                print("error with collectionViewcell: \(appError)")
+            case .success(let image):
+                DispatchQueue.main.async {
+                self?.venueImage.image = image
+                }
+            }
         }
+    }
+//       func configureCell() {
+//        venueLabel.text = "Venue"
+//        venueImage.image = UIImage(systemName: "photo.fill")
+//        }
 }

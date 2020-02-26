@@ -48,6 +48,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <size key="customSize" width="209" height="195"/>
             <connections>
+                <outlet property="venueImage" destination="t2s-Sv-rj3" id="bfO-2G-5fx"/>
                 <outlet property="venueLabel" destination="BHm-bh-4cn" id="25r-dx-CeG"/>
             </connections>
             <point key="canvasLocation" x="202.17391304347828" y="134.26339285714286"/>

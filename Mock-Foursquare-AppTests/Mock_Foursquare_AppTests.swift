@@ -116,5 +116,177 @@ class Mock_Foursquare_AppTests: XCTestCase {
                 }
             }
         }
-
+    
+    func testVenuePhotoModel() {
+        let jsonData = """
+        {
+            "meta": {
+                "code": 200,
+                "requestId": "5e55d2701a4b0a001b3fd627"
+            },
+            "response": {
+                "venue": {
+                    "id": "3fd66200f964a5209beb1ee3",
+                    "name": "Peter Luger Steak House",
+                    "contact": {
+                        "phone": "7183877400",
+                        "formattedPhone": "(718) 387-7400",
+                        "instagram": "peterlugersteakhouse",
+                        "facebook": "243860423562",
+                        "facebookName": "Peter Luger Steak House Est. 1887"
+                    },
+                    "location": {
+                        "address": "178 Broadway",
+                        "crossStreet": "at Driggs Ave",
+                        "lat": 40.70995790682886,
+                        "lng": -73.96229110893742,
+                        "labeledLatLngs": [{
+                            "label": "display",
+                            "lat": 40.70995790682886,
+                            "lng": -73.96229110893742
+                        }],
+                        "postalCode": "11211",
+                        "cc": "US",
+                        "neighborhood": "Williamsburg",
+                        "city": "Brooklyn",
+                        "state": "NY",
+                        "country": "United States",
+                        "formattedAddress": [
+                            "178 Broadway (at Driggs Ave)",
+                            "Brooklyn, NY 11211",
+                            "United States"
+                        ]
+                    },
+                    "canonicalUrl": "https://foursquare.com/v/peter-luger-steak-house/3fd66200f964a5209beb1ee3",
+                    "categories": [{
+                            "id": "4bf58dd8d48988d1cc941735",
+                            "name": "Steakhouse",
+                            "pluralName": "Steakhouses",
+                            "shortName": "Steakhouse",
+                            "icon": {
+                                "prefix": "https://ss3.4sqi.net/img/categories_v2/food/steakhouse_",
+                                "suffix": ".png"
+                            },
+                            "primary": true
+                        },
+                        {
+                            "id": "4bf58dd8d48988d14e941735",
+                            "name": "American Restaurant",
+                            "pluralName": "American Restaurants",
+                            "shortName": "American",
+                            "icon": {
+                                "prefix": "https://ss3.4sqi.net/img/categories_v2/food/default_",
+                                "suffix": ".png"
+                            }
+                        }
+                    ],
+                    "verified": true,
+                    "stats": {
+                        "tipCount": 679
+                    },
+                    "url": "http://peterluger.com",
+                    "price": {
+                        "tier": 4,
+                        "message": "Very Expensive",
+                        "currency": "$"
+                    },
+                    "hasMenu": true,
+                    "likes": {
+                        "count": 1931,
+                        "groups": [{
+                            "type": "others",
+                            "count": 1931,
+                            "items": []
+                        }],
+                        "summary": "1931 Likes"
+                    },
+                    "dislike": false,
+                    "ok": false,
+                    "rating": 8.8,
+                    "ratingColor": "73CF42",
+                    "ratingSignals": 2658,
+                    "menu": {
+                        "type": "Menu",
+                        "label": "Menu",
+                        "anchor": "View Menu",
+                        "url": "https://foursquare.com/v/peter-luger-steak-house/3fd66200f964a5209beb1ee3/menu",
+                        "mobileUrl": "https://foursquare.com/v/3fd66200f964a5209beb1ee3/device_menu"
+                    },
+                    "allowMenuUrlEdit": true,
+                    "beenHere": {
+                        "count": 0,
+                        "unconfirmedCount": 0,
+                        "marked": false,
+                        "lastCheckinExpiredAt": 0
+                    },
+                    "specials": {
+                        "count": 0,
+                        "items": []
+                    },
+                    "photos": {
+                        "count": 3116,
+                        "groups": [{
+                            "type": "venue",
+                            "name": "Venue photos",
+                            "count": 3116,
+                            "items": [{
+                                "id": "56746c1e498e4c310a4258e6",
+                                "createdAt": 1450470430,
+                                "source": {
+                                    "name": "Foursquare Web",
+                                    "url": "https://foursquare.com"
+                                },
+                                "prefix": "https://fastly.4sqi.net/img/general/",
+                                "suffix": "/87447937_J9VdinKoIREPNY89gugWIXFuTcA59G97Zpb4LmWeowA.jpg",
+                                "width": 552,
+                                "height": 376,
+                                "user": {
+                                    "id": "87447937",
+                                    "firstName": "PureWow",
+                                    "photo": {
+                                        "prefix": "https://fastly.4sqi.net/img/user/",
+                                        "suffix": "/87447937-J0LUNLSTPTSQSM5R.png"
+                                    },
+                                    "type": "page"
+                                },
+                                "visibility": "public"
+                            }]
+                        }]
+                    }
+                }
+            }
+        }
+        """.data(using: .utf8)!
+        
+        struct FourSquarePhoto: Codable & Equatable {
+            let response: Response
+        }
+        struct Response: Codable & Equatable {
+            let venue: ResponseVenue
+        }
+        struct ResponseVenue: Codable & Equatable {
+            let name: String
+            let photos: PhotosResponse
+        }
+        struct PhotosResponse: Codable & Equatable {
+            let groups: [Groups]
+        }
+        struct Groups: Codable & Equatable {
+            let items: [Items]
+        }
+        struct Items: Codable & Equatable {
+            let prefix: String
+            let suffix: String
+        }
+        
+        let expectedName = "Peter Luger Steak House"
+        
+        do {
+            let photoData = try JSONDecoder().decode(FourSquarePhoto.self, from: jsonData)
+            let supName = photoData.response.venue.name
+            XCTAssertEqual(expectedName, supName)
+        } catch {
+            XCTFail("decoding error: \(error)")
+        }
+    }
 }

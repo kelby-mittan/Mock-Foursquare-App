@@ -39,5 +39,27 @@ struct FoursquareAPIClient {
             }
         }
     }
-    
+    static func getVenuePhotos(locationID: String, completion: @escaping (Result<[VenueDetail],AppError>) -> ()) {
+        var photosEndpoint = "https://api.foursquare.com/v2/venues/\(locationID)?client_id=\(APIKeys.id)&client_secret=\(APIKeys.secret)&v=20200220"
+        photosEndpoint = photosEndpoint.replacingOccurrences(of: " ", with: "%20")
+        guard let url = URL(string: photosEndpoint) else {
+            completion(.failure(.badURL(photosEndpoint)))
+            return
+        }
+        let request = URLRequest(url: url)
+
+        NetworkHelper.shared.performDataTask(with: request) { (result) in
+            switch result {
+            case .failure(let appError):
+                completion(.failure(.networkClientError(appError)))
+            case .success(let data):
+                do {
+                    let venuePhotos = try JSONDecoder().decode(VenueDetail.self, from: data)
+                    completion(.success([venuePhotos]))
+                } catch {
+                    completion(.failure(.decodingError(error)))
+                }
+            }
+        }
+    }
 }

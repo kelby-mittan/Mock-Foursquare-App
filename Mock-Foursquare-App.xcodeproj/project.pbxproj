@@ -32,6 +32,7 @@
 		6CF62ECC2405DB4B008B62C6 /* configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF62ECB2405DB4B008B62C6 /* configure.swift */; };
 		C187F2F424059D6500C10721 /* VenueCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C187F2F324059D6500C10721 /* VenueCVCell.xib */; };
 		C187F2FA2405A03400C10721 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C187F2F92405A03400C10721 /* CollectionViewCell.swift */; };
+		C1AE932D24060C8F00ECF980 /* FourSquarePhotosModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1AE932C24060C8F00ECF980 /* FourSquarePhotosModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		6CF62ECB2405DB4B008B62C6 /* configure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = configure.swift; sourceTree = "<group>"; };
 		C187F2F324059D6500C10721 /* VenueCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VenueCVCell.xib; sourceTree = "<group>"; };
 		C187F2F92405A03400C10721 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		C1AE932C24060C8F00ECF980 /* FourSquarePhotosModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourSquarePhotosModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +173,7 @@
 			children = (
 				02699BE824021FCA00211C0F /* FoursquareSearch.swift */,
 				02A5D1D424044F7F00060CA2 /* UserCollection.swift */,
+				C1AE932C24060C8F00ECF980 /* FourSquarePhotosModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 				02699BE724021F8400211C0F /* FoursquareAPIClient.swift in Sources */,
 				6CF62EC22405DABC008B62C6 /* ItemTableViewController.swift in Sources */,
 				02699BF32402217C00211C0F /* UserCollectionsView.swift in Sources */,
+				C1AE932D24060C8F00ECF980 /* FourSquarePhotosModel.swift in Sources */,
 				0269500C2404407F001CE788 /* UsersCollectionsCell.swift in Sources */,
 				02699BED2402205600211C0F /* MapViewController.swift in Sources */,
 			);
