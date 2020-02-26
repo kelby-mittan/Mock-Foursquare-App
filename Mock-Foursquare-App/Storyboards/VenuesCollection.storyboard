@@ -10,7 +10,7 @@
         <!--Venue Collection Controller-->
         <scene sceneID="6gj-HD-slg">
             <objects>
-                <viewController id="xfZ-en-RiV" customClass="VenueCollectionController" customModule="Mock_Foursquare_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VenueCollectionController" id="xfZ-en-RiV" customClass="VenueCollectionController" customModule="Mock_Foursquare_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3pg-ok-Eov">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -28,11 +28,14 @@
                                 <subviews>
                                     <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Jo-73-FDs">
                                         <rect key="frame" x="0.0" y="0.0" width="290" height="44"/>
-                                        <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <items>
                                             <barButtonItem style="plain" systemItem="flexibleSpace" id="CoP-e8-UG6"/>
                                             <barButtonItem image="minus" catalog="system" id="xP4-it-0yj">
                                                 <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <connections>
+                                                    <action selector="collapseButtonPressed:" destination="xfZ-en-RiV" id="hLe-H2-72g"/>
+                                                </connections>
                                             </barButtonItem>
                                             <barButtonItem style="plain" systemItem="flexibleSpace" id="QMD-ef-osK"/>
                                         </items>
@@ -40,6 +43,7 @@
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lgJ-Fi-7i8">
                                         <rect key="frame" x="0.0" y="44" width="290" height="314"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="venueCollectionCell" rowHeight="125" id="N1I-Vm-wHz" customClass="VenueCollectionTableCell" customModule="Mock_Foursquare_App" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="290" height="125"/>
@@ -48,8 +52,8 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="290" height="125"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lTB-Lj-vNQ">
-                                                            <rect key="frame" x="0.0" y="0.0" width="145" height="125"/>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="lTB-Lj-vNQ">
+                                                            <rect key="frame" x="0.0" y="1" width="145" height="122.5"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Restaurant Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DIl-0t-T1r">
                                                             <rect key="frame" x="153" y="16" width="129" height="42.5"/>
@@ -86,7 +90,7 @@
                                         </prototypes>
                                     </tableView>
                                 </subviews>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="lgJ-Fi-7i8" secondAttribute="trailing" id="7lX-Wv-5AL"/>
                                     <constraint firstItem="lgJ-Fi-7i8" firstAttribute="leading" secondItem="PSn-1l-N5Z" secondAttribute="leading" id="L4g-4K-HBR"/>
@@ -111,6 +115,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="URE-HB-A4U"/>
                     </view>
+                    <connections>
+                        <outlet property="blurEffect" destination="9Zp-mF-zkv" id="JRH-2N-SRG"/>
+                        <outlet property="tableView" destination="lgJ-Fi-7i8" id="8sQ-Ke-eDS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4yJ-Ys-jih" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -119,5 +127,6 @@
     </scenes>
     <resources>
         <image name="minus" catalog="system" width="64" height="12"/>
+        <image name="photo.fill" catalog="system" width="64" height="46"/>
     </resources>
 </document>

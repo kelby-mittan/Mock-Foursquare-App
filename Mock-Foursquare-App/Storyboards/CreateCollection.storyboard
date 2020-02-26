@@ -15,8 +15,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="enter name for collection" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pam-h5-cWd">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="enter name for collection" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pam-h5-cWd">
                                 <rect key="frame" x="20" y="150" width="374" height="44"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="RCE-nP-go6"/>
                                 </constraints>
@@ -33,11 +34,11 @@
                                 <rect key="frame" x="62" y="204" width="290" height="224"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rrg-tN-dGO">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="restaurantPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="Rrg-tN-dGO">
                                 <rect key="frame" x="62" y="204" width="290" height="224"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5XL-TE-sGD">
-                                <rect key="frame" x="185" y="224" width="44" height="44"/>
+                                <rect key="frame" x="308" y="438" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="8rj-aE-UdJ"/>
                                     <constraint firstAttribute="width" constant="44" id="Yyk-IL-xFR"/>
@@ -48,14 +49,20 @@
                                     <action selector="pickPhotoButton:" destination="fdt-kC-sAk" eventType="touchUpInside" id="ooI-m6-cqA"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This Is Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NQY-w4-oGl">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Restaurants" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NQY-w4-oGl">
                                 <rect key="frame" x="76.5" y="303" width="261" height="26"/>
                                 <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="22"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change Photo:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Yk-M0-L9K">
+                                <rect key="frame" x="140.5" y="447" width="133" height="26"/>
+                                <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="22"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="NQY-w4-oGl" firstAttribute="width" secondItem="Rrg-tN-dGO" secondAttribute="width" multiplier="0.9" id="1eZ-H7-rP4"/>
                             <constraint firstItem="NQY-w4-oGl" firstAttribute="centerY" secondItem="Rrg-tN-dGO" secondAttribute="centerY" id="2Uy-zG-NJj"/>
@@ -63,14 +70,16 @@
                             <constraint firstAttribute="trailing" secondItem="pBJ-xv-SOJ" secondAttribute="trailing" constant="20" id="7B8-FN-3sc"/>
                             <constraint firstItem="Rrg-tN-dGO" firstAttribute="centerX" secondItem="PDJ-Jv-Dtk" secondAttribute="centerX" id="7l7-fT-1xK"/>
                             <constraint firstItem="pBJ-xv-SOJ" firstAttribute="top" secondItem="3ES-h4-MwU" secondAttribute="top" constant="40" id="7xv-TA-uYm"/>
-                            <constraint firstItem="5XL-TE-sGD" firstAttribute="centerX" secondItem="pam-h5-cWd" secondAttribute="centerX" id="Eur-MC-b7D"/>
                             <constraint firstItem="3ES-h4-MwU" firstAttribute="trailing" secondItem="pam-h5-cWd" secondAttribute="trailing" constant="20" id="GEN-9c-FF5"/>
                             <constraint firstItem="NQY-w4-oGl" firstAttribute="centerX" secondItem="Rrg-tN-dGO" secondAttribute="centerX" id="GJt-ag-Jr3"/>
+                            <constraint firstItem="5Yk-M0-L9K" firstAttribute="centerX" secondItem="PDJ-Jv-Dtk" secondAttribute="centerX" id="Mkv-bC-S8X"/>
                             <constraint firstItem="Rrg-tN-dGO" firstAttribute="top" secondItem="pam-h5-cWd" secondAttribute="bottom" constant="10" id="Pzb-Oq-fjO"/>
                             <constraint firstItem="pam-h5-cWd" firstAttribute="leading" secondItem="3ES-h4-MwU" secondAttribute="leading" constant="20" id="aqi-xI-r45"/>
+                            <constraint firstItem="5Yk-M0-L9K" firstAttribute="centerY" secondItem="5XL-TE-sGD" secondAttribute="centerY" id="csQ-aH-wsP"/>
+                            <constraint firstItem="5XL-TE-sGD" firstAttribute="trailing" secondItem="Rrg-tN-dGO" secondAttribute="trailing" id="dAL-Vm-JTg"/>
                             <constraint firstItem="Rrg-tN-dGO" firstAttribute="width" secondItem="PDJ-Jv-Dtk" secondAttribute="width" multiplier="0.7" id="hMQ-Dj-HQX"/>
                             <constraint firstItem="pBJ-xv-SOJ" firstAttribute="leading" secondItem="3ES-h4-MwU" secondAttribute="leading" constant="20" id="hQM-QN-c6X"/>
-                            <constraint firstItem="5XL-TE-sGD" firstAttribute="top" secondItem="pam-h5-cWd" secondAttribute="bottom" constant="30" id="jYe-4o-APk"/>
+                            <constraint firstItem="5XL-TE-sGD" firstAttribute="top" secondItem="Rrg-tN-dGO" secondAttribute="bottom" constant="10" id="jYe-4o-APk"/>
                             <constraint firstItem="pam-h5-cWd" firstAttribute="top" secondItem="pBJ-xv-SOJ" secondAttribute="bottom" constant="40" id="k2z-Lr-AMV"/>
                             <constraint firstItem="iWg-uQ-va6" firstAttribute="width" secondItem="Rrg-tN-dGO" secondAttribute="width" id="qbT-rq-G7M"/>
                             <constraint firstItem="iWg-uQ-va6" firstAttribute="centerY" secondItem="Rrg-tN-dGO" secondAttribute="centerY" id="sIF-mN-JPc"/>
@@ -82,6 +91,7 @@
                     <navigationItem key="navigationItem" id="s1f-y8-0n4"/>
                     <connections>
                         <outlet property="alphaView" destination="iWg-uQ-va6" id="qCK-kb-8xS"/>
+                        <outlet property="changePhotoLabel" destination="5Yk-M0-L9K" id="gqH-mi-KsQ"/>
                         <outlet property="collectionNameTextField" destination="pam-h5-cWd" id="ydm-5e-pHC"/>
                         <outlet property="libraryButton" destination="5XL-TE-sGD" id="7im-eb-0kn"/>
                         <outlet property="selectedImageView" destination="Rrg-tN-dGO" id="TQZ-ZK-STc"/>
@@ -95,5 +105,6 @@
     </scenes>
     <resources>
         <image name="photo.on.rectangle" catalog="system" width="64" height="48"/>
+        <image name="restaurantPhoto" width="1536" height="1024"/>
     </resources>
 </document>
