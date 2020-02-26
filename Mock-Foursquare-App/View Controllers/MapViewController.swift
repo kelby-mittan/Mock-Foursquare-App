@@ -33,7 +33,7 @@ class MapViewController: UIViewController {
             loadVenuePhotos(venueSearch: venues)
         }
     }
-    private var venuePhotos = [FourSquarePhoto]() {
+    private var venuePhotos = [VenueDetail]() {
         didSet {
             print(venuePhotos.count)
             theMapView.collectionView.reloadData()

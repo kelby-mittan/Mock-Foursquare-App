@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct FourSquarePhoto: Codable & Equatable {
+struct VenueDetail: Codable & Equatable {
     let response: Response
 }
 struct Response: Codable & Equatable {
