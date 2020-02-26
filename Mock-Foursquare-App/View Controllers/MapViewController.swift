@@ -82,6 +82,7 @@ class MapViewController: UIViewController {
     
     @objc private func menuButtonPressed(_ sender: UIBarButtonItem) {
         print("menu button pressed")
+        navigationController?.pushViewController(ItemTableViewController(), animated: true)
         //        mediumMenu()
     }
     
