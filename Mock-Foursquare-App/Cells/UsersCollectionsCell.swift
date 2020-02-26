@@ -19,6 +19,8 @@ class UsersCollectionsCell: UICollectionViewCell {
     public lazy var collectionImage: UIImageView = {
         let iv = UIImageView()
         iv.image = UIImage(systemName: "photo.fill")
+        iv.contentMode = .scaleToFill
+        iv.layer.cornerRadius = 20
         return iv
     }()
     
@@ -49,7 +51,7 @@ class UsersCollectionsCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+        layer.cornerRadius = 20
         addGestureRecognizer(longPressGesture)
     }
     
@@ -63,10 +65,10 @@ class UsersCollectionsCell: UICollectionViewCell {
         collectionImage.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            collectionImage.topAnchor.constraint(equalTo: self.topAnchor),
+            collectionImage.topAnchor.constraint(equalTo: contentView.topAnchor),
             collectionImage.leadingAnchor.constraint(equalTo: leadingAnchor),
             collectionImage.trailingAnchor.constraint(equalTo: trailingAnchor),
-            collectionImage.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.75)
+            collectionImage.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.75)
         ])
     }
     
@@ -82,13 +84,13 @@ class UsersCollectionsCell: UICollectionViewCell {
     }
     
     func configureCell(for collection: UserCollection) {
-        layer.cornerRadius = 20
-        titleLabel.text = collection.collectionName
-        
         guard let image = UIImage(data: collection.pickedImage) else {
             return
         }
+        
+        
         collectionImage.image = image
+        titleLabel.text = collection.collectionName
     }
     
     @objc private func longPressAction(gesture: UILongPressGestureRecognizer) {
