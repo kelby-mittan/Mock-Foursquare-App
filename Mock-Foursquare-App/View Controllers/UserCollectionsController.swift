@@ -118,6 +118,19 @@ extension UserCollectionsController: UICollectionViewDataSource {
         cell.backgroundColor = .systemBackground
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("selected")
+        
+        let venuesCollectionStoryboard = UIStoryboard(name: "VenuesCollection", bundle: nil)
+        
+        let venuesCollectionVC = venuesCollectionStoryboard.instantiateViewController(identifier: "VenueCollectionController", creator: { coder in
+            
+            return VenueCollectionController(coder: coder, venuePersistence: self.venuePersistence, collectionPersistence: self.collectionPersistence)
+        })
+        
+        present(venuesCollectionVC, animated: true)
+    }
 }
 
 extension UserCollectionsController: UICollectionViewDelegateFlowLayout {

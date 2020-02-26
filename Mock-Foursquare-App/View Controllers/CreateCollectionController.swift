@@ -26,6 +26,8 @@ class CreateCollectionController: UIViewController {
     
     @IBOutlet var libraryButton: UIButton!
     
+    @IBOutlet var changePhotoLabel: UILabel!
+    
     public var venuePersistence: DataPersistence<Venue>
     public var collectionPersistence: DataPersistence<UserCollection>
     
@@ -76,7 +78,7 @@ class CreateCollectionController: UIViewController {
         }
         
         let userCollection = UserCollection(collectionName: collectionName, pickedImage: resizedImageData)
-        
+    
         collectionDelegate?.updateCollectionView(userCollection: userCollection)
         
         UIView.animate(withDuration: 0.75, delay: 0.0, options: [], animations: {
@@ -145,6 +147,7 @@ extension CreateCollectionController: UIImagePickerControllerDelegate, UINavigat
         alphaView.isHidden = false
         titleLabel.isHidden = false
         libraryButton.isHidden = true
+        changePhotoLabel.isHidden = true
         
         dismiss(animated: true)
     }
