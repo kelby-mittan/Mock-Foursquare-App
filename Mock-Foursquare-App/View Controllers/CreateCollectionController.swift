@@ -15,9 +15,16 @@ protocol AddToCollection: AnyObject {
 }
 
 class CreateCollectionController: UIViewController {
-
+    
     @IBOutlet var collectionNameTextField: UITextField!
     
+    @IBOutlet var selectedImageView: UIImageView!
+    
+    @IBOutlet var alphaView: UIView!
+    
+    @IBOutlet var titleLabel: UILabel!
+    
+    @IBOutlet var libraryButton: UIButton!
     
     public var venuePersistence: DataPersistence<Venue>
     public var collectionPersistence: DataPersistence<UserCollection>
@@ -46,9 +53,11 @@ class CreateCollectionController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         navigationItem.setRightBarButton(createButton, animated: true)
         collectionNameTextField.delegate = self
+        alphaView.isHidden = true
+        titleLabel.isHidden = true
     }
     
     @objc private func createButtonPressed(_ sender: UIBarButtonItem) {
@@ -65,7 +74,7 @@ class CreateCollectionController: UIViewController {
         guard let resizedImageData = resizeImage.jpegData(compressionQuality: 1.0) else {
             return
         }
-
+        
         let userCollection = UserCollection(collectionName: collectionName, pickedImage: resizedImageData)
         
         collectionDelegate?.updateCollectionView(userCollection: userCollection)
@@ -86,17 +95,18 @@ class CreateCollectionController: UIViewController {
         
     }
     
-
+    
 }
 
 extension CreateCollectionController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-                if textField.text != "" && selectedImage != nil {
-                    createButton.isEnabled = true
-                }
-                collectionName = textField.text ?? "no photo description"
-                return true
+        if textField.text != "" && selectedImage != nil {
+            createButton.isEnabled = true
+        }
+        collectionName = textField.text ?? "no photo description"
+        titleLabel.text = collectionName
+        return true
     }
 }
 
@@ -113,6 +123,12 @@ extension CreateCollectionController: UIImagePickerControllerDelegate, UINavigat
             return
         }
         selectedImage = image
+        selectedImageView.image = image
+        selectedImageView.alpha = 0.45
+        alphaView.isHidden = false
+        titleLabel.isHidden = false
+        libraryButton.isHidden = true
+        
         dismiss(animated: true)
     }
 }
