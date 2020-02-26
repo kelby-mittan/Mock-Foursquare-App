@@ -29,9 +29,17 @@ class MapViewController: UIViewController {
     
     private var venues = [Venue]() {
         didSet {
-            dump(venues)
+//            dump(venues)
+            loadVenuePhotos(venueSearch: venues)
         }
     }
+    private var venuePhotos = [FourSquarePhoto]() {
+        didSet {
+            print(venuePhotos.count)
+            theMapView.collectionView.reloadData()
+        }
+    }
+    
     
     private var locationSearch = ""
     private var venueSearch = ""
@@ -94,6 +102,21 @@ class MapViewController: UIViewController {
         }
     }
     
+    private func loadVenuePhotos(venueSearch: [Venue]) {
+        for venue in venueSearch {
+            FoursquareAPIClient.getVenuePhotos(locationID: venue.id) { [weak self] (results) in
+                switch results {
+                case .failure(let appError):
+                    print("Failed to load photos: \(appError)")
+                case .success(let photoData):
+                    DispatchQueue.main.async {
+                    self?.venuePhotos = photoData
+                        print(photoData.count)
+                    }
+                }
+            }
+        }
+    }
     private func makeAnnotations() {
         //        var annotations = [MKPointAnnotation]()
         for venue in venues {
@@ -105,7 +128,7 @@ class MapViewController: UIViewController {
             annotation.title = venue.name
             annotations.append(annotation)
         }
-        dump(annotations)
+//        dump(annotations)
         //        return annotations
     }
     
@@ -167,7 +190,7 @@ extension MapViewController: UISearchTextFieldDelegate {
         venueSearch = textField.text?.lowercased() ?? ""
         loadVenues(city: venueSearch)
         textField.text = ""
-        print("search")
+ 
         textField.resignFirstResponder()
         return true
     }
@@ -208,19 +231,22 @@ extension MapViewController: MKMapViewDelegate {
 
 // MARK: Collection View Delegate/Datasource
 extension MapViewController: UICollectionViewDelegateFlowLayout {
-    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10)
+    }
 }
 
 extension MapViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 25
+        return venuePhotos.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "venueCell", for: indexPath) as? VenueCVCell else {
             fatalError("Failed to dequeue to VenueCVCell")
         }
-        cell.configureCell()
+        cell.configureCell(photoData: venuePhotos[indexPath.row])
+//        cell.configureCell()
         cell.layer.cornerRadius = 4
         return cell
     }
