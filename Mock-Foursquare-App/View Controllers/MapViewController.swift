@@ -87,18 +87,15 @@ class MapViewController: UIViewController {
     }
     
     private func loadVenues(city: String) {
-        //        locationSearch = "new york"
-//        venueSearch = "coffee"
         clearSearch()
         print("searchQuery: \(venueSearch)")
         print("location: \(locationSearch)")
-        FoursquareAPIClient.getVenues(location: city, search: venueSearch) { [weak self] (result) in
+        FoursquareAPIClient.getVenues(location: city, search: venueSearch.lowercased()) { [weak self] (result) in
             switch result {
             case .failure(let error):
                 print(error)
             case .success(let venues):
                 self?.venues = venues
-                //                dump(venues)
                 DispatchQueue.main.async {
                     self?.loadMapView()
                 }
@@ -112,28 +109,23 @@ class MapViewController: UIViewController {
                 switch results {
                 case .failure(let appError):
                     print("Failed to load venue details: \(appError)")
-                case .success(let photoData):
+                case .success(let venueDetails):
                     DispatchQueue.main.async {
-                    self?.venueDetails = photoData
-                        print(photoData.count)
+                    self?.venueDetails = venueDetails
+
                     }
                 }
             }
         }
     }
     private func makeAnnotations() {
-        //        var annotations = [MKPointAnnotation]()
         for venue in venues {
-            
             let coordinate = CLLocationCoordinate2D(latitude: venue.location.lat, longitude: venue.location.lng)
-            
             let annotation = MKPointAnnotation()
             annotation.coordinate = coordinate
             annotation.title = venue.name
             annotations.append(annotation)
         }
-//        dump(annotations)
-        //        return annotations
     }
     
     private func loadMapView() {
@@ -142,8 +134,8 @@ class MapViewController: UIViewController {
         theMapView.mapView.showAnnotations(annotations, animated: true)
     }
     private func clearSearch() {
-        theMapView.mapView.removeAnnotations(annotations)
         annotations.removeAll()
+        theMapView.mapView.removeAnnotations(theMapView.mapView.annotations)
         venues.removeAll()
         venueDetails.removeAll()
     }
@@ -168,9 +160,12 @@ class MapViewController: UIViewController {
 extension MapViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text else { return }
-        print(searchText)
+        guard !locationSearch.isEmpty else {
+            showAlert(title: "Location Field Missing", message: "Please enter a location to search")
+            return
+        }
         venueSearch = searchText
-        print(venueSearch)
+        loadVenues(city: locationSearch)
     }
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(true, animated: true)
@@ -185,7 +180,6 @@ extension MapViewController: UISearchBarDelegate {
             searchBar.setShowsCancelButton(false, animated: true)
             print("didEndEditing(search)")
         }
-    
 //    func textFieldDidEndEditing(_ textField: UITextField) {
 //        print("text field is \(textField.text ?? "empty")")
 //    }
@@ -194,17 +188,21 @@ extension MapViewController: UISearchBarDelegate {
 extension MapViewController: UISearchTextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard !venueSearch.isEmpty else {
+            showAlert(title: "Search Field is Missing", message: "Please enter a search term")
+            return true
+        }
         locationSearch = textField.text?.lowercased() ?? ""
         loadVenues(city: locationSearch)
-        textField.text = ""
- 
+        // Note: leaving the text in this field, allows the user to quickly search a different venue type, without typing the city again
+//        textField.text = ""
         textField.resignFirstResponder()
         return true
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         print("textFieldDidBeginEditing")
-        annotations.removeAll()
+//        annotations.removeAll()
     }
 }
 
