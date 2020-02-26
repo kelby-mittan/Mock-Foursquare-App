@@ -75,9 +75,9 @@ class UserCollectionsController: UIViewController {
         
         createCollectionVC.collectionDelegate = self
         
-//        let createCollectionNC = UINavigationController(rootViewController: createCollectionVC)
+        //        let createCollectionNC = UINavigationController(rootViewController: createCollectionVC)
         
-//        createCollectionVC.modalTransitionStyle
+        //        createCollectionVC.modalTransitionStyle
         navigationController?.pushViewController(createCollectionVC, animated: true)
     }
     
@@ -114,6 +114,7 @@ extension UserCollectionsController: UICollectionViewDataSource {
         cell.userCollection = userCollection
         cell.configureCell(for: userCollection)
         cell.cellDelegate = self
+        cell.layer.cornerRadius = 20
         
         cell.backgroundColor = .systemBackground
         return cell
@@ -124,22 +125,25 @@ extension UserCollectionsController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let noOfCellsInRow = 2
+//                    let noOfCellsInRow = 2
+//
+//                    let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
+//
+//                    let totalSpace = flowLayout.sectionInset.left
+//                        + flowLayout.sectionInset.right
+//                        + (flowLayout.minimumInteritemSpacing * CGFloat(noOfCellsInRow - 1))
+//
+//                    let size = Int((collectionView.bounds.width - totalSpace) / CGFloat(noOfCellsInRow))
+//
+//                    return CGSize(width: size, height: size)
         
-        let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
-        
-        let totalSpace = flowLayout.sectionInset.left
-            + flowLayout.sectionInset.right
-            + (flowLayout.minimumInteritemSpacing * CGFloat(noOfCellsInRow - 1))
-        
-        let size = Int((collectionView.bounds.width - totalSpace) / CGFloat(noOfCellsInRow))
-        
-        return CGSize(width: size, height: size)
+        return CGSize(width: view.frame.width/2 - 20, height: view.frame.width/2.25 - 20)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+        return UIEdgeInsets(top: 20, left: 15, bottom: 20, right: 15)
     }
+    
 }
 
 extension UserCollectionsController: CollectionCellDelegate {
@@ -149,7 +153,7 @@ extension UserCollectionsController: CollectionCellDelegate {
         guard let indexPath = userCollectionsV.collectionView.indexPath(for: collectionsCell) else {
             return
         }
-      
+        
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         present(alertController, animated: true)
         

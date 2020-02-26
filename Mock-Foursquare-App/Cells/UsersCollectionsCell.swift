@@ -19,13 +19,25 @@ class UsersCollectionsCell: UICollectionViewCell {
     public lazy var collectionImage: UIImageView = {
         let iv = UIImageView()
         iv.image = UIImage(systemName: "photo.fill")
+        iv.contentMode = .scaleToFill
+        iv.layer.cornerRadius = 20
         return iv
+    }()
+    
+    public lazy var alphaView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        return view
     }()
     
     public lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "this is the title"
         label.textAlignment = .center
+        label.textColor = .white
+//        label.font = UIFont(name:"Helvetica Neue",size:22)
+        label.font = UIFont(name:"AmericanTypewriter-Bold",size:22)
+//        AmericanTypewriter-Bold
         return label
     }()
     
@@ -49,24 +61,37 @@ class UsersCollectionsCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+        layer.cornerRadius = 20
         addGestureRecognizer(longPressGesture)
     }
     
     private func commonInit() {
+        setupAlphaViewConstraints()
         setupVenueImageViewConstraints()
         setupTitleLabelConstraints()
+    }
+    
+    private func setupAlphaViewConstraints() {
+        addSubview(alphaView)
+        alphaView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            alphaView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            alphaView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            alphaView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            alphaView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
     }
     
     private func setupVenueImageViewConstraints() {
         addSubview(collectionImage)
         collectionImage.translatesAutoresizingMaskIntoConstraints = false
         
+        collectionImage.alpha = 0.7
         NSLayoutConstraint.activate([
-            collectionImage.topAnchor.constraint(equalTo: self.topAnchor),
-            collectionImage.leadingAnchor.constraint(equalTo: leadingAnchor),
-            collectionImage.trailingAnchor.constraint(equalTo: trailingAnchor),
-            collectionImage.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.75)
+            collectionImage.topAnchor.constraint(equalTo: contentView.topAnchor),
+            collectionImage.widthAnchor.constraint(equalTo: widthAnchor),
+            collectionImage.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 1)
         ])
     }
     
@@ -75,20 +100,20 @@ class UsersCollectionsCell: UICollectionViewCell {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: collectionImage.bottomAnchor, constant: 10),
+            titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
         ])
     }
     
     func configureCell(for collection: UserCollection) {
-        layer.cornerRadius = 20
-        titleLabel.text = collection.collectionName
-        
         guard let image = UIImage(data: collection.pickedImage) else {
             return
         }
+        
+        
         collectionImage.image = image
+        titleLabel.text = collection.collectionName
     }
     
     @objc private func longPressAction(gesture: UILongPressGestureRecognizer) {
