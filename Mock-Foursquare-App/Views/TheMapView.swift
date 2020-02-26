@@ -10,7 +10,14 @@ import UIKit
 import MapKit
 
 class TheMapView: UIView {
-    
+    public lazy var userTrackingButton: MKUserTrackingButton! = {
+        var button = MKUserTrackingButton()
+        button = MKUserTrackingButton(frame: CGRect(x: 200, y: 150, width: 40, height: 40))
+        button.backgroundColor = .link
+        button.tintColor = .blue
+        button.layer.cornerRadius = 4
+        return button
+    }()
     public lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -43,13 +50,10 @@ class TheMapView: UIView {
     }
     
     private func commonInit() {
-        
         setupMapViewConstraints()
-        
         setupLocationSearchBarConstraints()
-        
         setupConstraintsCollectionView()
-        
+//        setupConstraintsUserTrackingButton()
     }
     
     private func setupLocationSearchBarConstraints() {
@@ -85,6 +89,19 @@ class TheMapView: UIView {
             collectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor)
+            
+        ])
+    }
+    private func setupConstraintsUserTrackingButton() {
+        addSubview(userTrackingButton)
+        translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+        
+            userTrackingButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
+            userTrackingButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: 10),
+            userTrackingButton.heightAnchor.constraint(equalToConstant: 40),
+            userTrackingButton.widthAnchor.constraint(equalToConstant: 40)
+            
             
         ])
     }

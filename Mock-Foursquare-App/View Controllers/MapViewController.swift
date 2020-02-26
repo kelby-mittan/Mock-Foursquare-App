@@ -40,43 +40,42 @@ class MapViewController: UIViewController {
         }
     }
     
-    
     private var locationSearch = ""
     private var venueSearch = ""
     
     public var annotations = [MKPointAnnotation]()
     
+    private let locationSession = CoreLocationSession()
+    private var userTrackingButton: MKUserTrackingButton!
     
- // MARK: ViewDidLoad
+    // MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         theMapView.backgroundColor = .systemBackground
         setupNavBar()
-        
         theMapView.mapView.delegate = self
         theMapView.locationSearchBar.delegate = self
-        
+        venueSearchBar.delegate = self
         theMapView.collectionView.delegate = self
         theMapView.collectionView.dataSource = self
         theMapView.collectionView.register(UINib(nibName: "VenueCVCell", bundle: nil), forCellWithReuseIdentifier: "venueCell")
         
-                venueSearchBar.delegate = self
-        //        loadVenues()
+//        setupUserTrackingButton()
+    }
+    
+    private func setupUserTrackingButton() {
+        theMapView.mapView.showsUserLocation = true
+        theMapView.mapView.userTrackingMode = .follow
+        userTrackingButton = MKUserTrackingButton(frame: CGRect(x: 200, y: 150, width: 40, height: 40))
+        theMapView.userTrackingButton.mapView = theMapView.mapView
+        userTrackingButton.tintColor = .blue
+        userTrackingButton.layer.cornerRadius = 4
+        theMapView.mapView.addSubview(userTrackingButton)
     }
     
     private func setupNavBar() {
         navigationItem.setRightBarButton(menuButton, animated: true)
         navigationItem.titleView = venueSearchBar
-        
-        //        let searchController = UISearchController()
-        //        searchController.searchResultsUpdater = self as? UISearchResultsUpdating
-        //        searchController.obscuresBackgroundDuringPresentation = false
-        //        searchController.searchBar.placeholder = "search venues"
-        //        self.navigationItem.searchController = searchController
-        //        self.navigationItem.setRightBarButton(menuButton, animated: true)
-        //        self.definesPresentationContext = true
-        //        searchController.delegate = self
     }
     
     
