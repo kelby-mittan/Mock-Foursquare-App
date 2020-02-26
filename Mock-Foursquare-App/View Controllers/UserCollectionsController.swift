@@ -91,7 +91,6 @@ extension UserCollectionsController: AddToCollection {
         usersCollections.insert(userCollection, at: 0)
         do {
             try collectionPersistence.createItem(userCollection)
-            showAlert(title: "Cool", message: "\(userCollection.collectionName) has been added to your collections")
         } catch {
             print("error saving collection")
         }

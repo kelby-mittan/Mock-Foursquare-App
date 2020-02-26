@@ -79,7 +79,24 @@ class CreateCollectionController: UIViewController {
         
         collectionDelegate?.updateCollectionView(userCollection: userCollection)
         
-        self.dismiss(animated: true, completion: nil)
+        UIView.animate(withDuration: 0.75, delay: 0.0, options: [], animations: {
+            self.selectedImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+            self.alphaView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+            self.titleLabel.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+            
+        }) { (done) in
+            UIView.animate(withDuration: 0.75, animations: {
+                self.selectedImageView.transform = CGAffineTransform(translationX: 120, y: 600)
+                self.alphaView.transform = CGAffineTransform(translationX: 120, y: 600)
+                self.titleLabel.transform = CGAffineTransform(translationX: 120, y: 600)
+                
+            }) {(done) in
+                let collectionsVC = UserCollectionsController(self.venuePersistence, collectionPersistence: self.collectionPersistence)
+                self.navigationController?.pushViewController(collectionsVC, animated: true)
+            }
+            self.dismiss(animated: true)
+        }
+        
     }
     
     @IBAction func pickPhotoButton(_ sender: UIButton) {
