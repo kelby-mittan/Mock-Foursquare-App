@@ -10,5 +10,10 @@ import UIKit
 
 class VenueCollectionTableCell: UITableViewCell {
 
-
+    @IBOutlet var venueImage: UIImageView!
+    
+    @IBOutlet var venueNameLabel: UILabel!
+    
+    @IBOutlet var addressLabel: UILabel!
+    
 }
