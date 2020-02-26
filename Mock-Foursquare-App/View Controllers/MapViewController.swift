@@ -29,13 +29,13 @@ class MapViewController: UIViewController {
     
     private var venues = [Venue]() {
         didSet {
-//            dump(venues)
-            loadVenuePhotos(venueSearch: venues)
+            // TODO: enable this func to load collection view (when API limit resets)
+//            loadVenueDetails(venueSearch: venues)
         }
     }
-    private var venuePhotos = [VenueDetail]() {
+    private var venueDetails = [VenueDetail]() {
         didSet {
-            print(venuePhotos.count)
+            print(venueDetails.count)
             theMapView.collectionView.reloadData()
         }
     }
@@ -61,7 +61,7 @@ class MapViewController: UIViewController {
         theMapView.collectionView.dataSource = self
         theMapView.collectionView.register(UINib(nibName: "VenueCVCell", bundle: nil), forCellWithReuseIdentifier: "venueCell")
         
-        //        venueSearchBar.delegate = self
+                venueSearchBar.delegate = self
         //        loadVenues()
     }
     
@@ -87,15 +87,15 @@ class MapViewController: UIViewController {
     }
     
     private func loadVenues(city: String) {
-        //        locationSearch = "new york"
-        venueSearch = "coffee"
-        FoursquareAPIClient.getVenues(location: city, search: venueSearch) { [weak self] (result) in
+        clearSearch()
+        print("searchQuery: \(venueSearch)")
+        print("location: \(locationSearch)")
+        FoursquareAPIClient.getVenues(location: city, search: venueSearch.lowercased()) { [weak self] (result) in
             switch result {
             case .failure(let error):
                 print(error)
             case .success(let venues):
                 self?.venues = venues
-                //                dump(venues)
                 DispatchQueue.main.async {
                     self?.loadMapView()
                 }
@@ -103,34 +103,29 @@ class MapViewController: UIViewController {
         }
     }
     
-    private func loadVenuePhotos(venueSearch: [Venue]) {
+    private func loadVenueDetails(venueSearch: [Venue]) {
         for venue in venueSearch {
             FoursquareAPIClient.getVenuePhotos(locationID: venue.id) { [weak self] (results) in
                 switch results {
                 case .failure(let appError):
-                    print("Failed to load photos: \(appError)")
-                case .success(let photoData):
+                    print("Failed to load venue details: \(appError)")
+                case .success(let venueDetails):
                     DispatchQueue.main.async {
-                    self?.venuePhotos = photoData
-                        print(photoData.count)
+                    self?.venueDetails = venueDetails
+
                     }
                 }
             }
         }
     }
     private func makeAnnotations() {
-        //        var annotations = [MKPointAnnotation]()
         for venue in venues {
-            
             let coordinate = CLLocationCoordinate2D(latitude: venue.location.lat, longitude: venue.location.lng)
-            
             let annotation = MKPointAnnotation()
             annotation.coordinate = coordinate
             annotation.title = venue.name
             annotations.append(annotation)
         }
-//        dump(annotations)
-        //        return annotations
     }
     
     private func loadMapView() {
@@ -138,67 +133,79 @@ class MapViewController: UIViewController {
         theMapView.mapView.addAnnotations(annotations)
         theMapView.mapView.showAnnotations(annotations, animated: true)
     }
-    
+    private func clearSearch() {
+        annotations.removeAll()
+        theMapView.mapView.removeAnnotations(theMapView.mapView.annotations)
+        venues.removeAll()
+        venueDetails.removeAll()
+    }
 }
 
 
 // MARK: SearchFieldDelegate
-extension MapViewController: UISearchControllerDelegate {
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print("searchBarSearchButtonClicked")
-    }
-    
-    func searchBarResultsListButtonClicked(_ searchBar: UISearchBar) {
-        print("searchBarResultsListButtonClicked")
-    }
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        print("updateSearchResults")
-    }
-}
+//extension MapViewController: UISearchControllerDelegate {
+//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+//        print("searchBarSearchButtonClicked")
+//    }
+//
+//    func searchBarResultsListButtonClicked(_ searchBar: UISearchBar) {
+//        print("searchBarResultsListButtonClicked")
+//    }
+//
+//    func updateSearchResults(for searchController: UISearchController) {
+//        print("updateSearchResults")
+//    }
+//}
 
 extension MapViewController: UISearchBarDelegate {
-    //    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-    //
-    //        guard let text = searchBar.text else { return }
-    //        venueSearch = text
-    //        loadVenues(city: venueSearch)
-    //        print("searchBarCancelButtonClicked")
-    //    }
-    
-    //    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-    //        guard let text = searchBar.text else { return }
-    //        venueSearch = text
-    //        loadVenues(city: venueSearch)
-    //    }
-    
-    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
-        guard let text = searchBar.text else { return false }
-        venueSearch = text
-        loadVenues(city: venueSearch)
-        print("end editing")
-        return true
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchText = searchBar.text else { return }
+        guard !locationSearch.isEmpty else {
+            showAlert(title: "Location Field Missing", message: "Please enter a location to search")
+            return
+        }
+        venueSearch = searchText
+        loadVenues(city: locationSearch)
     }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        print("text field is \(textField.text ?? "empty")")
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
     }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        searchBar.setShowsCancelButton(false, animated: true)
+    }
+        func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+            guard let text = searchBar.text else { return }
+            venueSearch = text
+            searchBar.setShowsCancelButton(false, animated: true)
+            print("didEndEditing(search)")
+        }
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//        print("text field is \(textField.text ?? "empty")")
+//    }
 }
 
 extension MapViewController: UISearchTextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        venueSearch = textField.text?.lowercased() ?? ""
-        loadVenues(city: venueSearch)
-        textField.text = ""
- 
+        guard !(textField.text?.isEmpty ?? true) else {
+            showAlert(title: "Location Field is Missing", message: "Please enter a location")
+            return true }
+        guard !venueSearch.isEmpty else {
+            showAlert(title: "Search Field is Missing", message: "Please enter a search term")
+            return true
+        }
+        locationSearch = textField.text?.lowercased() ?? ""
+        loadVenues(city: locationSearch)
+        // Note: leaving the text in this field, allows the user to quickly search a different venue type, without typing the city again
+//        textField.text = ""
         textField.resignFirstResponder()
         return true
     }
     
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        annotations.removeAll()
-    }
+//    func textFieldDidBeginEditing(_ textField: UITextField) {
+//        print("textFieldDidBeginEditing")
+//    }
 }
 
 
@@ -239,14 +246,14 @@ extension MapViewController: UICollectionViewDelegateFlowLayout {
 
 extension MapViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return venuePhotos.count
+        return venueDetails.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "venueCell", for: indexPath) as? VenueCVCell else {
             fatalError("Failed to dequeue to VenueCVCell")
         }
-        cell.configureCell(photoData: venuePhotos[indexPath.row])
+        cell.configureCell(photoData: venueDetails[indexPath.row])
 //        cell.configureCell()
         cell.layer.cornerRadius = 4
         return cell
