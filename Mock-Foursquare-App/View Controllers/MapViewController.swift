@@ -188,6 +188,9 @@ extension MapViewController: UISearchBarDelegate {
 extension MapViewController: UISearchTextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard !(textField.text?.isEmpty ?? true) else {
+            showAlert(title: "Location Field is Missing", message: "Please enter a location")
+            return true }
         guard !venueSearch.isEmpty else {
             showAlert(title: "Search Field is Missing", message: "Please enter a search term")
             return true
@@ -200,10 +203,9 @@ extension MapViewController: UISearchTextFieldDelegate {
         return true
     }
     
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        print("textFieldDidBeginEditing")
-//        annotations.removeAll()
-    }
+//    func textFieldDidBeginEditing(_ textField: UITextField) {
+//        print("textFieldDidBeginEditing")
+//    }
 }
 
 
