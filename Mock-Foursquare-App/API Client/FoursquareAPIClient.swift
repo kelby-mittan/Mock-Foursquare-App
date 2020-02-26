@@ -39,6 +39,7 @@ struct FoursquareAPIClient {
             }
         }
     }
+    // TODO: Swap Data for photo model
     static func getVenuePhotos(locationID: String, completion: @escaping (Result<[Data],AppError>) -> ()) {
         var photosEndpoint = "https://api.foursquare.com/v2/venues/\(locationID)?client_id=\(APIKeys.id)&client_secret=\(APIKeys.secret)&v=20200220"
         photosEndpoint = photosEndpoint.replacingOccurrences(of: " ", with: "%20")
