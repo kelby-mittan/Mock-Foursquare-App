@@ -15,7 +15,7 @@ class TabBarController: UITabBarController {
     public var collectionPersistence = DataPersistence<UserCollection>(filename: "savedCollections.plist")
     
     private lazy var mapVC: MapViewController = {
-        let vc = MapViewController()
+        let vc = MapViewController(venuePersistence, collectionPersistence: collectionPersistence)
         vc.tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass"), tag: 0)
         return vc
     }()

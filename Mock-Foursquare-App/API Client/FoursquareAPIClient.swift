@@ -13,7 +13,9 @@ struct FoursquareAPIClient {
     
     static func getVenues(location: String, search: String, completion: @escaping (Result<[Venue] ,AppError>) -> ()) {
         
-        var foursquareEndpoint = "https://api.foursquare.com/v2/venues/search?client_id=\(APIKeys.id)&client_secret=\(APIKeys.secret)&v=20202002&near=\(location)&intent=browse&radius=10000&query=\(search)&limit=5"
+
+        var foursquareEndpoint = "https://api.foursquare.com/v2/venues/search?client_id=\(APIKeys.id)&client_secret=\(APIKeys.secret)&v=20202002&near=\(location)&intent=browse&radius=10000&query=\(search)&limit=2"
+
         
         foursquareEndpoint = foursquareEndpoint.replacingOccurrences(of: " ", with: "%20")
         
@@ -39,9 +41,9 @@ struct FoursquareAPIClient {
             }
         }
     }
-    static func getVenuePhotos(locationID: String, completion: @escaping (Result<[VenueDetail],AppError>) -> ()) {
-        var photosEndpoint = "https://api.foursquare.com/v2/venues/\(locationID)?client_id=\(APIKeys.id)&client_secret=\(APIKeys.secret)&v=20200220"
-        photosEndpoint = photosEndpoint.replacingOccurrences(of: " ", with: "%20")
+    static func getVenuePhotos(locationID: String, completion: @escaping (Result<VenueDetail,AppError>) -> ()) {
+        let photosEndpoint = "https://api.foursquare.com/v2/venues/\(locationID)?client_id=\(APIKeys.id)&client_secret=\(APIKeys.secret)&v=20200220"
+//        photosEndpoint = photosEndpoint.replacingOccurrences(of: " ", with: "%20")
         guard let url = URL(string: photosEndpoint) else {
             completion(.failure(.badURL(photosEndpoint)))
             return
@@ -55,7 +57,7 @@ struct FoursquareAPIClient {
             case .success(let data):
                 do {
                     let venuePhotos = try JSONDecoder().decode(VenueDetail.self, from: data)
-                    completion(.success([venuePhotos]))
+                    completion(.success(venuePhotos))
                 } catch {
                     completion(.failure(.decodingError(error)))
                 }

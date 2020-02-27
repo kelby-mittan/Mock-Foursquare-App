@@ -36,7 +36,7 @@
 		C148EC4F24070AA7002996DA /* CoreLocationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C148EC4E24070AA7002996DA /* CoreLocationSession.swift */; };
 		C187F2F424059D6500C10721 /* VenueCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C187F2F324059D6500C10721 /* VenueCVCell.xib */; };
 		C187F2FA2405A03400C10721 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C187F2F92405A03400C10721 /* CollectionViewCell.swift */; };
-		C1AE932D24060C8F00ECF980 /* FourSquarePhotosModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1AE932C24060C8F00ECF980 /* FourSquarePhotosModel.swift */; };
+		C1AE932D24060C8F00ECF980 /* VenueDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1AE932C24060C8F00ECF980 /* VenueDetailsModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,7 +82,7 @@
 		C148EC4E24070AA7002996DA /* CoreLocationSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreLocationSession.swift; sourceTree = "<group>"; };
 		C187F2F324059D6500C10721 /* VenueCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VenueCVCell.xib; sourceTree = "<group>"; };
 		C187F2F92405A03400C10721 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
-		C1AE932C24060C8F00ECF980 /* FourSquarePhotosModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourSquarePhotosModel.swift; sourceTree = "<group>"; };
+		C1AE932C24060C8F00ECF980 /* VenueDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueDetailsModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,7 +183,7 @@
 			children = (
 				02699BE824021FCA00211C0F /* FoursquareSearch.swift */,
 				02A5D1D424044F7F00060CA2 /* UserCollection.swift */,
-				C1AE932C24060C8F00ECF980 /* FourSquarePhotosModel.swift */,
+				C1AE932C24060C8F00ECF980 /* VenueDetailsModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -352,7 +352,7 @@
 				6CF62EC22405DABC008B62C6 /* ItemTableViewController.swift in Sources */,
 				026C2A1C2406E1DD00B71A14 /* VenueCollectionController.swift in Sources */,
 				02699BF32402217C00211C0F /* UserCollectionsView.swift in Sources */,
-				C1AE932D24060C8F00ECF980 /* FourSquarePhotosModel.swift in Sources */,
+				C1AE932D24060C8F00ECF980 /* VenueDetailsModel.swift in Sources */,
 				0269500C2404407F001CE788 /* UsersCollectionsCell.swift in Sources */,
 				02699BED2402205600211C0F /* MapViewController.swift in Sources */,
 			);

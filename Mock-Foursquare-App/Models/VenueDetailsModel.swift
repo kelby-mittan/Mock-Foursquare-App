@@ -16,9 +16,10 @@ struct Response: Codable & Equatable {
 }
 struct ResponseVenue: Codable & Equatable {
     let name: String
-    let photos: PhotosResponse
+    let description: String?
+    let photos: GroupsResponse
 }
-struct PhotosResponse: Codable & Equatable {
+struct GroupsResponse: Codable & Equatable {
     let groups: [Groups]
 }
 struct Groups: Codable & Equatable {
