@@ -14,13 +14,26 @@ class VenueCollectionController: UIViewController {
     @IBOutlet var blurEffect: UIVisualEffectView!
     
     @IBOutlet var tableView: UITableView!
+
+    @IBOutlet var viewForTV: UIView!
     
     public var venuePersistence: DataPersistence<Venue>
     public var collectionPersistence: DataPersistence<UserCollection>
+    public var userCollection: UserCollection
     
-    init?(coder: NSCoder, venuePersistence: DataPersistence<Venue>, collectionPersistence: DataPersistence<UserCollection>) {
+    private var venueCollection = [Venue]() {
+        didSet {
+            tableView.reloadData()
+//            DispatchQueue.main.async {
+//                self.tableView.reloadData()
+//            }
+        }
+    }
+    
+    init?(coder: NSCoder, venuePersistence: DataPersistence<Venue>, collectionPersistence: DataPersistence<UserCollection>, userCollection: UserCollection) {
         self.venuePersistence = venuePersistence
         self.collectionPersistence = collectionPersistence
+        self.userCollection = userCollection
         super.init(coder: coder)
     }
     
@@ -30,20 +43,38 @@ class VenueCollectionController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         tableView.dataSource = self
         tableView.delegate = self
-//        tableView.register(VenueCollectionTableCell.self, forCellReuseIdentifier: "venueTableCell")
+        
         blurEffect.isHidden = true
         tableView.rowHeight = 60
+        viewForTV.layer.cornerRadius = 15
+        loadVenues()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        viewForTV.layer.cornerRadius = 20
+    }
+    
+    private func loadVenues() {
+        do {
+            venueCollection = try venuePersistence.loadItems().filter { $0.customCategory == userCollection.collectionName }
+        } catch {
+            print("could not load venues")
+        }
+    }
+//    @IBAction func collapsePressed(_ sender: UIButton) {
+//        self.dismiss(animated: true)
+//    }
     
     @IBAction func collapseButtonPressed(_ sender: UIBarButtonItem) {
         
         self.dismiss(animated: true)
     }
     
-
+    
 }
 
 extension VenueCollectionController: UITableViewDataSource {

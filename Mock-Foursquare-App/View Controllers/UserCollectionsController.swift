@@ -124,11 +124,14 @@ extension UserCollectionsController: UICollectionViewDataSource {
         
         let venuesCollectionStoryboard = UIStoryboard(name: "VenuesCollection", bundle: nil)
         
+        let userCollection = usersCollections[indexPath.row]
+        
         let venuesCollectionVC = venuesCollectionStoryboard.instantiateViewController(identifier: "VenueCollectionController", creator: { coder in
             
-            return VenueCollectionController(coder: coder, venuePersistence: self.venuePersistence, collectionPersistence: self.collectionPersistence)
+            return VenueCollectionController(coder: coder, venuePersistence: self.venuePersistence, collectionPersistence: self.collectionPersistence, userCollection: userCollection)
         })
         
+//        navigationController?.pushViewController(venuesCollectionVC, animated: true)
         present(venuesCollectionVC, animated: true)
     }
 }
