@@ -22,7 +22,7 @@
 	<true/>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>This app needs your location to search local venues</string>
-	<key>NSLocationUsageDescription</key>
+	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs your location to search local venues</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

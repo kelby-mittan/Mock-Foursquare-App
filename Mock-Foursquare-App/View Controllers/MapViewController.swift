@@ -40,43 +40,42 @@ class MapViewController: UIViewController {
         }
     }
     
-    
     private var locationSearch = ""
     private var venueSearch = ""
     
     public var annotations = [MKPointAnnotation]()
     
+    private let locationSession = CoreLocationSession()
+    private var userTrackingButton: MKUserTrackingButton!
     
- // MARK: ViewDidLoad
+    // MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         theMapView.backgroundColor = .systemBackground
         setupNavBar()
-        
         theMapView.mapView.delegate = self
         theMapView.locationSearchBar.delegate = self
-        
+        venueSearchBar.delegate = self
         theMapView.collectionView.delegate = self
         theMapView.collectionView.dataSource = self
         theMapView.collectionView.register(UINib(nibName: "VenueCVCell", bundle: nil), forCellWithReuseIdentifier: "venueCell")
         
-                venueSearchBar.delegate = self
-        //        loadVenues()
+        setupUserTrackingButton()
+    }
+    
+    private func setupUserTrackingButton() {
+        theMapView.mapView.showsUserLocation = true
+        theMapView.mapView.userTrackingMode = .follow
+        userTrackingButton = MKUserTrackingButton(frame: CGRect(x: 200, y: 150, width: 40, height: 40))
+        theMapView.userTrackingButton.mapView = theMapView.mapView
+        userTrackingButton.tintColor = .blue
+        userTrackingButton.layer.cornerRadius = 4
+        theMapView.mapView.addSubview(userTrackingButton)
     }
     
     private func setupNavBar() {
         navigationItem.setRightBarButton(menuButton, animated: true)
         navigationItem.titleView = venueSearchBar
-        
-        //        let searchController = UISearchController()
-        //        searchController.searchResultsUpdater = self as? UISearchResultsUpdating
-        //        searchController.obscuresBackgroundDuringPresentation = false
-        //        searchController.searchBar.placeholder = "search venues"
-        //        self.navigationItem.searchController = searchController
-        //        self.navigationItem.setRightBarButton(menuButton, animated: true)
-        //        self.definesPresentationContext = true
-        //        searchController.delegate = self
     }
     
     
@@ -211,8 +210,53 @@ extension MapViewController: UISearchTextFieldDelegate {
 
 // MARK: MapviewDelegate
 extension MapViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let renderer = MKPolylineRenderer(overlay: overlay)
+        renderer.strokeColor = UIColor.red
+            renderer.lineWidth = 4.0
+            return renderer
+    }
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         print("did select")
+        mapView.removeOverlays(mapView.overlays)
+        guard let annotation = view.annotation else {return}
+        guard let location = (annotations.filter { $0.title == annotation.title }).first else { return }
+        let sourceCoord = CLLocationCoordinate2D(latitude: 40.782865, longitude: -73.967544)
+        let destinationCoord = location.coordinate
+        let sourcePlacemark = MKPlacemark(coordinate: sourceCoord, addressDictionary: nil)
+        let destinationPlacemark = MKPlacemark(coordinate: destinationCoord, addressDictionary: nil)
+        let sourceMapItem = MKMapItem(placemark: sourcePlacemark)
+        let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
+        let sourceAnnotation = MKPointAnnotation()
+        sourceAnnotation.title = ""
+        if let location = sourcePlacemark.location {
+            sourceAnnotation.coordinate = location.coordinate
+        }
+        let destinationAnnotation = MKPointAnnotation()
+        destinationAnnotation.title = annotation.title ?? ""
+        if let location = destinationPlacemark.location {
+            destinationAnnotation.coordinate = location.coordinate
+        }
+        theMapView.mapView.showAnnotations([sourceAnnotation,destinationAnnotation], animated: true )
+        let directionRequest = MKDirections.Request()
+        directionRequest.source = sourceMapItem
+        directionRequest.destination = destinationMapItem
+        directionRequest.transportType = .automobile
+        let directions = MKDirections(request: directionRequest)
+        directions.calculate {
+            (response, error) -> Void in
+            guard let response = response else {
+                if let error = error {
+                    print("Error: \(error)")
+                }
+                return
+            }
+            let route = response.routes[0]
+            self.theMapView.mapView.addOverlay((route.polyline), level: MKOverlayLevel.aboveRoads)
+            let rect = route.polyline.boundingMapRect
+            self.theMapView.mapView.setRegion(MKCoordinateRegion(rect), animated: true)
+        }
+        
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -254,7 +298,6 @@ extension MapViewController: UICollectionViewDataSource {
             fatalError("Failed to dequeue to VenueCVCell")
         }
         cell.configureCell(photoData: venueDetails[indexPath.row])
-//        cell.configureCell()
         cell.layer.cornerRadius = 4
         return cell
     }

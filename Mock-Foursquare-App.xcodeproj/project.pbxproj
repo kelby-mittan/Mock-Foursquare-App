@@ -33,6 +33,7 @@
 		6CF62EC82405DAEA008B62C6 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF62EC72405DAEA008B62C6 /* DetailView.swift */; };
 		6CF62ECA2405DB10008B62C6 /* ItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF62EC92405DB10008B62C6 /* ItemTableViewCell.swift */; };
 		6CF62ECC2405DB4B008B62C6 /* configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF62ECB2405DB4B008B62C6 /* configure.swift */; };
+		C148EC4F24070AA7002996DA /* CoreLocationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C148EC4E24070AA7002996DA /* CoreLocationSession.swift */; };
 		C187F2F424059D6500C10721 /* VenueCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C187F2F324059D6500C10721 /* VenueCVCell.xib */; };
 		C187F2FA2405A03400C10721 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C187F2F92405A03400C10721 /* CollectionViewCell.swift */; };
 		C1AE932D24060C8F00ECF980 /* FourSquarePhotosModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1AE932C24060C8F00ECF980 /* FourSquarePhotosModel.swift */; };
@@ -78,6 +79,7 @@
 		6CF62EC72405DAEA008B62C6 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		6CF62EC92405DB10008B62C6 /* ItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTableViewCell.swift; sourceTree = "<group>"; };
 		6CF62ECB2405DB4B008B62C6 /* configure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = configure.swift; sourceTree = "<group>"; };
+		C148EC4E24070AA7002996DA /* CoreLocationSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreLocationSession.swift; sourceTree = "<group>"; };
 		C187F2F324059D6500C10721 /* VenueCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VenueCVCell.xib; sourceTree = "<group>"; };
 		C187F2F92405A03400C10721 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		C1AE932C24060C8F00ECF980 /* FourSquarePhotosModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourSquarePhotosModel.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				6CF62ECB2405DB4B008B62C6 /* configure.swift */,
 				02699BC124021C2900211C0F /* Assets.xcassets */,
 				02699BC324021C2900211C0F /* LaunchScreen.storyboard */,
+				C148EC4E24070AA7002996DA /* CoreLocationSession.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				02699BF12402212C00211C0F /* TheMapView.swift in Sources */,
+				C148EC4F24070AA7002996DA /* CoreLocationSession.swift in Sources */,
 				6CF62EC82405DAEA008B62C6 /* DetailView.swift in Sources */,
 				02699BB924021C2400211C0F /* AppDelegate.swift in Sources */,
 				02A5D1D524044F7F00060CA2 /* UserCollection.swift in Sources */,
