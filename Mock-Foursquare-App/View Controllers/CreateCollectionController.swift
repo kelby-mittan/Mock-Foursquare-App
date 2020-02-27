@@ -63,9 +63,12 @@ class CreateCollectionController: UIViewController {
     }
     
     @objc private func createButtonPressed(_ sender: UIBarButtonItem) {
-        print("create button pressed")
+        if collectionName == "" {
+            showAlert(title: "Yo....", message: "Please Enter a Name for Collection")
+            return
+        }
         guard let image = selectedImage else {
-            print("image is nil")
+            showAlert(title: "Yo....", message: "Please Select a Picture for Collection")
             return
         }
         
@@ -78,7 +81,7 @@ class CreateCollectionController: UIViewController {
         }
         
         let userCollection = UserCollection(collectionName: collectionName, pickedImage: resizedImageData)
-    
+            
         collectionDelegate?.updateCollectionView(userCollection: userCollection)
         
         UIView.animate(withDuration: 0.75, delay: 0.0, options: [], animations: {

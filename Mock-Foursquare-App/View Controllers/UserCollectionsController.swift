@@ -140,18 +140,6 @@ extension UserCollectionsController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-//                    let noOfCellsInRow = 2
-//
-//                    let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
-//
-//                    let totalSpace = flowLayout.sectionInset.left
-//                        + flowLayout.sectionInset.right
-//                        + (flowLayout.minimumInteritemSpacing * CGFloat(noOfCellsInRow - 1))
-//
-//                    let size = Int((collectionView.bounds.width - totalSpace) / CGFloat(noOfCellsInRow))
-//
-//                    return CGSize(width: size, height: size)
-        
         return CGSize(width: view.frame.width/2 - 20, height: view.frame.width/2.25 - 20)
     }
     
@@ -190,7 +178,7 @@ extension UserCollectionsController: CollectionCellDelegate {
         do {
             try collectionPersistence.deleteItem(at: index)
         } catch {
-            showAlert(title: "Error", message: "Could not delete Book")
+            showAlert(title: "Error", message: "Could not delete Collection")
         }
     }
 }

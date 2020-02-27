@@ -95,6 +95,30 @@ extension VenueCollectionController: UITableViewDataSource {
         return 100
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            removeVenue(atIndexPath: indexPath)
+        }
+    }
+    
+    private func removeVenue(atIndexPath indexPath: IndexPath) {
+        
+        let venue = venueCollection[indexPath.row]
+
+        guard let index = venueCollection.firstIndex(of: venue) else {
+            return
+        }
+        
+        do {
+            try collectionPersistence.deleteItem(at: index)
+        } catch {
+            showAlert(title: "Error", message: "Could not delete Venue")
+        }
+        
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+        
+    }
+    
 }
 
 extension VenueCollectionController: UITableViewDelegate {
