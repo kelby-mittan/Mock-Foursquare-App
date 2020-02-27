@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import DataPersistence
+import ImageKit
 
 class MapViewController: UIViewController {
     
@@ -37,12 +38,16 @@ class MapViewController: UIViewController {
             loadVenueDetails(venueSearch: venues)
         }
     }
+    
     private var venueDetails = [VenueDetail]() {
         didSet {
             print(venueDetails.count)
             theMapView.collectionView.reloadData()
         }
     }
+    
+    private var images = [UIImage]()
+    private var image = UIImageView()
     
     private var locationSearch = ""
     private var venueSearch = ""
@@ -95,7 +100,7 @@ class MapViewController: UIViewController {
     
     
     @objc private func menuButtonPressed(_ sender: UIBarButtonItem) {
-        navigationController?.pushViewController(ItemTableViewController(venuePersistence, collectionPersistence: collectionPersistence, venues: venueDetails), animated: true)
+        navigationController?.pushViewController(ItemTableViewController(venuePersistence, collectionPersistence: collectionPersistence, venues: venueDetails, detail: venues, images: images), animated: true)
         //        mediumMenu()
     }
     
@@ -130,6 +135,20 @@ class MapViewController: UIViewController {
             }
         }
     }
+    
+    func loadImage(photoData: VenueDetail) {
+        image.getImage(with:  "\(photoData.response.venue.photos.groups.first?.items.first?.prefix ?? "")original\(photoData.response.venue.photos.groups.first?.items.first?.suffix ?? "")") { [weak self] (results) in
+            switch results {
+            case .failure(let appError):
+                print("error with collectionViewcell: \(appError)")
+            case .success(let image):
+                DispatchQueue.main.async {
+                    self?.images.append(image)
+                }
+            }
+        }
+    }
+    
     private func makeAnnotations() {
         for venue in venues {
             let coordinate = CLLocationCoordinate2D(latitude: venue.location.lat, longitude: venue.location.lng)
@@ -311,6 +330,7 @@ extension MapViewController: UICollectionViewDataSource {
             fatalError("Failed to dequeue to VenueCVCell")
         }
         cell.configureCell(photoData: venueDetails[indexPath.row])
+        //images.append(cell.image)
         cell.layer.cornerRadius = 4
         return cell
     }

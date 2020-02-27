@@ -14,10 +14,13 @@ class ItemTableViewController: UITableViewController {
     private var venuePersistence: DataPersistence<Venue>
     private var collectionPersistence: DataPersistence<UserCollection>
     
-    init(_ venuePersistence: DataPersistence<Venue>, collectionPersistence: DataPersistence<UserCollection>, venues: [VenueDetail]) {
+    init(_ venuePersistence: DataPersistence<Venue>, collectionPersistence: DataPersistence<UserCollection>, venues: [VenueDetail], detail: [Venue], images: [UIImage]) {
         self.venuePersistence = venuePersistence
         self.collectionPersistence = collectionPersistence
         self.venueDetails = venues
+        self.locationDetails = detail
+        self.images = images
+        
         super.init(nibName: nil, bundle: nil)
         
     }
@@ -26,9 +29,27 @@ class ItemTableViewController: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private var images = [UIImage]() {
+        didSet {
+            dump(images.count)
+        }
+    }
+    
     private var venueDetails = [VenueDetail]() {
         didSet {
             dump(venueDetails)
+        }
+    }
+    
+    private var locationDetails = [Venue]() {
+        didSet {
+            dump(locationDetails)
+        }
+    }
+    
+    private var collectionDetails = [UserCollection]() {
+        didSet {
+            dump(collectionDetails)
         }
     }
     
@@ -44,8 +65,8 @@ class ItemTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? ItemTableViewCell else { fatalError("you messted up making cell") }
+        cell.configureCell(photoData: venueDetails[indexPath.row], location: locationDetails[indexPath.row].location, image: images[indexPath.row])
         return cell
     }
     

@@ -82,19 +82,9 @@ class ItemTableViewCell: UITableViewCell {
         ])
     }
     
-    func configureCell(photoData: VenueDetail, location: LocationInfo) {
+    func configureCell(photoData: VenueDetail, location: LocationInfo, image: UIImage) {
         self.titleLabel.text = photoData.response.venue.name
         self.locationLabel.text = location.address
-        
-        itemImage.getImage(with:  "\(photoData.response.venue.photos.groups.first?.items.first?.prefix ?? "")original\(photoData.response.venue.photos.groups.first?.items.first?.suffix ?? "")") { [weak self] (results) in
-            switch results {
-            case .failure(let appError):
-                print("error with collectionViewcell: \(appError)")
-            case .success(let image):
-                DispatchQueue.main.async {
-                    self?.itemImage.image = image
-                }
-            }
-        }
+        self.imageView?.image = image
     }
 }
