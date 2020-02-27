@@ -218,6 +218,7 @@ extension MapViewController: MKMapViewDelegate {
     }
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         print("did select")
+        mapView.removeOverlays(mapView.overlays)
         guard let annotation = view.annotation else {return}
         guard let location = (annotations.filter { $0.title == annotation.title }).first else { return }
         let sourceCoord = CLLocationCoordinate2D(latitude: 40.782865, longitude: -73.967544)
@@ -255,6 +256,7 @@ extension MapViewController: MKMapViewDelegate {
             let rect = route.polyline.boundingMapRect
             self.theMapView.mapView.setRegion(MKCoordinateRegion(rect), animated: true)
         }
+        
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
