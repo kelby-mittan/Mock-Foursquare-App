@@ -8,8 +8,12 @@
 
 import UIKit
 import MapKit
+import DataPersistence
 
 class MapViewController: UIViewController {
+    
+    private var venuePersistence: DataPersistence<Venue>
+    private var collectionPersistence: DataPersistence<UserCollection>
     
     private let theMapView = TheMapView()
     override func loadView() {
@@ -30,7 +34,7 @@ class MapViewController: UIViewController {
     private var venues = [Venue]() {
         didSet {
             // TODO: enable this func to load collection view (when API limit resets)
-//            loadVenueDetails(venueSearch: venues)
+            loadVenueDetails(venueSearch: venues)
         }
     }
     private var venueDetails = [VenueDetail]() {
@@ -47,6 +51,17 @@ class MapViewController: UIViewController {
     
     private let locationSession = CoreLocationSession()
     private var userTrackingButton: MKUserTrackingButton!
+    
+    init(_ venuePersistence: DataPersistence<Venue>, collectionPersistence: DataPersistence<UserCollection>) {
+         self.venuePersistence = venuePersistence
+         self.collectionPersistence = collectionPersistence
+         super.init(nibName: nil, bundle: nil)
+         
+     }
+     
+     required init?(coder: NSCoder) {
+         fatalError("init(coder:) has not been implemented")
+     }
     
     // MARK: ViewDidLoad
     override func viewDidLoad() {
@@ -80,8 +95,7 @@ class MapViewController: UIViewController {
     
     
     @objc private func menuButtonPressed(_ sender: UIBarButtonItem) {
-        print("menu button pressed")
-        navigationController?.pushViewController(ItemTableViewController(), animated: true)
+        navigationController?.pushViewController(ItemTableViewController(venuePersistence, collectionPersistence: collectionPersistence, venues: venueDetails), animated: true)
         //        mediumMenu()
     }
     
@@ -110,8 +124,7 @@ class MapViewController: UIViewController {
                     print("Failed to load venue details: \(appError)")
                 case .success(let venueDetails):
                     DispatchQueue.main.async {
-                    self?.venueDetails = venueDetails
-
+                        self?.venueDetails.append(venueDetails)
                     }
                 }
             }
