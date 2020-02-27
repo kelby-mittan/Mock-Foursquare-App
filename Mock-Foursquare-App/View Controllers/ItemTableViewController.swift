@@ -66,12 +66,13 @@ class ItemTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? ItemTableViewCell else { fatalError("you messted up making cell") }
-        cell.configureCell(photoData: venueDetails[indexPath.row], location: locationDetails[indexPath.row].location, image: images[indexPath.row])
+        cell.configureCell(photoData: venueDetails[indexPath.row], location: locationDetails[indexPath.row].location) // image: images[indexPath.row]
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        navigationController?.pushViewController(DetailViewController(), animated: true)
+        //navigationController?.pushViewController(DetailViewController(), animated: true)
+        navigationController?.pushViewController(DetailViewController(venuePersistence, collectionPersistence: collectionPersistence, venue: venueDetails[indexPath.row], detail: locationDetails[indexPath.row]), animated: true) // , image: images[indexPath.row]
     }
 
 }
