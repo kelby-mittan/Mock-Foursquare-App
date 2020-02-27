@@ -56,9 +56,6 @@ class ItemTableViewCell: UITableViewCell {
             itemImage.heightAnchor.constraint(equalTo: heightAnchor),
             itemImage.widthAnchor.constraint(equalTo: heightAnchor)
         ])
-        
-//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-5-[v0]-\(UIScreen.main.bounds.width - 100)-|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": itemImage]))
-//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": itemImage]))
     }
     
     func setupTitleLabel() {
@@ -85,15 +82,19 @@ class ItemTableViewCell: UITableViewCell {
         ])
     }
     
+    func configureCell(photoData: VenueDetail, location: LocationInfo) {
+        self.titleLabel.text = photoData.response.venue.name
+        self.locationLabel.text = location.address
+        
+        itemImage.getImage(with:  "\(photoData.response.venue.photos.groups.first?.items.first?.prefix ?? "")original\(photoData.response.venue.photos.groups.first?.items.first?.suffix ?? "")") { [weak self] (results) in
+            switch results {
+            case .failure(let appError):
+                print("error with collectionViewcell: \(appError)")
+            case .success(let image):
+                DispatchQueue.main.async {
+                    self?.itemImage.image = image
+                }
+            }
+        }
+    }
 }
-
-//    override func awakeFromNib() {
-//        super.awakeFromNib()
-//        // Initialization code
-//    }
-//
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//
-//        // Configure the view for the selected state
-//    }
