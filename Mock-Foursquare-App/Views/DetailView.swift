@@ -31,17 +31,18 @@ class DetailView: UIView {
         return label
     }()
     
-    var savePicker: UIPickerView! = {
+    public lazy var savePicker: UIPickerView! = {
         let pv = UIPickerView(frame: CGRect.zero)
         pv.backgroundColor = .systemBackground
         return pv
     }()
     
-//    public lazy var descriptionTextView: UITextView = {
-//        let tv = UITextView()
-//        tv.text = "description----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
-//        return tv
-//    }()
+    public lazy var descriptionTextView: UITextView = {
+        let tv = UITextView()
+        tv.text = "Peter Luger Steak House has been serving the finest steaks since 1887. We choose from only the finest USDA PRIME meat available. The selection process is crucial and therefore is done only by members of the family who visit the wholesale markets on a daily basis."
+        tv.isEditable = false
+        return tv
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
@@ -58,6 +59,7 @@ class DetailView: UIView {
         setupTitleViewConstraints()
         setupAddressViewConstraints()
         setupPickerViewConstraints()
+        setupDescriptionViewConstraints()
     }
     
     private func setupImageViewConstraints() {
@@ -93,22 +95,22 @@ class DetailView: UIView {
         ])
     }
     
-//    private func setupDescriptionViewConstraints() {
-//        addSubview(descriptionTextView)
-//        descriptionTextView.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            descriptionTextView.topAnchor.constraint(equalTo: addressLabel.bottomAnchor, constant: 5),
-//            descriptionTextView.leadingAnchor.constraint(equalTo: leadingAnchor),
-//            descriptionTextView.trailingAnchor.constraint(equalTo: trailingAnchor),
-//            descriptionTextView.bottomAnchor.constraint(equalTo: bottomAnchor)
-//        ])
-//    }
+    private func setupDescriptionViewConstraints() {
+        addSubview(descriptionTextView)
+        descriptionTextView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            descriptionTextView.topAnchor.constraint(equalTo: addressLabel.bottomAnchor, constant: 5),
+            descriptionTextView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            descriptionTextView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            descriptionTextView.bottomAnchor.constraint(equalTo: savePicker.topAnchor)
+        ])
+    }
     
     private func setupPickerViewConstraints() {
         addSubview(savePicker)
         savePicker.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            savePicker.topAnchor.constraint(equalTo: addressLabel.bottomAnchor, constant: 20),
+            savePicker.topAnchor.constraint(equalTo: addressLabel.bottomAnchor, constant: 75),
             savePicker.leadingAnchor.constraint(equalTo: leadingAnchor),
             savePicker.trailingAnchor.constraint(equalTo: trailingAnchor),
             savePicker.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
