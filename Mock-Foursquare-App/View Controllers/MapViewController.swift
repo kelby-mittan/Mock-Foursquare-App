@@ -122,6 +122,7 @@ class MapViewController: UIViewController {
             let coordinate = CLLocationCoordinate2D(latitude: venue.location.lat, longitude: venue.location.lng)
             let annotation = MKPointAnnotation()
             annotation.coordinate = coordinate
+            annotation.subtitle = venue.id
             annotation.title = venue.name
             annotations.append(annotation)
         }
@@ -217,10 +218,9 @@ extension MapViewController: MKMapViewDelegate {
             return renderer
     }
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        print("did select")
         mapView.removeOverlays(mapView.overlays)
         guard let annotation = view.annotation else {return}
-        guard let location = (annotations.filter { $0.title == annotation.title }).first else { return }
+        guard let location = (annotations.filter { $0.subtitle == annotation.subtitle }).first else { return }
         let sourceCoord = CLLocationCoordinate2D(latitude: 40.782865, longitude: -73.967544)
         let destinationCoord = location.coordinate
         let sourcePlacemark = MKPlacemark(coordinate: sourceCoord, addressDictionary: nil)
