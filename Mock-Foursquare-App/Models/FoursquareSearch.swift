@@ -21,6 +21,7 @@ struct Venue: Codable & Equatable {
     let name: String
     let location: LocationInfo
     var customCategory: String?
+    let venuePhoto: Data?
 }
 
 struct LocationInfo: Codable & Equatable {
