@@ -16,4 +16,9 @@ class VenueCollectionTableCell: UITableViewCell {
     
     @IBOutlet var addressLabel: UILabel!
     
+    func configureCell(venue: Venue) {
+        self.venueNameLabel.text = venue.name
+        self.addressLabel.text = venue.location.address
+        //self.imageView?.image = image
+    }
 }

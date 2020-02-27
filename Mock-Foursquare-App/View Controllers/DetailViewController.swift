@@ -32,6 +32,8 @@ class DetailViewController: UIViewController {
         }
     }
     
+    private var pickedCollection = ""
+    
     init(_ venuePersistence: DataPersistence<Venue>, collectionPersistence: DataPersistence<UserCollection>, venue: VenueDetail, detail: Venue) { // , image: UIImage
         self.venuePersistence = venuePersistence
         self.collectionPersistence = collectionPersistence
@@ -75,6 +77,12 @@ class DetailViewController: UIViewController {
     
     @objc func didSaveItem(_ sender: UIBarButtonItem) {
         
+        let createdVenue = Venue(id: locationDetail.id, name: locationDetail.name, location: locationDetail.location, customCategory: pickedCollection, venuePhoto: nil)
+        do {
+            try venuePersistence.createItem(createdVenue)
+        } catch {
+            print("could not create venue")
+        }
     }
 }
 
@@ -89,6 +97,7 @@ extension DetailViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let selected = collectionName[row]
+        pickedCollection = selected.collectionName
         print(selected)
 //        let selected = dataSource[row]
 //        bestseller.collectionView.reloadData()

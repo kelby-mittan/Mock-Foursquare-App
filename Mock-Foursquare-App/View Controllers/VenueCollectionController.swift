@@ -79,7 +79,7 @@ class VenueCollectionController: UIViewController {
 
 extension VenueCollectionController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        10
+        venueCollection.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -87,7 +87,8 @@ extension VenueCollectionController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "venueCollectionCell", for: indexPath) as? VenueCollectionTableCell else {
             fatalError()
         }
-        
+        let venue = venueCollection[indexPath.row]
+        cell.configureCell(venue: venue)
         return cell
     }
     
