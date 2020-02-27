@@ -43,6 +43,7 @@ class MapViewController: UIViewController {
         didSet {
             print(venueDetails.count)
             theMapView.collectionView.reloadData()
+            loadImage(venueData: venueDetails)
         }
     }
     
@@ -130,20 +131,23 @@ class MapViewController: UIViewController {
                 case .success(let venueDetails):
                     DispatchQueue.main.async {
                         self?.venueDetails.append(venueDetails)
+    
                     }
                 }
             }
         }
     }
     
-    func loadImage(photoData: VenueDetail) {
-        image.getImage(with:  "\(photoData.response.venue.photos.groups.first?.items.first?.prefix ?? "")original\(photoData.response.venue.photos.groups.first?.items.first?.suffix ?? "")") { [weak self] (results) in
-            switch results {
-            case .failure(let appError):
-                print("error with collectionViewcell: \(appError)")
-            case .success(let image):
-                DispatchQueue.main.async {
-                    self?.images.append(image)
+    func loadImage(venueData: [VenueDetail]) {
+        for venue in venueData {
+            image.getImage(with:  "\(venue.response.venue.photos.groups.first?.items.first?.prefix ?? "")original\(venue.response.venue.photos.groups.first?.items.first?.suffix ?? "")") { [weak self] (results) in
+                switch results {
+                case .failure(let appError):
+                    print("error with collectionViewcell: \(appError)")
+                case .success(let image):
+                    DispatchQueue.main.async {
+                        self?.images.append(image)
+                    }
                 }
             }
         }
@@ -329,8 +333,10 @@ extension MapViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "venueCell", for: indexPath) as? VenueCVCell else {
             fatalError("Failed to dequeue to VenueCVCell")
         }
-        cell.configureCell(photoData: venueDetails[indexPath.row])
-        //images.append(cell.image)
+        DispatchQueue.main.async {
+            cell.configureCell(photoData: self.venueDetails[indexPath.row], image: self.images[indexPath.row])
+        }
+
         cell.layer.cornerRadius = 4
         return cell
     }
