@@ -72,7 +72,7 @@ class ItemTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //navigationController?.pushViewController(DetailViewController(), animated: true)
-        navigationController?.pushViewController(DetailViewController(venuePersistence, collectionPersistence: collectionPersistence, venue: venueDetails[indexPath.row], detail: locationDetails[indexPath.row], image: images[indexPath.row]), animated: true) // , image: images[indexPath.row]
+        navigationController?.pushViewController(DetailViewController(venuePersistence, collectionPersistence: collectionPersistence, venue: venueDetails[indexPath.row], detail: locationDetails[indexPath.row], image: images[indexPath.row], showPickerView: false), animated: true) // , image: images[indexPath.row]
     }
 
 }

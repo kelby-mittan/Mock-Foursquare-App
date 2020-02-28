@@ -27,6 +27,8 @@ class DetailViewController: UIViewController {
     
     private var image: UIImage!
     
+    private var showPickerView = false
+    
     private var collectionDetails = [UserCollection]() {
         didSet {
 //            dump(collectionDetails)
@@ -35,7 +37,7 @@ class DetailViewController: UIViewController {
     
     private var pickedCollection = ""
     
-    init(_ venuePersistence: DataPersistence<Venue>, collectionPersistence: DataPersistence<UserCollection>, venue: VenueDetail, detail: Venue, image: UIImage) { // , image: UIImage
+    init(_ venuePersistence: DataPersistence<Venue>, collectionPersistence: DataPersistence<UserCollection>, venue: VenueDetail, detail: Venue, image: UIImage, showPickerView: Bool) { // , image: UIImage
         self.venuePersistence = venuePersistence
         self.collectionPersistence = collectionPersistence
         self.venueDetail = venue
@@ -54,6 +56,10 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         view.addSubview(detailView)
+        if showPickerView {
+            detailView.savePicker.isHidden = true
+        }
+        
         loadCollection()
         detailView.savePicker.dataSource = self
         detailView.savePicker.delegate = self
