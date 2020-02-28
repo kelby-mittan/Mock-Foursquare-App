@@ -107,7 +107,7 @@ extension VenueCollectionController: UITableViewDataSource {
     }
     
     private func removeVenue(atIndexPath indexPath: IndexPath) {
-        loadVenues()
+//        loadVenues()
         let venue = venueCollection[indexPath.row]
 
         guard let indexInAllVenues = allVenues.firstIndex(of: venue) else {
