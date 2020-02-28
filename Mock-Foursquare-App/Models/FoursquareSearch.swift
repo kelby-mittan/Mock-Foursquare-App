@@ -8,23 +8,25 @@
 
 import Foundation
 
-struct FoursquareSearch: Codable {
+struct FoursquareSearch: Codable & Equatable {
     let response: Venues
 }
 
-struct Venues: Codable {
+struct Venues: Codable & Equatable {
     let venues: [Venue]
 }
 
-struct Venue: Codable {
+struct Venue: Codable & Equatable {
     let id: String
     let name: String
     let location: LocationInfo
+    var customCategory: String?
+    let venuePhoto: Data?
 }
 
-struct LocationInfo: Codable {
-    let address: String
-    let crossStreet: String
+struct LocationInfo: Codable & Equatable {
+    let address: String?
+    let crossStreet: String?
     let lat: Double
     let lng: Double
 }
