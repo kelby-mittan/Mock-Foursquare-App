@@ -313,7 +313,7 @@ extension MapViewController: UICollectionViewDataSource {
             fatalError("Failed to dequeue to VenueCVCell")
         }
         cell.cellDelegate = self
-        cell.configureCell(photoData: venueDetails[indexPath.row])
+        cell.configureCell(venueDetail: venueDetails[indexPath.row])
         //images.append(cell.image)
         cell.layer.cornerRadius = 4
         print(images.count)
