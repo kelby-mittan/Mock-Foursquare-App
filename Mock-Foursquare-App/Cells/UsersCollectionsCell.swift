@@ -27,6 +27,7 @@ class UsersCollectionsCell: UICollectionViewCell {
     public lazy var alphaView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
+        view.layer.cornerRadius = 20
         return view
     }()
     
@@ -63,6 +64,8 @@ class UsersCollectionsCell: UICollectionViewCell {
         super.layoutSubviews()
         layer.cornerRadius = 20
         addGestureRecognizer(longPressGesture)
+        collectionImage.clipsToBounds = true
+        alphaView.clipsToBounds = true
     }
     
     private func commonInit() {
