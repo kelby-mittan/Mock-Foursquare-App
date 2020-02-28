@@ -102,7 +102,6 @@ class MapViewController: UIViewController {
     
     @objc private func menuButtonPressed(_ sender: UIBarButtonItem) {
         navigationController?.pushViewController(ItemTableViewController(venuePersistence, collectionPersistence: collectionPersistence, venues: venueDetails, detail: venues, images: images), animated: true)
-        //        mediumMenu()
     }
     
     private func loadVenues(city: String) {
@@ -177,22 +176,6 @@ class MapViewController: UIViewController {
     }
 }
 
-
-// MARK: SearchFieldDelegate
-//extension MapViewController: UISearchControllerDelegate {
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//        print("searchBarSearchButtonClicked")
-//    }
-//
-//    func searchBarResultsListButtonClicked(_ searchBar: UISearchBar) {
-//        print("searchBarResultsListButtonClicked")
-//    }
-//
-//    func updateSearchResults(for searchController: UISearchController) {
-//        print("updateSearchResults")
-//    }
-//}
-
 extension MapViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text else { return }
@@ -216,9 +199,6 @@ extension MapViewController: UISearchBarDelegate {
             searchBar.setShowsCancelButton(false, animated: true)
             print("didEndEditing(search)")
         }
-//    func textFieldDidEndEditing(_ textField: UITextField) {
-//        print("text field is \(textField.text ?? "empty")")
-//    }
 }
 
 extension MapViewController: UISearchTextFieldDelegate {
@@ -233,15 +213,10 @@ extension MapViewController: UISearchTextFieldDelegate {
         }
         locationSearch = textField.text?.lowercased() ?? ""
         loadVenues(city: locationSearch)
-        // Note: leaving the text in this field, allows the user to quickly search a different venue type, without typing the city again
-//        textField.text = ""
+
         textField.resignFirstResponder()
         return true
     }
-    
-//    func textFieldDidBeginEditing(_ textField: UITextField) {
-//        print("textFieldDidBeginEditing")
-//    }
 }
 
 
@@ -322,6 +297,9 @@ extension MapViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10)
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        navigationController?.pushViewController(DetailViewController(venuePersistence, collectionPersistence: collectionPersistence, venue: venueDetails[indexPath.row], detail: venues[indexPath.row], image: images[indexPath.row]), animated: true)
+    }
 }
 
 extension MapViewController: UICollectionViewDataSource {
@@ -336,7 +314,7 @@ extension MapViewController: UICollectionViewDataSource {
         DispatchQueue.main.async {
             cell.configureCell(photoData: self.venueDetails[indexPath.row], image: self.images[indexPath.row])
         }
-
+        
         cell.layer.cornerRadius = 4
         return cell
     }

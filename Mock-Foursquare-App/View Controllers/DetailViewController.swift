@@ -26,6 +26,8 @@ class DetailViewController: UIViewController {
     
     private var locationDetail: Venue
     
+    private var image: UIImage!
+    
     private var collectionDetails = [UserCollection]() {
         didSet {
             dump(collectionDetails)
@@ -34,12 +36,12 @@ class DetailViewController: UIViewController {
     
     private var pickedCollection = ""
     
-    init(_ venuePersistence: DataPersistence<Venue>, collectionPersistence: DataPersistence<UserCollection>, venue: VenueDetail, detail: Venue) { // , image: UIImage
+    init(_ venuePersistence: DataPersistence<Venue>, collectionPersistence: DataPersistence<UserCollection>, venue: VenueDetail, detail: Venue, image: UIImage) { // , image: UIImage
         self.venuePersistence = venuePersistence
         self.collectionPersistence = collectionPersistence
         self.venueDetail = venue
         self.locationDetail = detail
-        //self.image = image
+        self.image = image
         
         super.init(nibName: nil, bundle: nil)
         
@@ -61,7 +63,7 @@ class DetailViewController: UIViewController {
         detailView.titleLabel.text = venueDetail.response.venue.name
         detailView.addressLabel.text = locationDetail.location.address
         detailView.descriptionTextView.text = venueDetail.response.venue.description
-        
+        detailView.itemImage.image = image
         // Do any additional setup after loading the view.
     }
     
