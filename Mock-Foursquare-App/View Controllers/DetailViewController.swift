@@ -8,6 +8,7 @@
 
 import UIKit
 import DataPersistence
+import AVFoundation
 
 class DetailViewController: UIViewController {
 
@@ -77,7 +78,20 @@ class DetailViewController: UIViewController {
     
     @objc func didSaveItem(_ sender: UIBarButtonItem) {
         
-        let createdVenue = Venue(id: locationDetail.id, name: venueDetail.response.venue.name, location: locationDetail.location, customCategory: pickedCollection, venuePhoto: nil, description: venueDetail.response.venue.description)
+        guard let image = image else {
+            showAlert(title: "Yo....", message: "Please Select a Picture for Collection")
+            return
+        }
+        
+        let size = UIScreen.main.bounds.size
+        let rect = AVMakeRect(aspectRatio: image.size, insideRect: CGRect(origin: CGPoint.zero, size: size))
+        let resizeImage = image.resizeImage(to: rect.size.width, height: rect.size.height)
+        
+        guard let resizedImageData = resizeImage.jpegData(compressionQuality: 1.0) else {
+            return
+        }
+        
+        let createdVenue = Venue(id: locationDetail.id, name: venueDetail.response.venue.name, location: locationDetail.location, customCategory: pickedCollection, venuePhoto: resizedImageData, description: venueDetail.response.venue.description)
         do {
             try venuePersistence.createItem(createdVenue)
         } catch {

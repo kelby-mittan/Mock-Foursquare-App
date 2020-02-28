@@ -45,9 +45,9 @@ class VenueCVCell: UICollectionViewCell {
     weak var cellDelegate: VenueCVCellDelegate?
     var vImage = UIImage()
     
-    func configureCell(photoData: VenueDetail) {
-        venueLabel.text = "Venue"
-        venueImage.getImage(with:  "\(photoData.response.venue.photos.groups.first?.items.first?.prefix ?? "")original\(photoData.response.venue.photos.groups.first?.items.first?.suffix ?? "")") { [weak self] (results) in
+    func configureCell(venueDetail: VenueDetail) {
+        venueLabel.text = venueDetail.response.venue.name
+        venueImage.getImage(with:  "\(venueDetail.response.venue.photos.groups.first?.items.first?.prefix ?? "")original\(venueDetail.response.venue.photos.groups.first?.items.first?.suffix ?? "")") { [weak self] (results) in
             switch results {
             case .failure(let appError):
                 print("error with collectionViewcell: \(appError)")
