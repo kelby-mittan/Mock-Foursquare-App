@@ -298,7 +298,7 @@ class MapViewController: UIViewController {
             return UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10)
         }
         func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-            navigationController?.pushViewController(DetailViewController(venuePersistence, collectionPersistence: collectionPersistence, venue: venueDetails[indexPath.row], detail: venues[indexPath.row], image: images[indexPath.row]), animated: true)
+            navigationController?.pushViewController(DetailViewController(venuePersistence, collectionPersistence: collectionPersistence, venue: venueDetails[indexPath.row], detail: venues[indexPath.row], image: images[indexPath.row], showPickerView: true), animated: true)
         }
     }
 
