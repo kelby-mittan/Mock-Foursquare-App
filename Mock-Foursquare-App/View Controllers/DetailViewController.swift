@@ -43,6 +43,7 @@ class DetailViewController: UIViewController {
         self.venueDetail = venue
         self.locationDetail = detail
         self.image = image
+        self.showPickerView = showPickerView
         
         super.init(nibName: nil, bundle: nil)
         
@@ -97,7 +98,7 @@ class DetailViewController: UIViewController {
             return
         }
         
-        let createdVenue = Venue(id: locationDetail.id, name: venueDetail.response.venue.name, location: locationDetail.location, customCategory: pickedCollection, venuePhoto: resizedImageData, description: venueDetail.response.venue.description)
+        let createdVenue = Venue(id: locationDetail.id, name: venueDetail.response.venue.name, location: locationDetail.location, customCategory: pickedCollection, venuePhoto: resizedImageData, description: venueDetail.response.venue.description, venueDetail: venueDetail)
         do {
             try venuePersistence.createItem(createdVenue)
         } catch {
