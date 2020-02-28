@@ -155,7 +155,7 @@ class MapViewController: UIViewController {
                 let coordinate = CLLocationCoordinate2D(latitude: venue.location.lat, longitude: venue.location.lng)
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = coordinate
-                annotation.subtitle = venue.id
+                annotation.subtitle = venue.location.address
                 annotation.title = venue.name
                 annotations.append(annotation)
             }
@@ -232,9 +232,9 @@ class MapViewController: UIViewController {
             mapView.removeOverlays(mapView.overlays)
             guard let annotation = view.annotation else {return}
             guard let location = (annotations.filter { $0.subtitle == annotation.subtitle }).first else { return }
-            let sourceCoord = CLLocationCoordinate2D(latitude: 40.782865, longitude: -73.967544)
+            let sourceCoord = mapView.userLocation
             let destinationCoord = location.coordinate
-            let sourcePlacemark = MKPlacemark(coordinate: sourceCoord, addressDictionary: nil)
+            let sourcePlacemark = MKPlacemark(coordinate: sourceCoord.coordinate, addressDictionary: nil)
             let destinationPlacemark = MKPlacemark(coordinate: destinationCoord, addressDictionary: nil)
             let sourceMapItem = MKMapItem(placemark: sourcePlacemark)
             let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
@@ -252,7 +252,7 @@ class MapViewController: UIViewController {
             let directionRequest = MKDirections.Request()
             directionRequest.source = sourceMapItem
             directionRequest.destination = destinationMapItem
-            directionRequest.transportType = .automobile
+            directionRequest.transportType = .walking
             let directions = MKDirections(request: directionRequest)
             directions.calculate {
                 (response, error) -> Void in
