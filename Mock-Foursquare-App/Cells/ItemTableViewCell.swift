@@ -82,9 +82,9 @@ class ItemTableViewCell: UITableViewCell {
         ])
     }
     //image: UIImage
-    func configureCell(photoData: VenueDetail, location: LocationInfo) {
+    func configureCell(photoData: VenueDetail, location: LocationInfo, image: UIImage) {
         self.titleLabel.text = photoData.response.venue.name
         self.locationLabel.text = location.address
-        //self.imageView?.image = image
+        self.imageView?.image = image
     }
 }

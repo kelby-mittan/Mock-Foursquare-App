@@ -19,9 +19,7 @@ class DetailViewController: UIViewController {
     }
     private var venuePersistence: DataPersistence<Venue>
     private var collectionPersistence: DataPersistence<UserCollection>
-    
-    //private var image: UIImage
-    
+        
     private var venueDetail: VenueDetail
     
     private var locationDetail: Venue
@@ -30,7 +28,7 @@ class DetailViewController: UIViewController {
     
     private var collectionDetails = [UserCollection]() {
         didSet {
-            dump(collectionDetails)
+//            dump(collectionDetails)
         }
     }
     

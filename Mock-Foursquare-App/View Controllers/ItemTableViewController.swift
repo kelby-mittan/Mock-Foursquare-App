@@ -37,25 +37,25 @@ class ItemTableViewController: UITableViewController {
     
     private var venueDetails = [VenueDetail]() {
         didSet {
-            dump(venueDetails)
+//            dump(venueDetails)
         }
     }
     
     private var locationDetails = [Venue]() {
         didSet {
-            dump(locationDetails)
+//            dump(locationDetails)
         }
     }
     
     private var collectionDetails = [UserCollection]() {
         didSet {
-            dump(collectionDetails)
+//            dump(collectionDetails)
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dump(venueDetails)
+//        dump(venueDetails)
         tableView.register(ItemTableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.rowHeight = 100
     }
@@ -66,7 +66,7 @@ class ItemTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? ItemTableViewCell else { fatalError("you messted up making cell") }
-        cell.configureCell(photoData: venueDetails[indexPath.row], location: locationDetails[indexPath.row].location) // image: images[indexPath.row]
+        cell.configureCell(photoData: venueDetails[indexPath.row], location: locationDetails[indexPath.row].location, image: images[indexPath.row]) // image: images[indexPath.row]
         return cell
     }
     
