@@ -8,6 +8,7 @@
 
 import UIKit
 import DataPersistence
+import AVFoundation
 
 class VenueCollectionController: UIViewController {
     
@@ -107,7 +108,7 @@ extension VenueCollectionController: UITableViewDataSource {
     }
     
     private func removeVenue(atIndexPath indexPath: IndexPath) {
-        loadVenues()
+//        loadVenues()
         let venue = venueCollection[indexPath.row]
 
         guard let indexInAllVenues = allVenues.firstIndex(of: venue) else {
@@ -142,12 +143,21 @@ extension VenueCollectionController: UITableViewDelegate {
                 }
             }
         }
-        
-        guard let venueDetail = venueDetail else {
+
+        guard let venueDetail = venue.venueDetail else {
             return
         }
         
-        let detailVC = DetailViewController(venuePersistence, collectionPersistence: collectionPersistence, venue: venueDetail, detail: venue)
+        guard let data = venue.venuePhoto else {
+            return
+        }
+        
+        guard let image = UIImage(data: data) else {
+            return
+        }
+        
+        let detailVC = DetailViewController(venuePersistence, collectionPersistence: collectionPersistence, venue: venueDetail, detail: venue, image: image, showPickerView: true)
+        
         present(detailVC, animated: true)
     }
 }

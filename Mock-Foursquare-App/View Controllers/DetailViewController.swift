@@ -8,6 +8,7 @@
 
 import UIKit
 import DataPersistence
+import AVFoundation
 
 class DetailViewController: UIViewController {
 
@@ -19,27 +20,30 @@ class DetailViewController: UIViewController {
     }
     private var venuePersistence: DataPersistence<Venue>
     private var collectionPersistence: DataPersistence<UserCollection>
-    
-    //private var image: UIImage
-    
+        
     private var venueDetail: VenueDetail
     
     private var locationDetail: Venue
     
+    private var image: UIImage!
+    
+    private var showPickerView = false
+    
     private var collectionDetails = [UserCollection]() {
         didSet {
-            dump(collectionDetails)
+//            dump(collectionDetails)
         }
     }
     
     private var pickedCollection = ""
     
-    init(_ venuePersistence: DataPersistence<Venue>, collectionPersistence: DataPersistence<UserCollection>, venue: VenueDetail, detail: Venue) { // , image: UIImage
+    init(_ venuePersistence: DataPersistence<Venue>, collectionPersistence: DataPersistence<UserCollection>, venue: VenueDetail, detail: Venue, image: UIImage, showPickerView: Bool) { // , image: UIImage
         self.venuePersistence = venuePersistence
         self.collectionPersistence = collectionPersistence
         self.venueDetail = venue
         self.locationDetail = detail
-        //self.image = image
+        self.image = image
+        self.showPickerView = showPickerView
         
         super.init(nibName: nil, bundle: nil)
         
@@ -53,15 +57,19 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         view.addSubview(detailView)
+        if showPickerView {
+            detailView.savePicker.isHidden = true
+        } else {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(didSaveItem(_:)))
+        }
+        
         loadCollection()
         detailView.savePicker.dataSource = self
         detailView.savePicker.delegate = self
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(didSaveItem(_:)))
-        
         detailView.titleLabel.text = venueDetail.response.venue.name
         detailView.addressLabel.text = locationDetail.location.address
         detailView.descriptionTextView.text = venueDetail.response.venue.description
-        
+        detailView.itemImage.image = image
         // Do any additional setup after loading the view.
     }
     
@@ -76,13 +84,28 @@ class DetailViewController: UIViewController {
     }
     
     @objc func didSaveItem(_ sender: UIBarButtonItem) {
+        print(pickedCollection)
+        guard let image = image else {
+            showAlert(title: "Yo....", message: "Please Select a Picture for Collection")
+            return
+        }
         
-        let createdVenue = Venue(id: locationDetail.id, name: locationDetail.name, location: locationDetail.location, customCategory: pickedCollection, venuePhoto: nil)
+        let size = UIScreen.main.bounds.size
+        let rect = AVMakeRect(aspectRatio: image.size, insideRect: CGRect(origin: CGPoint.zero, size: size))
+        let resizeImage = image.resizeImage(to: rect.size.width, height: rect.size.height)
+        
+        guard let resizedImageData = resizeImage.jpegData(compressionQuality: 1.0) else {
+            return
+        }
+        
+        let createdVenue = Venue(id: locationDetail.id, name: venueDetail.response.venue.name, location: locationDetail.location, customCategory: pickedCollection, venuePhoto: resizedImageData, description: venueDetail.response.venue.description, venueDetail: venueDetail)
         do {
             try venuePersistence.createItem(createdVenue)
         } catch {
             print("could not create venue")
         }
+        
+        navigationItem.rightBarButtonItem?.isEnabled = false
     }
 }
 
@@ -105,7 +128,7 @@ extension DetailViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         print(collectionName[row])
-
+        pickedCollection = collectionName[row].collectionName
         return collectionName[row].collectionName
     }
     
