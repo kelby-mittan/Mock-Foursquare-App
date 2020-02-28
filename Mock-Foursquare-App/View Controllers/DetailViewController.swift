@@ -77,7 +77,7 @@ class DetailViewController: UIViewController {
     
     @objc func didSaveItem(_ sender: UIBarButtonItem) {
         
-        let createdVenue = Venue(id: locationDetail.id, name: locationDetail.name, location: locationDetail.location, customCategory: pickedCollection, venuePhoto: nil)
+        let createdVenue = Venue(id: locationDetail.id, name: venueDetail.response.venue.name, location: locationDetail.location, customCategory: pickedCollection, venuePhoto: nil, description: venueDetail.response.venue.description)
         do {
             try venuePersistence.createItem(createdVenue)
         } catch {
