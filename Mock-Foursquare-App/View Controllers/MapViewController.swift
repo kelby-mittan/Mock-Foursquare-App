@@ -329,10 +329,21 @@ extension MapViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "venueCell", for: indexPath) as? VenueCVCell else {
             fatalError("Failed to dequeue to VenueCVCell")
         }
+        cell.cellDelegate = self
         cell.configureCell(photoData: venueDetails[indexPath.row])
         //images.append(cell.image)
         cell.layer.cornerRadius = 4
+        print(images.count)
+        dump(images)
         return cell
+    }
+    
+    
+}
+
+extension MapViewController: VenueCVCellDelegate {
+    func loadVenueImages(_ collectionsCell: VenueCVCell, venueImage: UIImage) {
+        images.append(venueImage)
     }
     
     

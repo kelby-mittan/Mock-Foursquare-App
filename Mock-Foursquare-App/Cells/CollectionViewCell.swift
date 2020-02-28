@@ -9,11 +9,17 @@
 import UIKit
 import ImageKit
 
+protocol VenueCVCellDelegate: AnyObject {
+    func loadVenueImages(_ collectionsCell: VenueCVCell, venueImage: UIImage)
+}
+
 class VenueCVCell: UICollectionViewCell {
     
     @IBOutlet weak var venueLabel: UILabel!
     @IBOutlet weak var venueImage: UIImageView!
 //    var image: UIImage!
+    weak var cellDelegate: VenueCVCellDelegate?
+    var vImage = UIImage()
     
     func configureCell(photoData: VenueDetail) {
         venueLabel.text = "Venue"
@@ -25,8 +31,10 @@ class VenueCVCell: UICollectionViewCell {
                 DispatchQueue.main.async {
                     self?.venueImage.image = image
                     //self?.image = image
+                    self?.vImage = image
                 }
             }
         }
+        cellDelegate?.loadVenueImages(self, venueImage: vImage)
     }
 }
