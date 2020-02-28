@@ -47,6 +47,7 @@ class MapViewController: UIViewController {
     }
     
     private var images = [UIImage]()
+        
     private var image = UIImageView()
     
     private var locationSearch = ""
@@ -129,6 +130,7 @@ class MapViewController: UIViewController {
                     case .success(let venueDetails):
                         DispatchQueue.main.async {
                             self?.venueDetails.append(venueDetails)
+                            self?.loadImage(photoData: venueDetails)
                         }
                     }
                 }
@@ -324,7 +326,9 @@ extension MapViewController: UICollectionViewDataSource {
 
 extension MapViewController: VenueCVCellDelegate {
     func loadVenueImages(_ collectionsCell: VenueCVCell, venueImage: UIImage) {
-        images.append(venueImage)
+        
+        
+        //images.append(venueImage)
     }
     
     
