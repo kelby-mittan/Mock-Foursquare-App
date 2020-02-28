@@ -47,6 +47,7 @@ class MapViewController: UIViewController {
     }
     
     private var images = [UIImage]()
+        
     private var image = UIImageView()
     
     private var locationSearch = ""
@@ -101,224 +102,206 @@ class MapViewController: UIViewController {
     
     @objc private func menuButtonPressed(_ sender: UIBarButtonItem) {
         navigationController?.pushViewController(ItemTableViewController(venuePersistence, collectionPersistence: collectionPersistence, venues: venueDetails, detail: venues, images: images), animated: true)
-        //        mediumMenu()
     }
     
-    private func loadVenues(city: String) {
-        clearSearch()
-        print("searchQuery: \(venueSearch)")
-        print("location: \(locationSearch)")
-        FoursquareAPIClient.getVenues(location: city, search: venueSearch.lowercased()) { [weak self] (result) in
-            switch result {
-            case .failure(let error):
-                print(error)
-            case .success(let venues):
-                self?.venues = venues
-                DispatchQueue.main.async {
-                    self?.loadMapView()
-                }
-            }
-        }
-    }
-    
-    private func loadVenueDetails(venueSearch: [Venue]) {
-        for venue in venueSearch {
-            FoursquareAPIClient.getVenuePhotos(locationID: venue.id) { [weak self] (results) in
-                switch results {
-                case .failure(let appError):
-                    print("Failed to load venue details: \(appError)")
-                case .success(let venueDetails):
+        private func loadVenues(city: String) {
+            clearSearch()
+            print("searchQuery: \(venueSearch)")
+            print("location: \(locationSearch)")
+            FoursquareAPIClient.getVenues(location: city, search: venueSearch.lowercased()) { [weak self] (result) in
+                switch result {
+                case .failure(let error):
+                    print(error)
+                case .success(let venues):
+                    self?.venues = venues
                     DispatchQueue.main.async {
-                        self?.venueDetails.append(venueDetails)
+                        self?.loadMapView()
                     }
                 }
             }
         }
-    }
-    
-    func loadImage(photoData: VenueDetail) {
-        image.getImage(with:  "\(photoData.response.venue.photos.groups.first?.items.first?.prefix ?? "")original\(photoData.response.venue.photos.groups.first?.items.first?.suffix ?? "")") { [weak self] (results) in
-            switch results {
-            case .failure(let appError):
-                print("error with collectionViewcell: \(appError)")
-            case .success(let image):
-                DispatchQueue.main.async {
-                    self?.images.append(image)
+        
+        private func loadVenueDetails(venueSearch: [Venue]) {
+            for venue in venueSearch {
+                FoursquareAPIClient.getVenuePhotos(locationID: venue.id) { [weak self] (results) in
+                    switch results {
+                    case .failure(let appError):
+                        print("Failed to load venue details: \(appError)")
+                    case .success(let venueDetails):
+                        DispatchQueue.main.async {
+                            self?.venueDetails.append(venueDetails)
+                            self?.loadImage(photoData: venueDetails)
+                        }
+                    }
                 }
             }
         }
-    }
-    
-    private func makeAnnotations() {
-        for venue in venues {
-            let coordinate = CLLocationCoordinate2D(latitude: venue.location.lat, longitude: venue.location.lng)
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = coordinate
-            annotation.subtitle = venue.id
-            annotation.title = venue.name
-            annotations.append(annotation)
-        }
-    }
-    
-    private func loadMapView() {
-        makeAnnotations()
-        theMapView.mapView.addAnnotations(annotations)
-        theMapView.mapView.showAnnotations(annotations, animated: true)
-    }
-    private func clearSearch() {
-        annotations.removeAll()
-        theMapView.mapView.removeAnnotations(theMapView.mapView.annotations)
-        venues.removeAll()
-        venueDetails.removeAll()
-    }
-}
-
-
-// MARK: SearchFieldDelegate
-//extension MapViewController: UISearchControllerDelegate {
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//        print("searchBarSearchButtonClicked")
-//    }
-//
-//    func searchBarResultsListButtonClicked(_ searchBar: UISearchBar) {
-//        print("searchBarResultsListButtonClicked")
-//    }
-//
-//    func updateSearchResults(for searchController: UISearchController) {
-//        print("updateSearchResults")
-//    }
-//}
-
-extension MapViewController: UISearchBarDelegate {
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchText = searchBar.text else { return }
-        guard !locationSearch.isEmpty else {
-            showAlert(title: "Location Field Missing", message: "Please enter a location to search")
-            return
-        }
-        venueSearch = searchText
-        loadVenues(city: locationSearch)
-    }
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchBar.setShowsCancelButton(true, animated: true)
-    }
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-        searchBar.setShowsCancelButton(false, animated: true)
-    }
-        func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-            guard let text = searchBar.text else { return }
-            venueSearch = text
-            searchBar.setShowsCancelButton(false, animated: true)
-            print("didEndEditing(search)")
-        }
-//    func textFieldDidEndEditing(_ textField: UITextField) {
-//        print("text field is \(textField.text ?? "empty")")
-//    }
-}
-
-extension MapViewController: UISearchTextFieldDelegate {
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        guard !(textField.text?.isEmpty ?? true) else {
-            showAlert(title: "Location Field is Missing", message: "Please enter a location")
-            return true }
-        guard !venueSearch.isEmpty else {
-            showAlert(title: "Search Field is Missing", message: "Please enter a search term")
-            return true
-        }
-        locationSearch = textField.text?.lowercased() ?? ""
-        loadVenues(city: locationSearch)
-        // Note: leaving the text in this field, allows the user to quickly search a different venue type, without typing the city again
-//        textField.text = ""
-        textField.resignFirstResponder()
-        return true
-    }
-    
-//    func textFieldDidBeginEditing(_ textField: UITextField) {
-//        print("textFieldDidBeginEditing")
-//    }
-}
-
-
-// MARK: MapviewDelegate
-extension MapViewController: MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        let renderer = MKPolylineRenderer(overlay: overlay)
-        renderer.strokeColor = UIColor.red
-            renderer.lineWidth = 4.0
-            return renderer
-    }
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        mapView.removeOverlays(mapView.overlays)
-        guard let annotation = view.annotation else {return}
-        guard let location = (annotations.filter { $0.subtitle == annotation.subtitle }).first else { return }
-        let sourceCoord = CLLocationCoordinate2D(latitude: 40.782865, longitude: -73.967544)
-        let destinationCoord = location.coordinate
-        let sourcePlacemark = MKPlacemark(coordinate: sourceCoord, addressDictionary: nil)
-        let destinationPlacemark = MKPlacemark(coordinate: destinationCoord, addressDictionary: nil)
-        let sourceMapItem = MKMapItem(placemark: sourcePlacemark)
-        let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
-        let sourceAnnotation = MKPointAnnotation()
-        sourceAnnotation.title = ""
-        if let location = sourcePlacemark.location {
-            sourceAnnotation.coordinate = location.coordinate
-        }
-        let destinationAnnotation = MKPointAnnotation()
-        destinationAnnotation.title = annotation.title ?? ""
-        if let location = destinationPlacemark.location {
-            destinationAnnotation.coordinate = location.coordinate
-        }
-        theMapView.mapView.showAnnotations([sourceAnnotation,destinationAnnotation], animated: true )
-        let directionRequest = MKDirections.Request()
-        directionRequest.source = sourceMapItem
-        directionRequest.destination = destinationMapItem
-        directionRequest.transportType = .automobile
-        let directions = MKDirections(request: directionRequest)
-        directions.calculate {
-            (response, error) -> Void in
-            guard let response = response else {
-                if let error = error {
-                    print("Error: \(error)")
+        
+        func loadImage(photoData: VenueDetail) {
+            image.getImage(with:  "\(photoData.response.venue.photos.groups.first?.items.first?.prefix ?? "")original\(photoData.response.venue.photos.groups.first?.items.first?.suffix ?? "")") { [weak self] (results) in
+                switch results {
+                case .failure(let appError):
+                    print("error with collectionViewcell: \(appError)")
+                case .success(let image):
+                    DispatchQueue.main.async {
+                        self?.images.append(image)
+                    }
                 }
+            }
+        }
+        
+        private func makeAnnotations() {
+            for venue in venues {
+                let coordinate = CLLocationCoordinate2D(latitude: venue.location.lat, longitude: venue.location.lng)
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = coordinate
+                annotation.subtitle = venue.id
+                annotation.title = venue.name
+                annotations.append(annotation)
+            }
+        }
+        
+        private func loadMapView() {
+            makeAnnotations()
+            theMapView.mapView.addAnnotations(annotations)
+            theMapView.mapView.showAnnotations(annotations, animated: true)
+        }
+        private func clearSearch() {
+            annotations.removeAll()
+            theMapView.mapView.removeAnnotations(theMapView.mapView.annotations)
+            venues.removeAll()
+            venueDetails.removeAll()
+            images.removeAll()
+        }
+    }
+
+    extension MapViewController: UISearchBarDelegate {
+        func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+            guard let searchText = searchBar.text else { return }
+            guard !locationSearch.isEmpty else {
+                showAlert(title: "Location Field Missing", message: "Please enter a location to search")
                 return
             }
-            let route = response.routes[0]
-            self.theMapView.mapView.addOverlay((route.polyline), level: MKOverlayLevel.aboveRoads)
-            let rect = route.polyline.boundingMapRect
-            self.theMapView.mapView.setRegion(MKCoordinateRegion(rect), animated: true)
+            venueSearch = searchText
+            loadVenues(city: locationSearch)
         }
+        func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+            searchBar.setShowsCancelButton(true, animated: true)
+        }
+        func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+            searchBar.resignFirstResponder()
+            searchBar.setShowsCancelButton(false, animated: true)
+        }
+            func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+                guard let text = searchBar.text else { return }
+                venueSearch = text
+                searchBar.setShowsCancelButton(false, animated: true)
+                print("didEndEditing(search)")
+            }
+
+    }
+
+    extension MapViewController: UISearchTextFieldDelegate {
         
-    }
-    
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard annotation is MKPointAnnotation else {
-            return nil
+        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            guard !(textField.text?.isEmpty ?? true) else {
+                showAlert(title: "Location Field is Missing", message: "Please enter a location")
+                return true }
+            guard !venueSearch.isEmpty else {
+                showAlert(title: "Search Field is Missing", message: "Please enter a search term")
+                return true
+            }
+            locationSearch = textField.text?.lowercased() ?? ""
+            loadVenues(city: locationSearch)
+
+            textField.resignFirstResponder()
+            return true
         }
-        let identifier = "locationAnnotation"
-        var annotationView: MKPinAnnotationView
-        
-        if let dequeView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView {
-            annotationView = dequeView
-        } else {
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            annotationView.canShowCallout = true
-        }
-        return annotationView
     }
-    
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        print("calloutAccessoryControlTapped")
-    }
-}
 
 
-// MARK: Collection View Delegate/Datasource
-extension MapViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10)
+    // MARK: MapviewDelegate
+    extension MapViewController: MKMapViewDelegate {
+        func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+            let renderer = MKPolylineRenderer(overlay: overlay)
+            renderer.strokeColor = UIColor.red
+                renderer.lineWidth = 4.0
+                return renderer
+        }
+        func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+            mapView.removeOverlays(mapView.overlays)
+            guard let annotation = view.annotation else {return}
+            guard let location = (annotations.filter { $0.subtitle == annotation.subtitle }).first else { return }
+            let sourceCoord = CLLocationCoordinate2D(latitude: 40.782865, longitude: -73.967544)
+            let destinationCoord = location.coordinate
+            let sourcePlacemark = MKPlacemark(coordinate: sourceCoord, addressDictionary: nil)
+            let destinationPlacemark = MKPlacemark(coordinate: destinationCoord, addressDictionary: nil)
+            let sourceMapItem = MKMapItem(placemark: sourcePlacemark)
+            let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
+            let sourceAnnotation = MKPointAnnotation()
+            sourceAnnotation.title = ""
+            if let location = sourcePlacemark.location {
+                sourceAnnotation.coordinate = location.coordinate
+            }
+            let destinationAnnotation = MKPointAnnotation()
+            destinationAnnotation.title = annotation.title ?? ""
+            if let location = destinationPlacemark.location {
+                destinationAnnotation.coordinate = location.coordinate
+            }
+            theMapView.mapView.showAnnotations([sourceAnnotation,destinationAnnotation], animated: true )
+            let directionRequest = MKDirections.Request()
+            directionRequest.source = sourceMapItem
+            directionRequest.destination = destinationMapItem
+            directionRequest.transportType = .automobile
+            let directions = MKDirections(request: directionRequest)
+            directions.calculate {
+                (response, error) -> Void in
+                guard let response = response else {
+                    if let error = error {
+                        print("Error: \(error)")
+                    }
+                    return
+                }
+                let route = response.routes[0]
+                self.theMapView.mapView.addOverlay((route.polyline), level: MKOverlayLevel.aboveRoads)
+                let rect = route.polyline.boundingMapRect
+                self.theMapView.mapView.setRegion(MKCoordinateRegion(rect), animated: true)
+            }
+            
+        }
+        
+        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            guard annotation is MKPointAnnotation else {
+                return nil
+            }
+            let identifier = "locationAnnotation"
+            var annotationView: MKPinAnnotationView
+            
+            if let dequeView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView {
+                annotationView = dequeView
+            } else {
+                annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                annotationView.canShowCallout = true
+            }
+            return annotationView
+        }
+        
+        func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+            print("calloutAccessoryControlTapped")
+        }
     }
-}
+
+
+    // MARK: Collection View Delegate/Datasource
+    extension MapViewController: UICollectionViewDelegateFlowLayout {
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+            return UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10)
+        }
+        func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            navigationController?.pushViewController(DetailViewController(venuePersistence, collectionPersistence: collectionPersistence, venue: venueDetails[indexPath.row], detail: venues[indexPath.row], image: images[indexPath.row]), animated: true)
+        }
+    }
+
 
 extension MapViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -343,7 +326,13 @@ extension MapViewController: UICollectionViewDataSource {
 
 extension MapViewController: VenueCVCellDelegate {
     func loadVenueImages(_ collectionsCell: VenueCVCell, venueImage: UIImage) {
+<<<<<<< HEAD
+        
+        
+        //images.append(venueImage)
+=======
         images.append(venueImage)
+>>>>>>> 0796b11cd3a51f14d173d37b019e5cd14c174647
     }
     
     

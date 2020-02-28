@@ -130,25 +130,25 @@ extension VenueCollectionController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let venue = venueCollection[indexPath.row]
+//        let venue = venueCollection[indexPath.row]
+//
+//        FoursquareAPIClient.getVenuePhotos(locationID: venue.id) { [weak self] (results) in
+//            switch results {
+//            case .failure(let appError):
+//                print("Failed to load venue details: \(appError)")
+//            case .success(let venueDetail):
+//                DispatchQueue.main.async {
+//                    self?.venueDetail = venueDetail
+//                }
+//            }
+//        }
+//
+//        guard let venueDetail = venueDetail else {
+//            return
+//        }
         
-        FoursquareAPIClient.getVenuePhotos(locationID: venue.id) { [weak self] (results) in
-            switch results {
-            case .failure(let appError):
-                print("Failed to load venue details: \(appError)")
-            case .success(let venueDetail):
-                DispatchQueue.main.async {
-                    self?.venueDetail = venueDetail
-                }
-            }
-        }
-        
-        guard let venueDetail = venueDetail else {
-            return
-        }
-        
-        let detailVC = DetailViewController(venuePersistence, collectionPersistence: collectionPersistence, venue: venueDetail, detail: venue)
-        present(detailVC, animated: true)
+//        let detailVC = DetailViewController(venuePersistence, collectionPersistence: collectionPersistence, venue: venueDetail, detail: venue, image: )
+//        present(detailVC, animated: true)
     }
 }
 
