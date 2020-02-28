@@ -32,6 +32,8 @@ class VenueCollectionController: UIViewController {
         }
     }
     
+    private var allVenues = [Venue]()
+    
     init?(coder: NSCoder, venuePersistence: DataPersistence<Venue>, collectionPersistence: DataPersistence<UserCollection>, userCollection: UserCollection) {
         self.venuePersistence = venuePersistence
         self.collectionPersistence = collectionPersistence
@@ -63,6 +65,7 @@ class VenueCollectionController: UIViewController {
     private func loadVenues() {
         do {
             venueCollection = try venuePersistence.loadItems().filter { $0.customCategory == userCollection.collectionName }
+            allVenues = try venuePersistence.loadItems()
         } catch {
             print("could not load venues")
         }
@@ -72,7 +75,6 @@ class VenueCollectionController: UIViewController {
 //    }
     
     @IBAction func collapseButtonPressed(_ sender: UIBarButtonItem) {
-        
         self.dismiss(animated: true)
     }
     
@@ -105,20 +107,19 @@ extension VenueCollectionController: UITableViewDataSource {
     }
     
     private func removeVenue(atIndexPath indexPath: IndexPath) {
-        
+//        loadVenues()
         let venue = venueCollection[indexPath.row]
 
-        guard let index = venueCollection.firstIndex(of: venue) else {
+        guard let indexInAllVenues = allVenues.firstIndex(of: venue) else {
             return
         }
+        venueCollection.remove(at: indexPath.row)
         
         do {
-            try collectionPersistence.deleteItem(at: index)
+            try venuePersistence.deleteItem(at: indexInAllVenues)
         } catch {
             showAlert(title: "Error", message: "Could not delete Venue")
         }
-        
-        tableView.deleteRows(at: [indexPath], with: .automatic)
         
     }
     

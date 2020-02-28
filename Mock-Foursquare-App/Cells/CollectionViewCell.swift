@@ -34,7 +34,6 @@ import ImageKit
 //    }
 //}
 
-// NEW
 protocol VenueCVCellDelegate: AnyObject {
     func loadVenueImages(_ collectionsCell: VenueCVCell, venueImage: UIImage)
 }

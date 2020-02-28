@@ -326,9 +326,13 @@ extension MapViewController: UICollectionViewDataSource {
 
 extension MapViewController: VenueCVCellDelegate {
     func loadVenueImages(_ collectionsCell: VenueCVCell, venueImage: UIImage) {
+<<<<<<< HEAD
         
         
         //images.append(venueImage)
+=======
+        images.append(venueImage)
+>>>>>>> 0796b11cd3a51f14d173d37b019e5cd14c174647
     }
     
     

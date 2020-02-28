@@ -348,6 +348,8 @@
 				6CF62EC42405DAC7008B62C6 /* DetailViewController.swift in Sources */,
 				02A5D1DA240452AA00060CA2 /* CreateCollectionController.swift in Sources */,
 				02699BE924021FCA00211C0F /* FoursquareSearch.swift in Sources */,
+				6C7CDC5424058FCC003839DC /* ItemTableViewController.swift in Sources */,
+				6C7CDC5A2405902A003839DC /* configure.swift in Sources */,
 				02699BE724021F8400211C0F /* FoursquareAPIClient.swift in Sources */,
 				6CF62EC22405DABC008B62C6 /* ItemTableViewController.swift in Sources */,
 				026C2A1C2406E1DD00B71A14 /* VenueCollectionController.swift in Sources */,
@@ -355,6 +357,7 @@
 				C1AE932D24060C8F00ECF980 /* VenueDetailsModel.swift in Sources */,
 				0269500C2404407F001CE788 /* UsersCollectionsCell.swift in Sources */,
 				02699BED2402205600211C0F /* MapViewController.swift in Sources */,
+				6C7CDC5624058FD2003839DC /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
