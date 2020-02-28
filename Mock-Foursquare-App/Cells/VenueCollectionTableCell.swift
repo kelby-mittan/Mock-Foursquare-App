@@ -20,5 +20,10 @@ class VenueCollectionTableCell: UITableViewCell {
         self.venueNameLabel.text = venue.name
         self.addressLabel.text = venue.location.address
         //self.imageView?.image = image
+        
+        guard let data = venue.venuePhoto else {
+            return
+        }
+        self.venueImage.image = UIImage(data: data)
     }
 }
