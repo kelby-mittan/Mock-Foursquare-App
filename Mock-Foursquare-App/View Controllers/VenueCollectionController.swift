@@ -8,6 +8,7 @@
 
 import UIKit
 import DataPersistence
+import AVFoundation
 
 class VenueCollectionController: UIViewController {
     
@@ -130,8 +131,8 @@ extension VenueCollectionController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-//        let venue = venueCollection[indexPath.row]
-//
+        let venue = venueCollection[indexPath.row]
+        
 //        FoursquareAPIClient.getVenuePhotos(locationID: venue.id) { [weak self] (results) in
 //            switch results {
 //            case .failure(let appError):
@@ -142,13 +143,18 @@ extension VenueCollectionController: UITableViewDelegate {
 //                }
 //            }
 //        }
-//
-//        guard let venueDetail = venueDetail else {
-//            return
-//        }
+
+        guard let venueDetail = venueDetail else {
+            return
+        }
         
-//        let detailVC = DetailViewController(venuePersistence, collectionPersistence: collectionPersistence, venue: venueDetail, detail: venue, image: )
-//        present(detailVC, animated: true)
+        guard let data = venue.venuePhoto else { return }
+        
+        guard let image = UIImage(data: data) else { return }
+        
+        let detailVC = DetailViewController(venuePersistence, collectionPersistence: collectionPersistence, venue: venueDetail, detail: venue, image: image, showPickerView: false)
+        
+        present(detailVC, animated: true)
     }
 }
 
