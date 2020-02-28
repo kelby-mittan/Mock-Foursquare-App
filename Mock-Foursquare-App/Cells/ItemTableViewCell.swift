@@ -76,15 +76,15 @@ class ItemTableViewCell: UITableViewCell {
         locationLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            locationLabel.topAnchor.constraint(equalTo: titleLabel.topAnchor, constant: 13),
+            locationLabel.topAnchor.constraint(equalTo: titleLabel.topAnchor, constant: 20),
             locationLabel.leadingAnchor.constraint(equalTo: itemImage.trailingAnchor),
             locationLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
         ])
     }
-    
-    func configureCell(photoData: VenueDetail, location: LocationInfo, image: UIImage) {
+    //image: UIImage
+    func configureCell(photoData: VenueDetail, location: LocationInfo) {
         self.titleLabel.text = photoData.response.venue.name
         self.locationLabel.text = location.address
-        self.imageView?.image = image
+        //self.imageView?.image = image
     }
 }
