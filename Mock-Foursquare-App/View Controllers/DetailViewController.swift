@@ -58,13 +58,13 @@ class DetailViewController: UIViewController {
         view.addSubview(detailView)
         if showPickerView {
             detailView.savePicker.isHidden = true
+        } else {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(didSaveItem(_:)))
         }
         
         loadCollection()
         detailView.savePicker.dataSource = self
         detailView.savePicker.delegate = self
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(didSaveItem(_:)))
-        
         detailView.titleLabel.text = venueDetail.response.venue.name
         detailView.addressLabel.text = locationDetail.location.address
         detailView.descriptionTextView.text = venueDetail.response.venue.description
@@ -83,7 +83,7 @@ class DetailViewController: UIViewController {
     }
     
     @objc func didSaveItem(_ sender: UIBarButtonItem) {
-        
+        print(pickedCollection)
         guard let image = image else {
             showAlert(title: "Yo....", message: "Please Select a Picture for Collection")
             return
@@ -103,6 +103,8 @@ class DetailViewController: UIViewController {
         } catch {
             print("could not create venue")
         }
+        
+        navigationItem.rightBarButtonItem?.isEnabled = false
     }
 }
 
@@ -125,7 +127,7 @@ extension DetailViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         print(collectionName[row])
-
+        pickedCollection = collectionName[row].collectionName
         return collectionName[row].collectionName
     }
     
