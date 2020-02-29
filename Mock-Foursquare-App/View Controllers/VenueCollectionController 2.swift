@@ -51,11 +51,10 @@ class VenueCollectionController: UIViewController {
         
         tableView.dataSource = self
         tableView.delegate = self
-        viewForTV.clipsToBounds = true
+        
         blurEffect.isHidden = true
         tableView.rowHeight = 60
         viewForTV.layer.cornerRadius = 15
-        tableView.isHidden = true
         loadVenues()
     }
     
@@ -90,10 +89,6 @@ extension VenueCollectionController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if !venueCollection.isEmpty {
-            tableView.isHidden = false
-        }
-        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "venueCollectionCell", for: indexPath) as? VenueCollectionTableCell else {
             fatalError()
         }
@@ -113,7 +108,7 @@ extension VenueCollectionController: UITableViewDataSource {
     }
     
     private func removeVenue(atIndexPath indexPath: IndexPath) {
-
+//        loadVenues()
         let venue = venueCollection[indexPath.row]
 
         guard let indexInAllVenues = allVenues.firstIndex(of: venue) else {

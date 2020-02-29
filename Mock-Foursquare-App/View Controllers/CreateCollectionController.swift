@@ -58,11 +58,34 @@ class CreateCollectionController: UIViewController {
         
         navigationItem.setRightBarButton(createButton, animated: true)
         collectionNameTextField.delegate = self
+        setupUI()
+    }
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(true)
+//        collectionNameTextField.text = "    " + collectionName
+//    }
+    
+    private func setupUI() {
+        collectionNameTextField.layer.borderWidth = 4
+        collectionNameTextField.layer.borderColor = UIColor.darkGray.cgColor
+        collectionNameTextField.layer.cornerRadius = 5
+        view.backgroundColor = .systemBackground
         alphaView.isHidden = true
+        alphaView.clipsToBounds = true
+        selectedImageView.clipsToBounds = true
+        alphaView.layer.cornerRadius = 15
+        selectedImageView.layer.cornerRadius = 15
         titleLabel.isHidden = true
+        
+        if selectedImage != nil {
+            selectedImageView.image = selectedImage
+        }
     }
     
     @objc private func createButtonPressed(_ sender: UIBarButtonItem) {
+        collectionName = collectionNameTextField.text ?? ""
+        titleLabel.text = collectionName
         if collectionName == "" {
             showAlert(title: "Yo....", message: "Please Enter a Name for Collection")
             return
@@ -83,7 +106,28 @@ class CreateCollectionController: UIViewController {
         let userCollection = UserCollection(collectionName: collectionName, pickedImage: resizedImageData)
             
         collectionDelegate?.updateCollectionView(userCollection: userCollection)
+        animatePhoto()
+//        UIView.animate(withDuration: 0.75, delay: 0.0, options: [], animations: {
+//            self.selectedImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+//            self.alphaView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+//            self.titleLabel.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+//
+//        }) { (done) in
+//            UIView.animate(withDuration: 0.75, animations: {
+//                self.selectedImageView.transform = CGAffineTransform(translationX: 120, y: 600)
+//                self.alphaView.transform = CGAffineTransform(translationX: 120, y: 600)
+//                self.titleLabel.transform = CGAffineTransform(translationX: 120, y: 600)
+//
+//            }) {(done) in
+//                let collectionsVC = UserCollectionsController(self.venuePersistence, collectionPersistence: self.collectionPersistence)
+//                self.navigationController?.pushViewController(collectionsVC, animated: true)
+//            }
+//            self.dismiss(animated: true)
+//        }
         
+    }
+    
+    private func animatePhoto() {
         UIView.animate(withDuration: 0.75, delay: 0.0, options: [], animations: {
             self.selectedImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
             self.alphaView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
@@ -101,7 +145,6 @@ class CreateCollectionController: UIViewController {
             }
             self.dismiss(animated: true)
         }
-        
     }
     
     @IBAction func pickPhotoButton(_ sender: UIButton) {
@@ -130,6 +173,7 @@ extension CreateCollectionController: UITextFieldDelegate {
         titleLabel.text = collectionName
         return true
     }
+    
 }
 
 extension CreateCollectionController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {

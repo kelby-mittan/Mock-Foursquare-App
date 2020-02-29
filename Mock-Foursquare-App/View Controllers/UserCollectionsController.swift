@@ -47,6 +47,7 @@ class UserCollectionsController: UIViewController {
         
         userCollectionsV.backgroundColor = .systemGray2
         navigationItem.setRightBarButton(addButton, animated: true)
+        navigationItem.title = "Collections"
         userCollectionsV.collectionView.register(UsersCollectionsCell.self, forCellWithReuseIdentifier: "userCell")
         userCollectionsV.collectionView.dataSource = self
         userCollectionsV.collectionView.delegate = self

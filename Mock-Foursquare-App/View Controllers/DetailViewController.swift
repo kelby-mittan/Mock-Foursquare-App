@@ -60,7 +60,11 @@ class DetailViewController: UIViewController {
         if showPickerView {
             detailView.savePicker.isHidden = true
         } else {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(didSaveItem(_:)))
+            
+            let saveButton = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(didSaveItem(_:)))
+            let createButton = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(addButtonPressed(_:)))
+//            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(didSaveItem(_:)))
+            navigationItem.setRightBarButtonItems([createButton,saveButton], animated: true)
         }
         
         loadCollection()
@@ -107,6 +111,20 @@ class DetailViewController: UIViewController {
         
         navigationItem.rightBarButtonItem?.isEnabled = false
     }
+    
+    @objc private func addButtonPressed(_ sender: UIBarButtonItem) {
+        print("add button pressed")
+        
+        let createStoryboard = UIStoryboard(name: "CreateCollection", bundle: nil)
+        
+        let createCollectionVC = createStoryboard.instantiateViewController(identifier: "CreateCollectionController", creator: { coder in
+            
+            return CreateCollectionController(coder: coder, venuePersistence: self.venuePersistence, collectionPersistence: self.collectionPersistence)
+        })
+        createCollectionVC.selectedImage = image
+        createCollectionVC.collectionDelegate = self
+        navigationController?.pushViewController(createCollectionVC, animated: true)
+    }
 }
 
 extension DetailViewController: UIPickerViewDelegate, UIPickerViewDataSource {
@@ -130,6 +148,28 @@ extension DetailViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         print(collectionName[row])
         pickedCollection = collectionName[row].collectionName
         return collectionName[row].collectionName
+    }
+    
+}
+
+extension DetailViewController: AddToCollection {
+    
+    func updateCollectionView(userCollection: UserCollection) {
+        
+        var usersCollections = [UserCollection]()
+        
+        do {
+            usersCollections = try collectionPersistence.loadItems()
+        } catch {
+            print("could not load collections")
+        }
+        
+        usersCollections.insert(userCollection, at: 0)
+        do {
+            try collectionPersistence.createItem(userCollection)
+        } catch {
+            print("error saving collection")
+        }
     }
     
 }
