@@ -108,8 +108,7 @@ class DetailViewController: UIViewController {
         } catch {
             print("could not create venue")
         }
-        
-        navigationItem.rightBarButtonItem?.isEnabled = false
+        navigationItem.rightBarButtonItems?[1].isEnabled = false
     }
     
     @objc private func addButtonPressed(_ sender: UIBarButtonItem) {
@@ -123,6 +122,8 @@ class DetailViewController: UIViewController {
         })
         createCollectionVC.selectedImage = image
         createCollectionVC.collectionDelegate = self
+        createCollectionVC.venue = locationDetail
+        createCollectionVC.venueDetail = venueDetail
         navigationController?.pushViewController(createCollectionVC, animated: true)
     }
 }

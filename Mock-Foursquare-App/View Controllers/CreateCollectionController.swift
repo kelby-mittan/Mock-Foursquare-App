@@ -17,15 +17,10 @@ protocol AddToCollection: AnyObject {
 class CreateCollectionController: UIViewController {
     
     @IBOutlet var collectionNameTextField: UITextField!
-    
     @IBOutlet var selectedImageView: UIImageView!
-    
     @IBOutlet var alphaView: UIView!
-    
     @IBOutlet var titleLabel: UILabel!
-    
     @IBOutlet var libraryButton: UIButton!
-    
     @IBOutlet var changePhotoLabel: UILabel!
     
     public var venuePersistence: DataPersistence<Venue>
@@ -35,6 +30,8 @@ class CreateCollectionController: UIViewController {
     
     public var selectedImage: UIImage?
     private var collectionName = ""
+    public var venue: Venue?
+    public var venueDetail: VenueDetail?
     
     weak var collectionDelegate: AddToCollection?
     
@@ -86,6 +83,7 @@ class CreateCollectionController: UIViewController {
     @objc private func createButtonPressed(_ sender: UIBarButtonItem) {
         collectionName = collectionNameTextField.text ?? ""
         titleLabel.text = collectionName
+        
         if collectionName == "" {
             showAlert(title: "Yo....", message: "Please Enter a Name for Collection")
             return
@@ -94,7 +92,6 @@ class CreateCollectionController: UIViewController {
             showAlert(title: "Yo....", message: "Please Select a Picture for Collection")
             return
         }
-        
         let size = UIScreen.main.bounds.size
         let rect = AVMakeRect(aspectRatio: image.size, insideRect: CGRect(origin: CGPoint.zero, size: size))
         let resizeImage = image.resizeImage(to: rect.size.width, height: rect.size.height)
@@ -104,26 +101,17 @@ class CreateCollectionController: UIViewController {
         }
         
         let userCollection = UserCollection(collectionName: collectionName, pickedImage: resizedImageData)
-            
+        if venue != nil && venueDetail != nil {
+            let savedVenue = Venue(id: venue?.id ?? "", name: venue?.name ?? "", location: (venue?.location ?? nil)!, customCategory: collectionName, venuePhoto: resizedImageData, description: venueDetail?.response.venue.description ?? "", venueDetail: venueDetail)
+            do {
+                try venuePersistence.createItem(savedVenue)
+            } catch {
+                print("could not create item")
+            }
+        }
+        
         collectionDelegate?.updateCollectionView(userCollection: userCollection)
         animatePhoto()
-//        UIView.animate(withDuration: 0.75, delay: 0.0, options: [], animations: {
-//            self.selectedImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-//            self.alphaView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-//            self.titleLabel.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
-//
-//        }) { (done) in
-//            UIView.animate(withDuration: 0.75, animations: {
-//                self.selectedImageView.transform = CGAffineTransform(translationX: 120, y: 600)
-//                self.alphaView.transform = CGAffineTransform(translationX: 120, y: 600)
-//                self.titleLabel.transform = CGAffineTransform(translationX: 120, y: 600)
-//
-//            }) {(done) in
-//                let collectionsVC = UserCollectionsController(self.venuePersistence, collectionPersistence: self.collectionPersistence)
-//                self.navigationController?.pushViewController(collectionsVC, animated: true)
-//            }
-//            self.dismiss(animated: true)
-//        }
         
     }
     
