@@ -27,9 +27,6 @@ class VenueCollectionController: UIViewController {
     private var venueCollection = [Venue]() {
         didSet {
             tableView.reloadData()
-//            DispatchQueue.main.async {
-//                self.tableView.reloadData()
-//            }
         }
     }
     
@@ -53,7 +50,6 @@ class VenueCollectionController: UIViewController {
         tableView.delegate = self
         viewForTV.clipsToBounds = true
         blurEffect.isHidden = true
-        tableView.rowHeight = 60
         viewForTV.layer.cornerRadius = 15
         tableView.isHidden = true
         loadVenues()
@@ -72,9 +68,6 @@ class VenueCollectionController: UIViewController {
             print("could not load venues")
         }
     }
-//    @IBAction func collapsePressed(_ sender: UIButton) {
-//        self.dismiss(animated: true)
-//    }
     
     @IBAction func collapseButtonPressed(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true)
@@ -103,7 +96,7 @@ extension VenueCollectionController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 110
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -160,7 +153,6 @@ extension VenueCollectionController: UITableViewDelegate {
         guard let image = UIImage(data: data) else {
             return
         }
-        
         let detailVC = DetailViewController(venuePersistence, collectionPersistence: collectionPersistence, venue: venueDetail, detail: venue, image: image, showPickerView: true)
         
         present(detailVC, animated: true)

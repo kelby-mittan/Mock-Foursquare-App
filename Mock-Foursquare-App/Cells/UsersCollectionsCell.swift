@@ -10,6 +10,7 @@ import UIKit
 
 protocol CollectionCellDelegate: AnyObject {
     func didLongPress(_ collectionsCell: UsersCollectionsCell, collection: UserCollection)
+    func didPressX(_ collectionsCell: UsersCollectionsCell, collection: UserCollection)
 }
 
 class UsersCollectionsCell: UICollectionViewCell {
@@ -21,6 +22,17 @@ class UsersCollectionsCell: UICollectionViewCell {
         iv.image = UIImage(systemName: "photo.fill")
         iv.contentMode = .scaleToFill
         iv.layer.cornerRadius = 20
+        return iv
+    }()
+    
+    public lazy var xButton: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(systemName: "xmark.circle.fill")
+        iv.isUserInteractionEnabled = true
+        iv.backgroundColor = .systemBackground
+        iv.tintColor = .black
+        iv.layer.cornerRadius = 40
+        iv.isHidden = true
         return iv
     }()
     
@@ -48,6 +60,12 @@ class UsersCollectionsCell: UICollectionViewCell {
         return gesture
     }()
     
+    private lazy var didTap: UITapGestureRecognizer = {
+        let gesture = UITapGestureRecognizer()
+        gesture.addTarget(self, action: #selector(buttonPressed(gesture:)))
+        return gesture
+    }()
+    
     weak var cellDelegate: CollectionCellDelegate?
     
     override init(frame: CGRect) {
@@ -64,14 +82,18 @@ class UsersCollectionsCell: UICollectionViewCell {
         super.layoutSubviews()
         layer.cornerRadius = 20
         addGestureRecognizer(longPressGesture)
+        xButton.addGestureRecognizer(didTap)
         collectionImage.clipsToBounds = true
         alphaView.clipsToBounds = true
     }
     
     private func commonInit() {
+        
         setupAlphaViewConstraints()
+        
         setupVenueImageViewConstraints()
         setupTitleLabelConstraints()
+        setupXButtonConstraints()
     }
     
     private func setupAlphaViewConstraints() {
@@ -109,6 +131,26 @@ class UsersCollectionsCell: UICollectionViewCell {
         ])
     }
     
+    private func setupXButtonConstraints() {
+        addSubview(xButton)
+        xButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            xButton.centerXAnchor.constraint(equalTo: self.trailingAnchor, constant: -6),
+            xButton.centerYAnchor.constraint(equalTo: self.topAnchor,constant: 6),
+            xButton.widthAnchor.constraint(equalToConstant: 44),
+            xButton.heightAnchor.constraint(equalToConstant: 44)
+        ])
+    }
+    
+    @objc private func buttonPressed(gesture: UITapGestureRecognizer) {
+        print("buttonPressed")
+        if gesture.state == .began {
+            gesture.state = .cancelled
+            return
+        }
+        cellDelegate?.didPressX(self, collection: userCollection)
+    }
+    
     func configureCell(for collection: UserCollection) {
         guard let image = UIImage(data: collection.pickedImage) else {
             return
@@ -125,5 +167,16 @@ class UsersCollectionsCell: UICollectionViewCell {
             return
         }
         cellDelegate?.didLongPress(self, collection: userCollection)
+    }
+}
+
+
+extension UICollectionViewCell {
+    func shake() {
+        let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
+        animation.duration = 1
+        animation.values = [-20, 20, -20, 20, -10, 10, -5, 5, 0]
+        layer.add(animation, forKey: "shake")
     }
 }

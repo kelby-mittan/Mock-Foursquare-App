@@ -19,6 +19,14 @@ class UserCollectionsView: UIView {
         return cv
     }()
     
+    public lazy var emptyLabel: UILabel = {
+        let label = UILabel()
+        label.text = "You have no collections!"
+        label.font = UIFont(name:"AmericanTypewriter-Bold",size:32)
+        label.isHidden = true
+        return label
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
         commonInit()
@@ -31,6 +39,7 @@ class UserCollectionsView: UIView {
     
     private func commonInit() {
         setupCollectionViewConstraints()
+        setupEmptyLabelConstraints()
     }
     
     private func setupCollectionViewConstraints() {
@@ -42,6 +51,16 @@ class UserCollectionsView: UIView {
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+    
+    private func setupEmptyLabelConstraints() {
+        addSubview(emptyLabel)
+        emptyLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            emptyLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            emptyLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
     

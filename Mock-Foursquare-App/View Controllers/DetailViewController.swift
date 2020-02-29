@@ -9,6 +9,7 @@
 import UIKit
 import DataPersistence
 import AVFoundation
+import MapKit
 
 class DetailViewController: UIViewController {
 
@@ -18,6 +19,20 @@ class DetailViewController: UIViewController {
             detailView.savePicker.reloadAllComponents()
         }
     }
+    
+    private lazy var swipeGesture: UISwipeGestureRecognizer = {
+        let gesture = UISwipeGestureRecognizer()
+        gesture.addTarget(self, action: #selector(goToMapView))
+        gesture.direction = .left
+        return gesture
+    }()
+    
+    private lazy var tapGesture: UITapGestureRecognizer = {
+        let gesture = UITapGestureRecognizer()
+        gesture.addTarget(self, action: #selector(goToMapView))
+        return gesture
+    }()
+    
     private var venuePersistence: DataPersistence<Venue>
     private var collectionPersistence: DataPersistence<UserCollection>
         
@@ -36,6 +51,8 @@ class DetailViewController: UIViewController {
     }
     
     private var pickedCollection = ""
+    
+    private var venueAnnotation = MKPointAnnotation()
     
     init(_ venuePersistence: DataPersistence<Venue>, collectionPersistence: DataPersistence<UserCollection>, venue: VenueDetail, detail: Venue, image: UIImage, showPickerView: Bool) { // , image: UIImage
         self.venuePersistence = venuePersistence
@@ -59,6 +76,8 @@ class DetailViewController: UIViewController {
         view.addSubview(detailView)
         if showPickerView {
             detailView.savePicker.isHidden = true
+            detailView.itemImage.isUserInteractionEnabled = true
+            detailView.itemImage.addGestureRecognizer(tapGesture)
         } else {
             
             let saveButton = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(didSaveItem(_:)))
@@ -75,6 +94,10 @@ class DetailViewController: UIViewController {
         detailView.descriptionTextView.text = venueDetail.response.venue.description
         detailView.itemImage.image = image
         // Do any additional setup after loading the view.
+        detailView.itemImage.isUserInteractionEnabled = true
+        detailView.mapView.delegate = self
+        detailView.mapView.showsUserLocation = true
+        detailView.itemImage.addGestureRecognizer(swipeGesture)
     }
     
     func loadCollection() {
@@ -126,6 +149,26 @@ class DetailViewController: UIViewController {
         createCollectionVC.venueDetail = venueDetail
         navigationController?.pushViewController(createCollectionVC, animated: true)
     }
+    
+    @objc private func goToMapView() {
+        print("swiped")
+        loadMapView()
+        UIView.transition(with: detailView.itemImage, duration: 0.75, options: [.transitionFlipFromTop], animations: {
+            self.detailView.itemImage.isHidden = true
+            self.detailView.mapView.isHidden = false
+        }, completion: nil)
+    }
+    
+    private func loadMapView() {
+        let coordinate = CLLocationCoordinate2D(latitude: locationDetail.location.lat, longitude: locationDetail.location.lng)
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate
+        annotation.title = locationDetail.name
+        venueAnnotation = annotation
+        detailView.mapView.addAnnotation(annotation)
+        detailView.mapView.showAnnotations([annotation], animated: true)
+    }
+
 }
 
 extension DetailViewController: UIPickerViewDelegate, UIPickerViewDataSource {
@@ -173,4 +216,89 @@ extension DetailViewController: AddToCollection {
         }
     }
     
+}
+
+extension DetailViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let renderer = MKPolylineRenderer(overlay: overlay)
+        renderer.strokeColor = UIColor.red
+            renderer.lineWidth = 4.0
+            return renderer
+    }
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        mapView.removeOverlays(mapView.overlays)
+        guard let annotation = view.annotation else {return}
+        
+        let coordinate = CLLocationCoordinate2D(latitude: locationDetail.location.lat, longitude: locationDetail.location.lng)
+        let annotation1 = MKPointAnnotation()
+        annotation1.coordinate = coordinate
+        annotation1.title = venueDetail.response.venue.name
+        let location = venueAnnotation
+        let sourceCoord = mapView.userLocation
+        let destinationCoord = location.coordinate
+        let sourcePlacemark = MKPlacemark(coordinate: sourceCoord.coordinate, addressDictionary: nil)
+        let destinationPlacemark = MKPlacemark(coordinate: destinationCoord, addressDictionary: nil)
+        let sourceMapItem = MKMapItem(placemark: sourcePlacemark)
+        let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
+        let sourceAnnotation = MKPointAnnotation()
+        sourceAnnotation.title = ""
+        if let location = sourcePlacemark.location {
+            sourceAnnotation.coordinate = location.coordinate
+        }
+        let destinationAnnotation = MKPointAnnotation()
+        destinationAnnotation.title = annotation.title ?? ""
+        if let location = destinationPlacemark.location {
+            destinationAnnotation.coordinate = location.coordinate
+        }
+        detailView.mapView.showAnnotations([sourceAnnotation,destinationAnnotation], animated: true )
+        let directionRequest = MKDirections.Request()
+        directionRequest.source = sourceMapItem
+        directionRequest.destination = destinationMapItem
+        directionRequest.transportType = .walking
+        let directions = MKDirections(request: directionRequest)
+        directions.calculate {
+            (response, error) -> Void in
+            guard let response = response else {
+                if let error = error {
+                    print("Error: \(error)")
+                }
+                return
+            }
+            let route = response.routes[0]
+            self.detailView.mapView.addOverlay((route.polyline), level: MKOverlayLevel.aboveRoads)
+            let rect = route.polyline.boundingMapRect
+            self.detailView.mapView.setRegion(MKCoordinateRegion(rect), animated: true)
+        }
+        
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard annotation is MKPointAnnotation else { return nil }
+        
+        let identifier = "annotationView"
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
+        
+        if annotationView == nil {
+            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView?.canShowCallout = true
+            
+//            let endpoint = "\(venueDetail.response.venue.categories.first?.icon.prefix ?? "")bg_32.png"
+//            let imageUrl = URL(string: endpoint)!
+//            let imageData = try! Data(contentsOf: imageUrl)
+//            let annotationImage = UIImage(data: imageData)
+//
+//            annotationView?.glyphImage = annotationImage
+//            annotationView?.image = annotationImage
+//            annotationView?.glyphTintColor = .systemOrange
+//            annotationView?.markerTintColor = .systemTeal
+        } else {
+            annotationView?.annotation = annotation
+        }
+        
+        return annotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        print("calloutAccessoryControlTapped")
+    }
 }
