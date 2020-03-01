@@ -343,12 +343,8 @@ extension MapViewController: MKMapViewDelegate {
         func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
             navigationController?.pushViewController(DetailViewController(venuePersistence, collectionPersistence: collectionPersistence, venue: venueDetails[indexPath.row], detail: venues[indexPath.row], image: images[indexPath.row], showPickerView: false), animated: true)
         }
-      
     }
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        navigationController?.pushViewController(DetailViewController(venuePersistence, collectionPersistence: collectionPersistence, venue: venueDetails[indexPath.row], detail: venues[indexPath.row], image: images[indexPath.row], showPickerView: true), animated: true)
-    }
-}
+
 
 
 extension MapViewController: UICollectionViewDataSource {
