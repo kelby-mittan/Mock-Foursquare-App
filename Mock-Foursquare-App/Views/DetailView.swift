@@ -23,6 +23,17 @@ class DetailView: UIView {
         return mv
     }()
     
+    public lazy var mapSateliteSegmentC: UISegmentedControl = {
+        let sc = UISegmentedControl(items: ["Map","Satelite"])
+        sc.selectedSegmentIndex = 0
+        sc.backgroundColor = .lightGray
+        sc.tintColor = .darkGray
+        sc.isHidden = true
+        return sc
+    }()
+
+    
+    
     public lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "title"
@@ -68,6 +79,7 @@ class DetailView: UIView {
         setupAddressViewConstraints()
         setupPickerViewConstraints()
         setupDescriptionViewConstraints()
+        setupSegmentedControlConstraints()
     }
     
     private func setupImageViewConstraints() {
@@ -133,6 +145,17 @@ class DetailView: UIView {
             savePicker.leadingAnchor.constraint(equalTo: leadingAnchor),
             savePicker.trailingAnchor.constraint(equalTo: trailingAnchor),
             savePicker.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+    
+    private func setupSegmentedControlConstraints() {
+        addSubview(mapSateliteSegmentC)
+        mapSateliteSegmentC.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            mapSateliteSegmentC.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 10),
+            mapSateliteSegmentC.centerXAnchor.constraint(equalTo: centerXAnchor),
+            mapSateliteSegmentC.widthAnchor.constraint(equalTo: mapView.widthAnchor, multiplier: 0.5)
         ])
     }
 
