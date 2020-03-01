@@ -47,11 +47,16 @@ class UserCollectionsController: UIViewController {
         
         userCollectionsV.backgroundColor = .systemGray2
         navigationItem.setRightBarButton(addButton, animated: true)
+        navigationItem.title = "Collections"
+        navigationItem.hidesBackButton = true
         userCollectionsV.collectionView.register(UsersCollectionsCell.self, forCellWithReuseIdentifier: "userCell")
         userCollectionsV.collectionView.dataSource = self
         userCollectionsV.collectionView.delegate = self
         
         loadUsersCollections()
+        if usersCollections.isEmpty {
+            userCollectionsV.emptyLabel.isHidden = false
+        }
         
     }
     
@@ -74,13 +79,8 @@ class UserCollectionsController: UIViewController {
         })
         
         createCollectionVC.collectionDelegate = self
-        
-        //        let createCollectionNC = UINavigationController(rootViewController: createCollectionVC)
-        
-        //        createCollectionVC.modalTransitionStyle
         navigationController?.pushViewController(createCollectionVC, animated: true)
     }
-    
     
 }
 
@@ -105,6 +105,10 @@ extension UserCollectionsController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+        if usersCollections.isEmpty {
+            userCollectionsV.emptyLabel.isHidden = false
+        }
+        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "userCell", for: indexPath) as? UsersCollectionsCell else {
             fatalError("could not deque")
         }
@@ -114,7 +118,7 @@ extension UserCollectionsController: UICollectionViewDataSource {
         cell.configureCell(for: userCollection)
         cell.cellDelegate = self
         cell.layer.cornerRadius = 20
-        
+        cell.xButton.isHidden = true
         cell.backgroundColor = .systemBackground
         return cell
     }
@@ -131,9 +135,15 @@ extension UserCollectionsController: UICollectionViewDataSource {
             return VenueCollectionController(coder: coder, venuePersistence: self.venuePersistence, collectionPersistence: self.collectionPersistence, userCollection: userCollection)
         })
         
-//        navigationController?.pushViewController(venuesCollectionVC, animated: true)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "userCell", for: indexPath) as? UsersCollectionsCell else {
+            fatalError("could not deque")
+        }
+        cell.xButton.isHidden = true
+        
         present(venuesCollectionVC, animated: true)
     }
+    
+    
 }
 
 extension UserCollectionsController: UICollectionViewDelegateFlowLayout {
@@ -150,25 +160,37 @@ extension UserCollectionsController: UICollectionViewDelegateFlowLayout {
 }
 
 extension UserCollectionsController: CollectionCellDelegate {
-    func didLongPress(_ collectionsCell: UsersCollectionsCell, collection: UserCollection) {
-        print("delegate working")
+    func didPressX(_ collectionsCell: UsersCollectionsCell, collection: UserCollection) {
+        print("button pressed for: \(collection.collectionName)")
         
         guard let indexPath = userCollectionsV.collectionView.indexPath(for: collectionsCell) else {
             return
         }
-        
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        present(alertController, animated: true)
-        
-        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { [weak self] alertAction in
-            self?.deleteCollection(collection: collection)
-            self?.usersCollections.remove(at: indexPath.row)
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        
-        alertController.addAction(deleteAction)
-        alertController.addAction(cancelAction)
+        deleteCollection(collection: collection)
+        usersCollections.remove(at: indexPath.row)
+        collectionsCell.xButton.isHidden = true
+    }
+    
+    func didLongPress(_ collectionsCell: UsersCollectionsCell, collection: UserCollection) {
+        print("delegate working")
+        collectionsCell.xButton.isHidden = false
+        collectionsCell.shake()
+//        guard let indexPath = userCollectionsV.collectionView.indexPath(for: collectionsCell) else {
+//            return
+//        }
+//
+//        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+//        present(alertController, animated: true)
+//
+//        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { [weak self] alertAction in
+//            self?.deleteCollection(collection: collection)
+//            self?.usersCollections.remove(at: indexPath.row)
+//        }
+//
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+//
+//        alertController.addAction(deleteAction)
+//        alertController.addAction(cancelAction)
     }
     
     private func deleteCollection(collection: UserCollection) {

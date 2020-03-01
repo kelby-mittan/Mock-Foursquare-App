@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class DetailView: UIView {
 
@@ -14,6 +15,12 @@ class DetailView: UIView {
         let iv = UIImageView()
         iv.image = UIImage(systemName: "camera.on.rectangle")
         return iv
+    }()
+    
+    public lazy var mapView: MKMapView = {
+        let mv = MKMapView()
+        mv.isHidden = true
+        return mv
     }()
     
     public lazy var titleLabel: UILabel = {
@@ -56,6 +63,7 @@ class DetailView: UIView {
     
     private func commonInit() {
         setupImageViewConstraints()
+        setupMapViewConstraints()
         setupTitleViewConstraints()
         setupAddressViewConstraints()
         setupPickerViewConstraints()
@@ -70,6 +78,17 @@ class DetailView: UIView {
             itemImage.leadingAnchor.constraint(equalTo: leadingAnchor),
             itemImage.trailingAnchor.constraint(equalTo: trailingAnchor),
             itemImage.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor)
+        ])
+    }
+    
+    private func setupMapViewConstraints() {
+        addSubview(mapView)
+        mapView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            mapView.topAnchor.constraint(equalTo: itemImage.topAnchor),
+            mapView.leadingAnchor.constraint(equalTo: itemImage.leadingAnchor),
+            mapView.trailingAnchor.constraint(equalTo: itemImage.trailingAnchor),
+            mapView.bottomAnchor.constraint(equalTo: itemImage.bottomAnchor)
         ])
     }
     

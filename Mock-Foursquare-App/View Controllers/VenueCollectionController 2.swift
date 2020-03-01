@@ -27,6 +27,9 @@ class VenueCollectionController: UIViewController {
     private var venueCollection = [Venue]() {
         didSet {
             tableView.reloadData()
+//            DispatchQueue.main.async {
+//                self.tableView.reloadData()
+//            }
         }
     }
     
@@ -48,10 +51,10 @@ class VenueCollectionController: UIViewController {
         
         tableView.dataSource = self
         tableView.delegate = self
-        viewForTV.clipsToBounds = true
+        
         blurEffect.isHidden = true
+        tableView.rowHeight = 60
         viewForTV.layer.cornerRadius = 15
-        tableView.isHidden = true
         loadVenues()
     }
     
@@ -68,6 +71,9 @@ class VenueCollectionController: UIViewController {
             print("could not load venues")
         }
     }
+//    @IBAction func collapsePressed(_ sender: UIButton) {
+//        self.dismiss(animated: true)
+//    }
     
     @IBAction func collapseButtonPressed(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true)
@@ -83,10 +89,6 @@ extension VenueCollectionController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if !venueCollection.isEmpty {
-            tableView.isHidden = false
-        }
-        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "venueCollectionCell", for: indexPath) as? VenueCollectionTableCell else {
             fatalError()
         }
@@ -96,7 +98,7 @@ extension VenueCollectionController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 110
+        return 100
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -106,7 +108,7 @@ extension VenueCollectionController: UITableViewDataSource {
     }
     
     private func removeVenue(atIndexPath indexPath: IndexPath) {
-
+//        loadVenues()
         let venue = venueCollection[indexPath.row]
 
         guard let indexInAllVenues = allVenues.firstIndex(of: venue) else {
@@ -153,6 +155,7 @@ extension VenueCollectionController: UITableViewDelegate {
         guard let image = UIImage(data: data) else {
             return
         }
+        
         let detailVC = DetailViewController(venuePersistence, collectionPersistence: collectionPersistence, venue: venueDetail, detail: venue, image: image, showPickerView: true)
         
         present(detailVC, animated: true)
