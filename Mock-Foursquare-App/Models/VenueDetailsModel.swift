@@ -18,6 +18,7 @@ struct ResponseVenue: Codable & Equatable {
     let name: String
     let description: String?
     let photos: GroupsResponse
+    let categories: [CategoryType]
 }
 struct GroupsResponse: Codable & Equatable {
     let groups: [Groups]
@@ -30,3 +31,10 @@ struct Items: Codable & Equatable {
     let suffix: String
 }
 
+struct CategoryType: Codable & Equatable {
+    let icon: PrefixSuffix
+}
+
+struct PrefixSuffix: Codable & Equatable {
+    let prefix: String
+}
