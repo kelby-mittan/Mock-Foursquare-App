@@ -17,15 +17,10 @@ protocol AddToCollection: AnyObject {
 class CreateCollectionController: UIViewController {
     
     @IBOutlet var collectionNameTextField: UITextField!
-    
     @IBOutlet var selectedImageView: UIImageView!
-    
     @IBOutlet var alphaView: UIView!
-    
     @IBOutlet var titleLabel: UILabel!
-    
     @IBOutlet var libraryButton: UIButton!
-    
     @IBOutlet var changePhotoLabel: UILabel!
     
     public var venuePersistence: DataPersistence<Venue>
@@ -35,6 +30,8 @@ class CreateCollectionController: UIViewController {
     
     public var selectedImage: UIImage?
     private var collectionName = ""
+    public var venue: Venue?
+    public var venueDetail: VenueDetail?
     
     weak var collectionDelegate: AddToCollection?
     
@@ -58,11 +55,35 @@ class CreateCollectionController: UIViewController {
         
         navigationItem.setRightBarButton(createButton, animated: true)
         collectionNameTextField.delegate = self
+        setupUI()
+    }
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(true)
+//        collectionNameTextField.text = "    " + collectionName
+//    }
+    
+    private func setupUI() {
+        collectionNameTextField.layer.borderWidth = 4
+        collectionNameTextField.layer.borderColor = UIColor.darkGray.cgColor
+        collectionNameTextField.layer.cornerRadius = 5
+        view.backgroundColor = .systemBackground
         alphaView.isHidden = true
+        alphaView.clipsToBounds = true
+        selectedImageView.clipsToBounds = true
+        alphaView.layer.cornerRadius = 15
+        selectedImageView.layer.cornerRadius = 15
         titleLabel.isHidden = true
+        
+        if selectedImage != nil {
+            selectedImageView.image = selectedImage
+        }
     }
     
     @objc private func createButtonPressed(_ sender: UIBarButtonItem) {
+        collectionName = collectionNameTextField.text ?? ""
+        titleLabel.text = collectionName
+        
         if collectionName == "" {
             showAlert(title: "Yo....", message: "Please Enter a Name for Collection")
             return
@@ -71,7 +92,6 @@ class CreateCollectionController: UIViewController {
             showAlert(title: "Yo....", message: "Please Select a Picture for Collection")
             return
         }
-        
         let size = UIScreen.main.bounds.size
         let rect = AVMakeRect(aspectRatio: image.size, insideRect: CGRect(origin: CGPoint.zero, size: size))
         let resizeImage = image.resizeImage(to: rect.size.width, height: rect.size.height)
@@ -81,9 +101,21 @@ class CreateCollectionController: UIViewController {
         }
         
         let userCollection = UserCollection(collectionName: collectionName, pickedImage: resizedImageData)
-            
-        collectionDelegate?.updateCollectionView(userCollection: userCollection)
+        if venue != nil && venueDetail != nil {
+            let savedVenue = Venue(id: venue?.id ?? "", name: venue?.name ?? "", location: (venue?.location ?? nil)!, customCategory: collectionName, venuePhoto: resizedImageData, description: venueDetail?.response.venue.description ?? "", venueDetail: venueDetail)
+            do {
+                try venuePersistence.createItem(savedVenue)
+            } catch {
+                print("could not create item")
+            }
+        }
         
+        collectionDelegate?.updateCollectionView(userCollection: userCollection)
+        animatePhoto()
+        
+    }
+    
+    private func animatePhoto() {
         UIView.animate(withDuration: 0.75, delay: 0.0, options: [], animations: {
             self.selectedImageView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
             self.alphaView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
@@ -101,7 +133,6 @@ class CreateCollectionController: UIViewController {
             }
             self.dismiss(animated: true)
         }
-        
     }
     
     @IBAction func pickPhotoButton(_ sender: UIButton) {
@@ -130,6 +161,7 @@ extension CreateCollectionController: UITextFieldDelegate {
         titleLabel.text = collectionName
         return true
     }
+    
 }
 
 extension CreateCollectionController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
