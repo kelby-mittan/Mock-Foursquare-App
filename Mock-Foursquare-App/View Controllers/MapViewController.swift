@@ -197,10 +197,10 @@ class MapViewController: UIViewController {
                 getUsersCurrentLocation()
                 
                 guard !locationSearch.isEmpty else {
-                    showAlert(title: "location services appear to be turned off", message: "Go to settings > Location Services > Mock-FourSquare-App to enable location services")
+                    showAlert(title: "Please enter a location, or enable location services", message: "Go to settings > Location Services > Mock-FourSquare-App to enable location services")
                     return
                 }
-//                showAlert(title: "Location Field Missing", message: "Please enter a location to search")
+                showAlert(title: "Location Field Missing", message: "Please enter a location to search")
                 return
             }
             theMapView.locationSearchBar.text = locationSearch
@@ -229,7 +229,7 @@ class MapViewController: UIViewController {
             guard !(textField.text?.isEmpty ?? true) else {
                 getUsersCurrentLocation()
                 guard !locationSearch.isEmpty else {
-                    showAlert(title: "location services appear to be turned off", message: "Go to settings > Location Services > Mock-FourSquare-App to enable location services")
+                    showAlert(title: "Please enter a location, or enable location services", message: "Go to settings > Location Services > Mock-FourSquare-App to enable location services")
                     return true
                 }
                 textField.text = locationSearch
