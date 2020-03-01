@@ -12,7 +12,8 @@ import MapKit
 class TheMapView: UIView {
     public lazy var userTrackingButton: MKUserTrackingButton! = {
         var button = MKUserTrackingButton()
-        button = MKUserTrackingButton(frame: CGRect(x: 200, y: 150, width: 40, height: 40))
+//        button = MKUserTrackingButton(frame: CGRect(x: 200, y: 150, width: 40, height: 40))
+        button.mapView = self.mapView
         button.backgroundColor = .link
         button.tintColor = .blue
         button.layer.cornerRadius = 4
@@ -36,6 +37,8 @@ class TheMapView: UIView {
     
     public lazy var mapView: MKMapView = {
         let mv = MKMapView()
+        mv.showsUserLocation = true
+        mv.userTrackingMode = .follow
         return mv
     }()
     
@@ -97,11 +100,8 @@ class TheMapView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
         
-            userTrackingButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
-            userTrackingButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: 10),
-            userTrackingButton.heightAnchor.constraint(equalToConstant: 40),
-            userTrackingButton.widthAnchor.constraint(equalToConstant: 40)
-            
+            userTrackingButton.centerYAnchor.constraint(equalTo: centerYAnchor),
+            userTrackingButton.centerXAnchor.constraint(equalTo: centerXAnchor)
             
         ])
     }

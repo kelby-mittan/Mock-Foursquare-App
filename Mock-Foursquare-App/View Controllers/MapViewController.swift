@@ -100,11 +100,15 @@ class MapViewController: UIViewController {
     private func setupUserTrackingButton()  {
         theMapView.mapView.showsUserLocation = true
         theMapView.mapView.userTrackingMode = .follow
-        userTrackingButton = MKUserTrackingButton(frame: CGRect(x: 200, y: 150, width: 40, height: 40))
-        theMapView.userTrackingButton.mapView = theMapView.mapView
-        userTrackingButton.tintColor = .blue
-        userTrackingButton.layer.cornerRadius = 4
-        theMapView.mapView.addSubview(userTrackingButton)
+        let locationSearch = theMapView.locationSearchBar.frame
+        userTrackingButton = MKUserTrackingButton(frame: CGRect(x: 326, y: 112, width: 35, height: 35))
+        print("LS width: \(locationSearch.width)")
+//        userTrackingButton = MKUserTrackingButton(frame: CGRect(x: 326, y: 112, width: locationSearch.width, height: locationSearch.width))
+        userTrackingButton.mapView = theMapView.mapView
+        userTrackingButton.backgroundColor = .link
+        userTrackingButton.tintColor = .white
+        userTrackingButton.layer.cornerRadius = 8
+        theMapView.addSubview(userTrackingButton)
     }
     
     private func setupNavBar() {
