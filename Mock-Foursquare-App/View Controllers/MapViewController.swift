@@ -57,6 +57,7 @@ class MapViewController: UIViewController {
     
     private let locationSession = CoreLocationSession()
     private var userTrackingButton: MKUserTrackingButton!
+//    private var userCurrentLocation = String()
     
     init(_ venuePersistence: DataPersistence<Venue>, collectionPersistence: DataPersistence<UserCollection>) {
          self.venuePersistence = venuePersistence
@@ -82,9 +83,21 @@ class MapViewController: UIViewController {
         theMapView.collectionView.register(UINib(nibName: "VenueCVCell", bundle: nil), forCellWithReuseIdentifier: "venueCell")
         
         setupUserTrackingButton()
+        getUsersCurrentLocation()
     }
-    
-    private func setupUserTrackingButton() {
+    private func getUsersCurrentLocation() {
+        guard let exposedLocation = locationSession.locationManager.location else {
+            return
+        }
+        locationSession.getPlace(for: exposedLocation) { placemark in
+            guard let placemark = placemark else { return }
+            if let location = placemark.locality {
+                self.locationSearch = location
+                    print("current location: \(self.locationSearch)")
+            }
+        }
+    }
+    private func setupUserTrackingButton()  {
         theMapView.mapView.showsUserLocation = true
         theMapView.mapView.userTrackingMode = .follow
         userTrackingButton = MKUserTrackingButton(frame: CGRect(x: 200, y: 150, width: 40, height: 40))
@@ -167,6 +180,7 @@ class MapViewController: UIViewController {
             theMapView.mapView.showAnnotations(annotations, animated: true)
         }
         private func clearSearch() {
+            locationSearch = ""
             annotations.removeAll()
             theMapView.mapView.removeAnnotations(theMapView.mapView.annotations)
             venues.removeAll()
@@ -180,9 +194,16 @@ class MapViewController: UIViewController {
         func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
             guard let searchText = searchBar.text else { return }
             guard !locationSearch.isEmpty else {
-                showAlert(title: "Location Field Missing", message: "Please enter a location to search")
+                getUsersCurrentLocation()
+                
+                guard !locationSearch.isEmpty else {
+                    showAlert(title: "location services appear to be turned off", message: "Go to settings > Location Services > Mock-FourSquare-App to enable location services")
+                    return
+                }
+//                showAlert(title: "Location Field Missing", message: "Please enter a location to search")
                 return
             }
+            theMapView.locationSearchBar.text = locationSearch
             venueSearch = searchText
             loadVenues(city: locationSearch)
         }
@@ -206,7 +227,13 @@ class MapViewController: UIViewController {
         
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
             guard !(textField.text?.isEmpty ?? true) else {
-                showAlert(title: "Location Field is Missing", message: "Please enter a location")
+                getUsersCurrentLocation()
+                guard !locationSearch.isEmpty else {
+                    showAlert(title: "location services appear to be turned off", message: "Go to settings > Location Services > Mock-FourSquare-App to enable location services")
+                    return true
+                }
+                textField.text = locationSearch
+                print("location on return: \(locationSearch)")
                 return true }
             guard !venueSearch.isEmpty else {
                 showAlert(title: "Search Field is Missing", message: "Please enter a search term")
@@ -214,7 +241,7 @@ class MapViewController: UIViewController {
             }
             locationSearch = textField.text?.lowercased() ?? ""
             loadVenues(city: locationSearch)
-
+            getUsersCurrentLocation()
             textField.resignFirstResponder()
             return true
         }
@@ -322,13 +349,11 @@ extension MapViewController: UICollectionViewDataSource {
         return cell
     }
     
-    
 }
 
 extension MapViewController: VenueCVCellDelegate {
     func loadVenueImages(_ collectionsCell: VenueCVCell, venueImage: UIImage) {
         //images.append(venueImage)
     }
-    
-    
 }
+
