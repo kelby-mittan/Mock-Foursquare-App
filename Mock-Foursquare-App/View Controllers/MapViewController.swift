@@ -172,6 +172,7 @@ class MapViewController: UIViewController {
             venues.removeAll()
             venueDetails.removeAll()
             images.removeAll()
+            theMapView.mapView.removeOverlays(theMapView.mapView.overlays)
         }
     }
 
