@@ -33,15 +33,15 @@ Whether you want to search locally, or abroad, you can use this app to search fo
 ## Screenshots
 
 ![](Images/ekgImage1.png)
-![](ekgImage2.png)
-![](ekgImage3.png)
-![](ekgImage4.png)
+![](Images/ekgImage2.png)
+![](Images/ekgImage3.png)
+![](Images/ekgImage4.png)
 
 ## Gifs
 
-![](ekgGIF1.gif)
-![](ekgGIF2.gif)
-![](ekgGIF3.gif)
+![](Images/ekgGIF1.gif)
+![](Images/ekgGIF2.gif)
+![](Images/ekgGIF3.gif)
 
 ## Code Example
 
