@@ -24,7 +24,7 @@ Whether you want to search locally, or abroad, you can use this app to search fo
 
 ## Code Example
 
-'''swift
+```swift
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay)
@@ -73,7 +73,7 @@ extension MapViewController: MKMapViewDelegate {
             self.theMapView.mapView.setVisibleMapRect(self.theMapView.mapView.visibleMapRect, edgePadding: UIEdgeInsets(top: 60.0, left: 20.0, bottom: 60, right: 20.0), animated: true)
         }
     }
-'''
+```
 
 ## Collaborators
 
