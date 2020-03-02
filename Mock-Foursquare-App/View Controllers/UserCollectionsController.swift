@@ -24,6 +24,7 @@ class UserCollectionsController: UIViewController {
     
     public var venuePersistence: DataPersistence<Venue>
     public var collectionPersistence: DataPersistence<UserCollection>
+    private var toggleLongPress = true
     
     private var usersCollections = [UserCollection]() {
         didSet{
@@ -160,9 +161,7 @@ extension UserCollectionsController: UICollectionViewDelegateFlowLayout {
 }
 
 extension UserCollectionsController: CollectionCellDelegate {
-    func didPressX(_ collectionsCell: UsersCollectionsCell, collection: UserCollection) {
-        print("button pressed for: \(collection.collectionName)")
-        
+    func didPressX(_ collectionsCell: UsersCollectionsCell, collection: UserCollection) {        
         guard let indexPath = userCollectionsV.collectionView.indexPath(for: collectionsCell) else {
             return
         }
@@ -172,9 +171,15 @@ extension UserCollectionsController: CollectionCellDelegate {
     }
     
     func didLongPress(_ collectionsCell: UsersCollectionsCell, collection: UserCollection) {
-        print("delegate working")
-        collectionsCell.xButton.isHidden = false
-        collectionsCell.shake()
+        if toggleLongPress {
+            collectionsCell.xButton.isHidden = false
+            collectionsCell.shake()
+            toggleLongPress.toggle()
+        } else {
+            collectionsCell.xButton.isHidden = true
+            toggleLongPress.toggle()
+        }
+        
 //        guard let indexPath = userCollectionsV.collectionView.indexPath(for: collectionsCell) else {
 //            return
 //        }

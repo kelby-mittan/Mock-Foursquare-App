@@ -98,6 +98,7 @@ class DetailViewController: UIViewController {
         detailView.mapView.delegate = self
         detailView.mapView.showsUserLocation = true
         detailView.itemImage.addGestureRecognizer(swipeGesture)
+        detailView.mapSateliteSegmentC.addTarget(self, action: #selector(segmentControlChanged(_:)), for: .valueChanged)
     }
     
     func loadCollection() {
@@ -156,7 +157,19 @@ class DetailViewController: UIViewController {
         UIView.transition(with: detailView.itemImage, duration: 0.75, options: [.transitionFlipFromTop], animations: {
             self.detailView.itemImage.isHidden = true
             self.detailView.mapView.isHidden = false
+            self.detailView.mapSateliteSegmentC.isHidden = false
         }, completion: nil)
+    }
+    
+    @objc func segmentControlChanged(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex{
+            case 0:
+                detailView.mapView.mapType = .standard
+            case 1:
+                detailView.mapView.mapType = .hybrid
+            default:
+                break
+            }
     }
     
     private func loadMapView() {
@@ -282,15 +295,15 @@ extension DetailViewController: MKMapViewDelegate {
             annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             annotationView?.canShowCallout = true
             
-//            let endpoint = "\(venueDetail.response.venue.categories.first?.icon.prefix ?? "")bg_32.png"
-//            let imageUrl = URL(string: endpoint)!
-//            let imageData = try! Data(contentsOf: imageUrl)
-//            let annotationImage = UIImage(data: imageData)
-//
-//            annotationView?.glyphImage = annotationImage
-//            annotationView?.image = annotationImage
-//            annotationView?.glyphTintColor = .systemOrange
-//            annotationView?.markerTintColor = .systemTeal
+            let endpoint = "\(venueDetail.response.venue.categories.first?.icon.prefix ?? "")bg_32.png"
+            let imageUrl = URL(string: endpoint)!
+            let imageData = try! Data(contentsOf: imageUrl)
+            let annotationImage = UIImage(data: imageData)
+
+            annotationView?.glyphImage = annotationImage
+            annotationView?.image = annotationImage
+            annotationView?.glyphTintColor = .systemOrange
+            annotationView?.markerTintColor = .systemTeal
         } else {
             annotationView?.annotation = annotation
         }
