@@ -14,7 +14,7 @@ struct FoursquareAPIClient {
     static func getVenues(location: String, search: String, completion: @escaping (Result<[Venue] ,AppError>) -> ()) {
         
 
-        var foursquareEndpoint = "https://api.foursquare.com/v2/venues/search?client_id=\(APIKeys.id)&client_secret=\(APIKeys.secret)&v=20202002&near=\(location)&intent=browse&radius=10000&query=\(search)&limit=5"
+        var foursquareEndpoint = "https://api.foursquare.com/v2/venues/search?client_id=\(APIKeys.id)&client_secret=\(APIKeys.secret)&v=20202002&near=\(location)&intent=browse&radius=10000&query=\(search)&limit=40"
 
         
         foursquareEndpoint = foursquareEndpoint.replacingOccurrences(of: " ", with: "%20")
