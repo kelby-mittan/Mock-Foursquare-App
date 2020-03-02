@@ -32,7 +32,7 @@ Whether you want to search locally, or abroad, you can use this app to search fo
 
 ## Screenshots
 
-![](ekgImage1.png)
+![](Images/ekgImage1.png)
 ![](ekgImage2.png)
 ![](ekgImage3.png)
 ![](ekgImage4.png)
