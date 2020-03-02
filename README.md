@@ -22,6 +22,27 @@ Whether you want to search locally, or abroad, you can use this app to search fo
 * MapKit
 * [FourSquare API](https://developer.foursquare.com) 
 
+## Collaborators
+
+[Kelby Mittan](https://github.com/kelby-mittan)
+
+[Eddie Oneill](https://github.com/Eddieoneill)
+
+[Gregory Keeley](https://github.com/GregKeeley)
+
+## Screenshots
+
+![](ekgImage1.png)
+![](ekgImage2.png)
+![](ekgImage3.png)
+![](ekgImage4.png)
+
+## Gifs
+
+![](ekgGIF1.gif)
+![](ekgGIF2.gif)
+![](ekgGIF3.gif)
+
 ## Code Example
 
 ### Creating a route for driving directions, direclty on the map view
@@ -76,10 +97,4 @@ extension MapViewController: MKMapViewDelegate {
     }
 ```
 
-## Collaborators
 
-[Kelby Mittan](https://github.com/kelby-mittan)
-
-[Eddie Oneill](https://github.com/Eddieoneill)
-
-[Gregory Keeley](https://github.com/GregKeeley)
