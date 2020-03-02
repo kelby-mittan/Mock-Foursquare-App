@@ -55,14 +55,23 @@ class CoreLocationSession: NSObject {
       }
      }
     }
-
-//  private func startMonitoringRegion() {
-//    let identifier = "monitoring region"
-//    let region = CLCircularRegion(center: location.coordinate, radius: 500, identifier: identifier)
-//    region.notifyOnEntry = true
-//    region.notifyOnExit = false
-//    locationManager.startMonitoring(for: region)
-//  }
+    
+    public func getPlace(for location: CLLocation, completion: @escaping (CLPlacemark?) -> Void) {
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(location) { placemarks, error in
+            guard error == nil else {
+                print("Error: \(error!.localizedDescription)")
+                completion(nil)
+                return
+            }
+            guard let placemark = placemarks?[0] else {
+                print("placemark is nil")
+                completion(nil)
+                return
+            }
+            completion(placemark)
+        }
+    }
 }
 extension CoreLocationSession: CLLocationManagerDelegate {
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
