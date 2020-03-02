@@ -285,33 +285,33 @@ extension DetailViewController: MKMapViewDelegate {
         
     }
     
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard annotation is MKPointAnnotation else { return nil }
-        
-        let identifier = "annotationView"
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
-        
-        if annotationView == nil {
-            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            annotationView?.canShowCallout = true
-            
-            let endpoint = "\(venueDetail.response.venue.categories.first?.icon.prefix ?? "")bg_32.png"
-            let imageUrl = URL(string: endpoint)!
-            let imageData = try! Data(contentsOf: imageUrl)
-            let annotationImage = UIImage(data: imageData)
-
-            annotationView?.glyphImage = annotationImage
-            annotationView?.image = annotationImage
-            annotationView?.glyphTintColor = .systemOrange
-            annotationView?.markerTintColor = .systemTeal
-        } else {
-            annotationView?.annotation = annotation
-        }
-        
-        return annotationView
-    }
-    
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        print("calloutAccessoryControlTapped")
-    }
+//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//        guard annotation is MKPointAnnotation else { return nil }
+//        
+//        let identifier = "annotationView"
+//        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
+//        
+//        if annotationView == nil {
+//            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+//            annotationView?.canShowCallout = true
+//            
+//            let endpoint = "\(venueDetail.response.venue.categories.first?.icon.prefix ?? "")bg_32.png"
+//            let imageUrl = URL(string: endpoint)!
+//            let imageData = try! Data(contentsOf: imageUrl)
+//            let annotationImage = UIImage(data: imageData)
+//
+//            annotationView?.glyphImage = annotationImage
+//            annotationView?.image = annotationImage
+//            annotationView?.glyphTintColor = .systemOrange
+//            annotationView?.markerTintColor = .systemTeal
+//        } else {
+//            annotationView?.annotation = annotation
+//        }
+//        
+//        return annotationView
+//    }
+//    
+//    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+//        print("calloutAccessoryControlTapped")
+//    }
 }
