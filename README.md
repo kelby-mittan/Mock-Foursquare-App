@@ -40,7 +40,7 @@ Whether you want to search locally, or abroad, you can use this app to search fo
 ## Gifs
 
 ![](Images/ekgGIF1.gif)
-![](Images/ekgGIF2.gif)
+![](Images/exgGIF2.gif)
 ![](Images/ekgGIF3.gif)
 
 ## Code Example
