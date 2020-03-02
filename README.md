@@ -1,7 +1,7 @@
 # Mock-Foursquare-App
 Mock Foursquare App using Mapkit and Core Location
 
-## FourSquare Mock App
+# FourSquare Mock App
 
 Search for local venues, based on a location, and save collections of your favorite venues.
 
@@ -24,7 +24,7 @@ Whether you want to search locally, or abroad, you can use this app to search fo
 
 ## Code Example
 
-# Creating a route for driving directions, direclty on the map view
+### Creating a route for driving directions, direclty on the map view
 ```swift
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
